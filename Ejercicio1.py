@@ -20,7 +20,7 @@ from astropy.table import Table
 dat=Table.read("Sharks_sgp_e_2_cat_small.fits", format="fits")
 df=dat.to_pandas()
 
-#Asigo variables a las columnas que me interesa usar
+#Asigno variables a las columnas que me interesa usar
 
 ALPHA_J2000 = df["ALPHA_J2000"]
 DELTA_J2000 = df["DELTA_J2000"]
