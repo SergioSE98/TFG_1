@@ -6,37 +6,68 @@ Created on Sun Dec  6 20:10:19 2020
 """
 
 #Importo librerías a utilizar
-    
 import 	astropy as astropy
 
 import pandas as pandas
 
 import seaborn as seaborn
 
+import matplotlib.pyplot as plt
+
+import matplotlib.image as mpimg
+
+from astropy.table import Table                        #Esto lo uso para leer la tabla de datos
+from astropy import units as u                         #Estos dos los uso para cambiar de coordenadas espaciales a galácticas
+from astropy.coordinates import SkyCoord
+
 
 #Voy a leer el archivo fits
-
-from astropy.table import Table
 dat=Table.read("Sharks_sgp_e_2_cat_small.fits", format="fits")
 df=dat.to_pandas()
 
 #Asigno variables a las columnas que me interesa usar
-
 ALPHA_J2000 = df["ALPHA_J2000"]
 DELTA_J2000 = df["DELTA_J2000"]
 
-#Ploteo la distribución de densidad de las fuentes contenidas en el archivo fits
+#Ploteo la distribución de densidad de las fuentes contenidas en el archivo fits (añado título y nombre a ejes)
+imagen1 = seaborn.jointplot(ALPHA_J2000, DELTA_J2000, kind="hex")
+imagen1.fig.suptitle("Density distribution (ALPHA_J2000, DELTA_J2000) in spacial coordinates", fontsize=11)
+imagen1.set_axis_labels('ALPHA_J2000 (Right ascension)', 'DELTA_J2000 (Declination)', fontsize=11)
 
-seaborn.jointplot(ALPHA_J2000, DELTA_J2000, kind="hex")
+
 
 #Ahora uso astropy para convertir las unidades espaciales de los parámetros ploteados a coordenadas galácticas
-
-from astropy import units as u                 #Importo los módulos necesarios
-from astropy.coordinates import SkyCoord
-
 c = SkyCoord(ALPHA_J2000,DELTA_J2000, unit="deg")     #Con esto denoto las unidades de las que parto (grados)
 ALPHA_J2000_galact= c.galactic.l                      #Ahora paso a unidades galacticas
 DELTA_J2000_galact= c.galactic.b
 
-seaborn.jointplot(ALPHA_J2000_galact, DELTA_J2000_galact, kind="hex")   #Vuelvo a plotear, ahora en uds galacticas
+#Ploteo ahora la distribución en coordenadas galácticas (con su correspondiente título y nombre de ejes)
+imagen2 = seaborn.jointplot(ALPHA_J2000_galact, DELTA_J2000_galact, kind="hex" )   #Vuelvo a plotear, ahora en uds galacticas
+imagen2.fig.suptitle("Density distribution (L,B) in galactic coordinates", fontsize=11)
+imagen2.set_axis_labels('L (Right ascension)', 'B (Declination)', fontsize=11)
 
+
+
+#Guardo ahora las imagenes con las distintas representaciones del paralaje
+imagen1.savefig('Density distribution (ALPHA_J2000, DELTA_J2000) in spacial coordinates.png')  
+#plt.close(imagen1.fig)  Esto podría activarlo si solo quisiera mostrar la imágen con ambas representaciones a la vez.
+
+imagen2.savefig('Density distribution (L,B) in galactic coordinates.png')
+#plt.close(imagen2.fig)
+
+
+
+#A continuación creo una figura con dos subplots, y en cada uno de ellos añadiré las dos imágenes antes obtenidas
+f, axarr = plt.subplots(1,2)
+axarr[0].imshow(mpimg.imread('Density distribution (ALPHA_J2000, DELTA_J2000) in spacial coordinates.png'))
+axarr[1].imshow(mpimg.imread('Density distribution (L,B) in galactic coordinates.png'))
+
+# turn off x and y axis, lo uso para quitar los ejes que el propio subplot introduce.
+[ax.set_axis_off() for ax in axarr.ravel()]
+
+
+
+#Por último guardo la figura que contiene ambas distribuciones de densidad
+f.savefig("Density distribution (right ascension,declination) in spacial and galactic coordinates.png")
+plt.show()
+plt.tight_layout()
