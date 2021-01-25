@@ -1,6 +1,6 @@
 # TFG
  Ejercicios del TFG
 
-EJERCICIO 1: CONVERSIÓN DE ALPHA_J2000 Y DELTA_J2000 A UNIDADES GALÁCTICAS.
+Ejercicio 1: Conversión de ALPHA_J2000 y DELTA_J2000 a unidades galácticas
 
-EJERCICIO 2: GRÁFICAS DE DISPERSIÓN DE MAGNITUDES DE INTERÉS PARA DETERMINAR LA CALIDAD DE LA IMÁGEN
+Ejercicio 2: Gráficas de dispersión de magnitudes de interés para evaluar la calidad de la imágen
