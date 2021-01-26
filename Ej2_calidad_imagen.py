@@ -32,15 +32,21 @@ MAGERR_AUTO = df["MAGERR_AUTO"]
 FWHM_WORLD = df["FWHM_WORLD"]
 
 #Imprimo las gráficas de dispersión de interés.
-plt.figure("THRESHOLD")
-imag1 = seaborn.scatterplot(ALPHA_J2000, DELTA_J2000, THRESHOLD)
+i1=plt.figure("THRESHOLD")
+imag1 = seaborn.scatterplot(ALPHA_J2000, DELTA_J2000, THRESHOLD, s=7)  #Ese "s" que añado en "size" cambia tamaño de puntos
 
-plt.figure("BACKGROUND")
-imag2 = seaborn.scatterplot(ALPHA_J2000, DELTA_J2000, BACKGROUND)
+i2=plt.figure("BACKGROUND")
+imag2 = seaborn.scatterplot(ALPHA_J2000, DELTA_J2000, BACKGROUND, s=7)
 
-plt.figure("1.086/MAGERR_AUTO")
-imag3 = seaborn.scatterplot(ALPHA_J2000, DELTA_J2000, 1.086/MAGERR_AUTO)
+i3=plt.figure("1.086/MAGERR_AUTO")   
+imag3 = seaborn.scatterplot(ALPHA_J2000, DELTA_J2000,1.086/MAGERR_AUTO, s=7)
 
-plt.figure("FWHM_WORLD")
-imag4 = seaborn.scatterplot(ALPHA_J2000, DELTA_J2000, FWHM_WORLD)
+i4=plt.figure("FWHM_WORLD")
+imag4 = seaborn.scatterplot(ALPHA_J2000, DELTA_J2000, FWHM_WORLD, s=7)
 
+#Guardo las imágenes en formato png
+
+i1.savefig('THRESHOLD scatter plot.png')  
+i2.savefig('BACKGROUND scatter plot.png')  
+i3.savefig('1.086_MAGERR_AUTO  scatter plot.png')    #La leyenda en esta figura no muestra el 1.086/, pero va dividiendo.
+i4.savefig('FWHM_WORLD scatter plot.png')  
