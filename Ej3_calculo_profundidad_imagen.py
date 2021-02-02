@@ -22,14 +22,7 @@ dat=Table.read("Sharks_sgp_e_2_cat_small.fits", format="fits")
 df=dat.to_pandas()
 
 #Asigno variables a las columnas que me interesa usar
-ALPHA_J2000 = df["ALPHA_J2000"]
-DELTA_J2000 = df["DELTA_J2000"]
-THRESHOLD = df["THRESHOLD"]
-BACKGROUND = df["BACKGROUND"]
 MAGERR_AUTO = df["MAGERR_AUTO"]
-FWHM_WORLD = df["FWHM_WORLD"]
-
-
 
 #La profundidad o magnitud límite se da en unidades de 5 veces el error estdístico. Debo por tanto igualar SNR (que era 1.086/magerr_auto) a 5, y despejar 
 #el valor del error de la magnitud(magerr), de forma que los objetos que tengan un error en la magnitud de ese valor despejado se detectan con la significancia
@@ -37,7 +30,6 @@ FWHM_WORLD = df["FWHM_WORLD"]
 
 #En primer lugar despejo ese valor de MAGERR_AUTO que tiene asociada una significancia de 5 veces el error estadístico.
 #1.086/X = 5, luego X = 1.086/5
-
 
 x=1.086/5
 
@@ -47,21 +39,36 @@ x=1.086/5
 
 #Con esto sacaremos el valor de la profundidad de la imagen, a partir del cual podré considerar los objetos significativamente brillantes.
 
+#Con "acotado" genero una columna de booleanos (True o False) en función de si se cumple o no la condición establecida, que en
+#mi caso es que el valor de MAGERR_AUTO esté comprendido entre x-0.005 y x+0.005
 
-result = [(MAGERR_AUTO<=(x+0.005)) & (MAGERR_AUTO>=(x-0.005))]
+acotado = [(MAGERR_AUTO<=(x+0.005)) & (MAGERR_AUTO>=(x-0.005))]  
 
+#print(acotado)
 
-print(result)
+#Ahora lo que hago es crear una misma tabla como la del archivo fits, pero conteniendo solo las filas cuyo MAGERR_AUTO he acotado
+#Este trocito de código lo vi en internety funcionó, lo había intentado de otras formas pero no lo conseguía obtener.
 
-positions = np.flatnonzero(result)
-filtered_df=df.iloc[positions]
-print(filtered_df)
+positions = np.flatnonzero(acotado)
+filtered_df=df.iloc[positions]   #Si quito el corchete en siguiente línea se imprime la tabla completa filtrada.
+#print(filtered_df)
 
-filtrado=filtered_df["MAGERR_AUTO"]
-print(filtrado)
+#Ahora selecciono de esa tabla (que pasa a tener 408 filas, pues es el número de valores de MAGERR_AUTO que cumplen la cota establecida)
+#la columna MAGERR_AUTO filtrada, con 408 filas, y la llamo "filtrado"
 
-media=np.mean(filtrado)
-print(media)
-plt.figure("filtrado")
+filtrado=filtered_df["MAGERR_AUTO"]  #Si quito el corchete en la siguiente línea se imprime la columna MAGERR_AUTO filtrada.
+#print(filtrado)
+
+#Realizo ahora la media de los valores de MAGERR_AUTO filtrados (los que cumplen la condición establecida), y con eso
+#obtengo ya el valor de la profundidad de la imagen.
+
+profundidad_imagen=np.mean(filtrado)
+print("La profunidad de mi imagen es: %f" % profundidad_imagen)
+
+#Por último realizo un histograma de los valores obtenidos tras el filtrado, aquellos MAGERR_AUTO que cumplen la condición dada.
+#(En internet salía que existía histplot en seaborn, pero a mí no me deja usarlo, así que he usado distplot).
+
+i1 = plt.figure("Valores de MAGERR_AUTO comprendidos entre x-0.005 y x+0.005 (para x=1.086/5)")
 imag1 = seaborn.distplot(filtrado)
+i1.savefig('Histograma de valores de MAGERR_AUTO que cumplen la codición establecida.png') 
 
