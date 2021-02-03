@@ -53,22 +53,22 @@ positions = np.flatnonzero(acotado)
 filtered_df=df.iloc[positions]   #Si quito el corchete en siguiente línea se imprime la tabla completa filtrada.
 #print(filtered_df)
 
-#Ahora selecciono de esa tabla (que pasa a tener 408 filas, pues es el número de valores de MAGERR_AUTO que cumplen la cota establecida)
+#Ahora selecciono de esa tabla (que pasa a tener 408 filas, pues es el número de valores de MAG_AUTO que cumplen la cota establecida)
 #la columna MAGERR_AUTO filtrada, con 408 filas, y la llamo "filtrado"
 
-filtrado=filtered_df["MAGERR_AUTO"]  #Si quito el corchete en la siguiente línea se imprime la columna MAGERR_AUTO filtrada.
+filtrado=filtered_df["MAG_AUTO"]  #Si quito el corchete en la siguiente línea se imprime la columna MAG_AUTO filtrada.
 #print(filtrado)
 
-#Realizo ahora la media de los valores de MAGERR_AUTO filtrados (los que cumplen la condición establecida), y con eso
+#Realizo ahora la media de los valores de MAG_AUTO filtrados (los que cumplen la condición establecida), y con eso
 #obtengo ya el valor de la profundidad de la imagen.
 
 profundidad_imagen=np.mean(filtrado)
 print("La profunidad de mi imagen es: %f" % profundidad_imagen)
 
-#Por último realizo un histograma de los valores obtenidos tras el filtrado, aquellos MAGERR_AUTO que cumplen la condición dada.
+#Por último realizo un histograma de los valores obtenidos tras el filtrado, aquellos MAG_AUTO que cumplen la condición dada.
 #(En internet salía que existía histplot en seaborn, pero a mí no me deja usarlo, así que he usado distplot).
 
-i1 = plt.figure("Valores de MAGERR_AUTO comprendidos entre x-0.005 y x+0.005 (para x=1.086/5)")
+i1 = plt.figure("Valores de MAG_AUTO con un error de aprox. 0.21")    #Ese 0.21 es x=1.086/5
 imag1 = seaborn.distplot(filtrado)
-i1.savefig('Histograma de valores de MAGERR_AUTO que cumplen la codición establecida.png') 
+i1.savefig('Histograma de valores de MAG_AUTO con un error de aprox. 0.21.png') 
 
