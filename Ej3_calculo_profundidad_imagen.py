@@ -69,6 +69,7 @@ print("La profunidad de mi imagen es: %f" % profundidad_imagen)
 #(En internet salía que existía histplot en seaborn, pero a mí no me deja usarlo, así que he usado distplot).
 
 i1 = plt.figure("Valores de MAG_AUTO con un error de aprox. 0.21")    #Ese 0.21 es x=1.086/5
-imag1 = seaborn.distplot(filtrado)
-i1.savefig('Histograma de valores de MAG_AUTO con un error de aprox. 0.21.png') 
+imag1 = seaborn.distplot(filtrado,kde=False,norm_hist=False)    #Debo quitar el KDE (un ajuste que hace seaborn) para poder quitar el histograma normalizado
+i1.savefig('Histograma de valores de MAG_AUTO con un error de aprox. 0.21.png')   #QUitando el hist normalizado ya sí obtengo el núm de cuentas en eje Y.
 
+ 
