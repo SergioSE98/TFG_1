@@ -113,6 +113,7 @@ print(dec3matched_gaia)
 #SHARKS-2MASS.
 
 #Diferencia entre valores de RA de SHARKS y 2MASS que hacen match
+
 dif_ra_2mass=[]
 for r1,r2 in zip(ra1matched_2mass,ra2matched_2mass):
     #print(r1,r2)
@@ -123,6 +124,7 @@ for r1,r2 in zip(ra1matched_2mass,ra2matched_2mass):
 #print(np.std(dif_ra_2mass))
 
 #Diferencia entre valores de DEC de SHARKS y 2MASS que hacen match
+
 dif_dec_2mass=[]
 for d1,d2 in zip(dec1matched_2mass,dec2matched_2mass):
     #print(r1,r2)
@@ -132,19 +134,29 @@ for d1,d2 in zip(dec1matched_2mass,dec2matched_2mass):
 #print(np.mean(dif_dec_2mass))
 #print(np.std(dif_dec_2mass))
 
+
+#Calculo también la diferencia entre los valores de las listas obtenidas anteriormente (para RA y DEC) en valor absoluto
+
+abs_ra_dec_2mass = []
+for a, b in zip(dif_dec_2mass, dif_ra_2mass):
+    abs_ra_dec_2mass.append(np.abs((a - b)))
+
+
 #Distancia angular entre puntos que hacen match entre SHARKS y 2MASS
+
 gamma_2mass=[]
 for r1,r2,d1,d2 in zip(ra1matched_2mass, ra2matched_2mass, dec1matched_2mass, dec2matched_2mass):
     gamma_2mass.append(np.arccos(np.cos(90-d1)*np.cos(90-d2)+np.sin(90-d1)*np.sin(90-d2)*np.cos(r1-r2))*3600)  #Esta formula en bibliografía
     
-print(gamma_2mass)
-print(np.mean(gamma_2mass))
-print(np.std(gamma_2mass))
+#print(gamma_2mass)
+print("El valor medio de la distancia angular para SHARKS-2MASS es: %f" %np.mean(gamma_2mass))
+print("La desviación estándar de la distancia angular para SHARKS-2MASS es: %f"  %np.std(gamma_2mass))
 
 image1 = plt.figure("Photometry histogramas SHARKS-2MASS")
 plt.title("SHARKS-2MASS matched point sources histogram")
 seaborn.distplot(dif_ra_2mass,bins=60, label= "RA diferences between matched point sources")
 seaborn.distplot(dif_dec_2mass,bins=60, label= "DEC diferences between matched point sources")
+seaborn.distplot(abs_ra_dec_2mass,bins=60, label= "RA-DEC difference in absolute value") 
 seaborn.distplot(gamma_2mass,bins=60, label= "Angular distance between matched point sources") 
 plt.legend()
 plt.show()
@@ -170,22 +182,49 @@ for d1,d3 in zip(dec1matched_gaia,dec3matched_gaia):
 #print(np.mean(dif_dec_2mass))
 #print(np.std(dif_dec_2mass))
 
+
+#Calculo también la diferencia entre los valores de las listas obtenidas anteriormente (para RA y DEC) en valor absoluto
+
+abs_ra_dec_gaia = []
+for a, b in zip(dif_dec_gaia, dif_ra_gaia):
+    abs_ra_dec_gaia.append(np.abs((a - b)))
+
+
+#Distancia angular entre puntos que hacen match entre SHARKS y 2MASS
+
 gamma_gaia=[]
 
 for r1,r3,d1,d3 in zip(ra1matched_gaia, ra3matched_gaia, dec1matched_gaia, dec3matched_gaia):
     gamma_gaia.append(np.arccos(np.cos(90-d1)*np.cos(90-d3)+np.sin(90-d1)*np.sin(90-d3)*np.cos(r1-r3))*3600)
     
-print(gamma_gaia)
-print(np.mean(gamma_gaia))
-print(np.std(gamma_gaia))
+    
+    
+#print(gamma_gaia)
+print("El valor medio de la distancia angular para SHARKS-GAIA es: %f" %np.mean(gamma_gaia))
+print("La desviación estándar de la distancia angular para SHARKS-GAIA es: %f" %np.std(gamma_gaia))
+
 
 image2 = plt.figure("Photometry histogramas SHARKS-GAIA")
 plt.title("SHARKS-GAIA matched point sources histogram")
 seaborn.distplot(dif_ra_gaia,bins=60, label= "RA diferences between matched point sources")
 seaborn.distplot(dif_dec_gaia,bins=60, label= "DEC diferences between matched point sources")
+seaborn.distplot(abs_ra_dec_gaia,bins=60, label= "RA-DEC difference in absolute value")
 seaborn.distplot(gamma_gaia,bins=60, label= "Angular distance between matched point sources") 
 plt.legend()
 plt.show()
 
+
+#Por último creo una última figura donde mostrar las distancias angulares obtenidas tanto en SHARKS-2MASS como en SHARKS-GAIA.
+
+
+image3 = plt.figure("Angular distances between matched point sources for SHARKS-2MASS and SHARKS-GAIA")
+plt.title("Angular distances between matched point sources for SHARKS-2MASS and SHARKS-GAIA")
+seaborn.distplot(gamma_2mass,bins=60, label= "Angular distance between matched point sources for SHARKS-2MASS") 
+seaborn.distplot(gamma_gaia,bins=60, label= "Angular distance between matched point sources for SHARKS-GAIA") 
+plt.legend()
+plt.show()
+
+
 image1.savefig('Photometry histograms SHARKS-2MASS.png')
 image2.savefig('Photometry histograms SHARKS-GAIA.png')   
+image3.savefig("Angular distances between matched point sources for SHARKS-2MASS and SHARKS-GAIA.png")
