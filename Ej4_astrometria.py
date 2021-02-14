@@ -152,6 +152,7 @@ seaborn.distplot(dif_dec_2mass,bins=60, label= "Absolute value of DEC diferences
 seaborn.distplot(gamma_2mass,bins=60, label= "Angular distance between matched point sources") 
 plt.legend()
 plt.xlabel("Seconds of arc")
+plt.tight_layout()
 plt.show()
 
 
@@ -196,6 +197,7 @@ seaborn.distplot(dif_dec_gaia,bins=60, label= "Absolute value of DEC diferences 
 seaborn.distplot(gamma_gaia,bins=60, label= "Angular distance between matched point sources") 
 plt.legend()
 plt.xlabel("Seconds of arc")
+plt.tight_layout()
 plt.show()
 
 
@@ -208,6 +210,7 @@ seaborn.distplot(gamma_2mass,bins=60, label= "Angular distance between matched p
 seaborn.distplot(gamma_gaia,bins=60, label= "Angular distance between matched point sources for SHARKS-GAIA") 
 plt.legend()
 plt.xlabel("Seconds of arc")
+plt.tight_layout()
 plt.show()
 
 
