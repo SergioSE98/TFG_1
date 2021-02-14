@@ -70,6 +70,7 @@ print("La profunidad de mi imagen es: %f" % profundidad_imagen)
 
 i1 = plt.figure("Valores de MAG_AUTO con un error de aprox. 0.21")    #Ese 0.21 es x=1.086/5
 imag1 = seaborn.distplot(filtrado,kde=False,norm_hist=False)    #Debo quitar el KDE (un ajuste que hace seaborn) para poder quitar el histograma normalizado
+plt.ylabel("Photon counts")
 i1.savefig('Histograma de valores de MAG_AUTO con un error de aprox. 0.21.png')   #QUitando el hist normalizado ya sí obtengo el núm de cuentas en eje Y.
 
  
