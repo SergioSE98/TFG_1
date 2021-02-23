@@ -33,7 +33,7 @@ mag1 = df1["MAG_AUTO"]
 
 dec2 = df2["DEJ2000"]
 ra2 = df2["RAJ2000"]
-mag2 = df2["Ksapc6"]   #Kspmag es petrosian magnitude. También: Ksap3, Ksap4, Ksap6 (fuentes puntuales) y Ksapc3, Ksapc4, Ksap6...
+mag2 = df2["Ksap3"]   #Kspmag es petrosian magnitude. También: Ksap3, Ksap4, Ksap6 (fuentes puntuales) y Ksapc3, Ksapc4, Ksap6...
 
 rad=0.000277778   #Un segundo sexagesimal (segundo de arco en grados, las unidades en que se expresan ra1...)
 nside=4096 # healpix nside
@@ -46,15 +46,23 @@ matches_viking = smatch.match(ra1, dec1, rad, ra2, dec2, nside=nside, maxmatch=m
 MAG_SHARKS  = mag1[matches_viking['i1']]
 MAG_VIKING = mag2[matches_viking['i2']]
 
+#Creo mask para evitar valores nulos
+#mask = (MAG_SHARKS>0)&(MAG_SHARKS<30)&(MAG_VIKING>0)&(MAG_VIKING<30)
 
-print(MAG_SHARKS)
+MAG_SHARKS_NEW = MAG_SHARKS#[mask]
 
-print(MAG_VIKING)
+MAG_VIKING_NEW = MAG_VIKING#[mask]
+
+
+print(MAG_SHARKS_NEW)
+
+print(MAG_VIKING_NEW)
 
 dif=[]
-for r1,r2 in zip(MAG_SHARKS,MAG_VIKING):
+for r1,r2 in zip(MAG_SHARKS_NEW,MAG_VIKING_NEW):
     #print(r1,r2)
-    dif.append(np.abs(r2-r1))  #multi por 3600 para pasar a grados
+    dif.append(r2-r1)  #multi por 3600 para pasar a grados
     
-seaborn.distplot(dif)
-#plt.plot(MAG_SHARKS,dif)
+#seaborn.distplot(dif)
+#seaborn.scatterplot(MAG_SHARKS_NEW, dif, s=10)
+seaborn.scatterplot(MAG_SHARKS_NEW, MAG_VIKING_NEW, s=10)
