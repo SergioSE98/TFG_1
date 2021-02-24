@@ -79,21 +79,22 @@ dif=MAG_VIKING_NEW-MAG_SHARKS_NEW
 
 #Figura 1
 plt.figure()
-plt.plot(MAG_VIKING_NEW,MAG_SHARKS_NEW,"o")
+plt.plot(MAG_VIKING_NEW,MAG_SHARKS_NEW,".")
 hola=np.polyfit(MAG_VIKING_NEW,MAG_SHARKS_NEW,1)
 print(hola)
-
+"""
 #Figura 2
 plt.figure()
-plt.plot(MAG_SHARKS_NEW, MAG_VIKING_NEW, "o")
+plt.plot(MAG_SHARKS_NEW, MAG_VIKING_NEW, ".")
 hola1=np.polyfit(MAG_SHARKS_NEW,MAG_VIKING_NEW,1)
 print(hola1)
-
-MAG_SHARKS_NEW_2= MAG_SHARKS_NEW-1.7503794
+"""
+print(hola[1])
+MAG_SHARKS_NEW_2= MAG_SHARKS_NEW-hola[1]
 
 #print(MAG_SHARKS_NEW_2)
 
-plt.plot([10,24],[10,24],MAG_SHARKS_NEW_2,MAG_VIKING_NEW,"go")
+plt.plot([10,24],[10,24],MAG_SHARKS_NEW_2,MAG_VIKING_NEW,"g.")
 
 #Figura 3
 plt.figure()
@@ -101,7 +102,7 @@ plt.figure()
 xerr_=ERROR_MAG_SHARKS_NEW
 yerr_=ERROR_MAG_VIKING_NEW
 
-plt.errorbar(MAG_SHARKS_NEW, MAG_VIKING_NEW, xerr=xerr_, yerr=yerr_,fmt=".")
+plt.errorbar(MAG_SHARKS_NEW, MAG_VIKING_NEW, xerr=xerr_, yerr=yerr_,fmt="g.")
 
 
 print(np.polyfit(MAG_SHARKS_NEW,MAG_VIKING_NEW,1,w=yerr_))
