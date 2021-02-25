@@ -22,24 +22,24 @@ import smatch
 #Leo los tres catálogos que voy a comparar.
 
 dat1=Table.read("Sharks_sgp_e_2_cat_small.fits", format="fits")
-df1=dat1.to_pandas()
+#df1=dat1.to_pandas()
 
 dat2=Table.read("2mass.fit", format="fits")
-df2=dat2.to_pandas()
+#df2=dat2.to_pandas()
 
 dat3=Table.read("GAIA_2018_lite.fit", format="fits")
-df3=dat3.to_pandas()
+#df3=dat3.to_pandas()
 
 #Nombro las variables que voy a usar para hacer matching (declinación y ascención recta).
 
-dec1 = df1["DELTA_J2000"]
-ra1 = df1["ALPHA_J2000"]
+dec1 = dat1["DELTA_J2000"]
+ra1 = dat1["ALPHA_J2000"]
 
-dec2 = df2["DEJ2000"]
-ra2 = df2["RAJ2000"]
+dec2 = dat2["DEJ2000"]
+ra2 = dat2["RAJ2000"]
 
-dec3 = df3["DE_ICRS"]
-ra3 =  df3["RA_ICRS"]
+dec3 = dat3["DE_ICRS"]
+ra3 =  dat3["RA_ICRS"]
 
 #Nombro las variables que uso en la función "match".
 
@@ -51,7 +51,6 @@ maxmatch=1 # return closest match
 
 matches_2mass = smatch.match(ra1, dec1, rad, ra2, dec2, nside=nside, maxmatch=maxmatch)  #Matching SHARKS-2MASS
 matches_gaia = smatch.match(ra1, dec1, rad, ra3, dec3, nside=nside, maxmatch=maxmatch)   #Matching SHARKS-GAIA
-
 
 #Imprimo las tablas con los valores de ascención recta y declinación que han hecho match:
     
@@ -70,10 +69,10 @@ print(matches_gaia)
 
 #Columnas de RA y DEC que hacen match entre SHARKS y 2MASS:
 
-ra1matched_2mass  = ra1[ matches_2mass['i1'] ]
-dec1matched_2mass = dec1[ matches_2mass['i1'] ]
-ra2matched_2mass  = ra2[ matches_2mass['i2'] ]
-dec2matched_2mass = dec2[ matches_2mass['i2'] ]
+ra1match_2mass  = ra1[ matches_2mass['i1'] ]
+dec1match_2mass = dec1[ matches_2mass['i1'] ]
+ra2match_2mass  = ra2[ matches_2mass['i2'] ]
+dec2match_2mass = dec2[ matches_2mass['i2'] ]
 
 """
 #Quitando este entrecomillado se imprimen los valores de RA y DEC que hacen match.
@@ -90,10 +89,10 @@ print(dec2matched_2mass)
 
 #Columnas de RA y DEC que hacen match entre SHARKS y GAIA:
 
-ra1matched_gaia  = ra1[ matches_gaia['i1'] ]
-dec1matched_gaia = dec1[ matches_gaia['i1'] ]
-ra3matched_gaia  = ra3[ matches_gaia['i2'] ]
-dec3matched_gaia = dec3[ matches_gaia['i2'] ]
+ra1match_gaia  = ra1[ matches_gaia['i1'] ]
+dec1match_gaia = dec1[ matches_gaia['i1'] ]
+ra3match_gaia  = ra3[ matches_gaia['i2'] ]
+dec3match_gaia = dec3[ matches_gaia['i2'] ]
 
 """
 #Quitando este entrecomillado se imprimen los valores de RA y DEC que hacen match.
@@ -108,39 +107,21 @@ print("\nGAIA DEC matched with SHARKS")
 print(dec3matched_gaia)
 """
 
-#Utilizo loops para calcular las diferencias entre los valores de RA y DEC que hacen matching, así comola distancia angular entre los puntos (gamma)
+#Calculo las diferencias entre los valores de RA y DEC que hacen matching, así comola distancia angular entre los puntos (gamma)
 
 #SHARKS-2MASS.
 
 #Diferencia entre valores de RA de SHARKS y 2MASS que hacen match (en valor absoluto)
 
-dif_ra_2mass=[]
-for r1,r2 in zip(ra1matched_2mass,ra2matched_2mass):
-    #print(r1,r2)
-    dif_ra_2mass.append(np.abs((r1-r2)*3600))  #multi por 3600 para pasar a grados
-    
-#print(dif_ra_2mass)
-#print(np.mean(dif_ra_2mass))
-#print(np.std(dif_ra_2mass))
+dif_ra_2mass=np.abs(ra1match_2mass-ra2match_2mass)*3600
 
 #Diferencia entre valores de DEC de SHARKS y 2MASS que hacen match
 
-dif_dec_2mass=[]
-for d1,d2 in zip(dec1matched_2mass,dec2matched_2mass):
-    #print(r1,r2)
-    dif_dec_2mass.append(np.abs((d1-d2)*3600))  
-    
-#print(dif_dec_2mass)
-#print(np.mean(dif_dec_2mass))
-#print(np.std(dif_dec_2mass))
-
+dif_dec_2mass=np.abs(dec1match_2mass-dec2match_2mass)*3600
 
 #Distancia angular entre puntos que hacen match entre SHARKS y 2MASS
 
-gamma_2mass=[]
-for r1,r2,d1,d2 in zip(ra1matched_2mass, ra2matched_2mass, dec1matched_2mass, dec2matched_2mass):
-    gamma_2mass.append(np.arccos(np.cos(90-d1)*np.cos(90-d2)+np.sin(90-d1)*np.sin(90-d2)*np.cos(r1-r2))*3600)  #Esta formula en bibliografía
-    
+gamma_2mass= np.arccos(np.cos(90-dec1match_2mass)*np.cos(90-dec2match_2mass)+np.sin(90-dec1match_2mass)*np.sin(90-dec2match_2mass)*np.cos(ra1match_2mass-ra2match_2mass))*3600
 #print(gamma_2mass)
 print("El valor medio de la distancia angular para SHARKS-2MASS es: %f" %np.mean(gamma_2mass))
 print("La desviación estándar de la distancia angular para SHARKS-2MASS es: %f"  %np.std(gamma_2mass))
@@ -155,35 +136,17 @@ plt.xlabel("Seconds of arc")
 plt.tight_layout()
 plt.show()
 
-
 #Procedo ahora exactamente igual a como hice con SHARKS-2MASS para obtener los valores de distancia angular entre matches.
 
 #SHARKS-GAIA
 
-dif_ra_gaia=[]
-for r1,r3 in zip(ra1matched_gaia,ra3matched_gaia):
-    #print(r1,r2)
-    dif_ra_gaia.append(np.abs((r1-r3)*3600))
-#print(dif_ra_2mass)
-#print(np.mean(dif_ra_2mass))
-#print(np.std(dif_ra_2mass))
+dif_ra_gaia=np.abs(ra1match_gaia-ra3match_gaia)*3600
 
-dif_dec_gaia=[]
-for d1,d3 in zip(dec1matched_gaia,dec3matched_gaia):
-    #print(r1,r2)
-    dif_dec_gaia.append(np.abs((d1-d3)*3600))
-#print(dif_dec_2mass)
-#print(np.mean(dif_dec_2mass))
-#print(np.std(dif_dec_2mass))
-
+dif_dec_gaia=np.abs(dec1match_gaia-dec3match_gaia)*3600
 
 #Distancia angular entre puntos que hacen match entre SHARKS y 2MASS
 
-gamma_gaia=[]
-
-for r1,r3,d1,d3 in zip(ra1matched_gaia, ra3matched_gaia, dec1matched_gaia, dec3matched_gaia):
-    gamma_gaia.append(np.arccos(np.cos(90-d1)*np.cos(90-d3)+np.sin(90-d1)*np.sin(90-d3)*np.cos(r1-r3))*3600)
-    
+gamma_gaia=np.arccos(np.cos(90-dec1match_gaia)*np.cos(90-dec3match_gaia)+np.sin(90-dec1match_gaia)*np.sin(90-dec3match_gaia)*np.cos(ra1match_gaia-ra3match_gaia))*3600    
     
 #print(gamma_gaia)
 print("El valor medio de la distancia angular para SHARKS-GAIA es: %f" %np.mean(gamma_gaia))
@@ -200,9 +163,7 @@ plt.xlabel("Seconds of arc")
 plt.tight_layout()
 plt.show()
 
-
 #Por último creo una última figura donde mostrar las distancias angulares obtenidas tanto en SHARKS-2MASS como en SHARKS-GAIA.
-
 
 image3 = plt.figure("Angular distances between matched point sources for SHARKS-2MASS and SHARKS-GAIA")
 plt.title("Angular distances between matched point sources for SHARKS-2MASS and SHARKS-GAIA")
@@ -212,7 +173,6 @@ plt.legend()
 plt.xlabel("Seconds of arc")
 plt.tight_layout()
 plt.show()
-
 
 image1.savefig('Photometry histograms SHARKS-2MASS.png')
 image2.savefig('Photometry histograms SHARKS-GAIA.png')   
