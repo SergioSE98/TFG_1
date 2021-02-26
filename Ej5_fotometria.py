@@ -78,11 +78,11 @@ print(hola1)
 #Figura 1 (Viking eje x, sharks eje y)
 plt.figure()
 plt.plot(MAG_VIKING_NEW,MAG_SHARKS_NEW,".")
-ajuste=np.polyfit(MAG_VIKING_NEW,MAG_SHARKS_NEW,1)
+ajuste=np.polyfit(MAG_VIKING_NEW,dif,0)
 print(ajuste)
 #print(ajuste[1])
-MAG_SHARKS_corrected= MAG_SHARKS_NEW-ajuste[1]
-plt.plot([10,24],[10,24],MAG_SHARKS_corrected,MAG_VIKING_NEW,"g.")
+MAG_SHARKS_corrected= MAG_SHARKS_NEW+ajuste[0]
+plt.plot([10,24],[10,24],MAG_VIKING_NEW,MAG_SHARKS_corrected,"g.")
 
 
 
@@ -92,22 +92,25 @@ xerr_=ERROR_MAG_SHARKS_NEW
 yerr_=ERROR_MAG_VIKING_NEW
 
 #Calculo el error total con la media aritmética de los errores de ambos surveys
-err_total= (xerr_ + yerr_)/2
+err_total= np.sqrt(xerr_**2 + yerr_**2)
+peso=1/err_total
 #print(xerr_)
 #print(yerr_)
 
-plt.errorbar(MAG_SHARKS_NEW, MAG_VIKING_NEW, xerr=xerr_, yerr=yerr_,fmt="g.")
-ajuste_err = np.polyfit(MAG_SHARKS_NEW,MAG_VIKING_NEW,1,w=err_total)
+plt.errorbar(MAG_VIKING_NEW, MAG_SHARKS_NEW, xerr=xerr_, yerr=yerr_,fmt="g.")
+ajuste_err = np.polyfit(MAG_VIKING_NEW,dif,0,w=peso)
 print(ajuste_err)
-MAG_SHARKS_corrected_errors = MAG_SHARKS_NEW-ajuste_err[1]
+MAG_SHARKS_corrected_errors = MAG_SHARKS_NEW+ajuste_err[0]
 plt.plot([10,24],[10,24])#, MAG_SHARKS_corrected_errors,MAG_VIKING_NEW, "r.")
-plt.errorbar(MAG_SHARKS_corrected_errors, MAG_VIKING_NEW, xerr=xerr_, yerr=yerr_,fmt="r.")
+plt.errorbar(MAG_VIKING_NEW, MAG_SHARKS_corrected_errors, xerr=xerr_, yerr=yerr_,fmt="r.")
 
 
-
+"""
 #Figura 3, imprimo solo el gráfico con las magnitudes de sharks ya corregidas usando las barras de error
 plt.figure()
 plt.plot([10,24],[10,24], MAG_SHARKS_corrected_errors,MAG_VIKING_NEW, "r.")
+"""
+
 
 
 
