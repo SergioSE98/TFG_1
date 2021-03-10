@@ -8,3 +8,5 @@ Ejercicio 2: Gráficas de dispersión de magnitudes de interés para evaluar la 
 Ejercicio 3: Cálculo de la profundidad de la imagen
 
 Ejercicio 4: Astrometría
+
+Ejercicio 5: Fotometría
