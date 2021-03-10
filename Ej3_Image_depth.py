@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Feb  2 12:58:16 2021
+Created on Wed Mar 10 20:54:05 2021
 
 @author: Sergio
 """
+
 
 import numpy as np
 
@@ -18,11 +19,11 @@ import matplotlib.pyplot as plt
 from astropy.table import Table    #Ojo importante aquí importar "Table" con mayuscula
 
 #Voy a leer el archivo fits
-dat=Table.read("Sharks_sgp_e_2_cat_small.fits", format="fits")
+dat=Table.read("sharks_sgpe.fits", format="fits")
 df=dat.to_pandas()
 
 #Asigno variables a las columnas que me interesa usar
-MAGERR_AUTO = df["MAGERR_AUTO"]
+MAGERR = df["APERMAG3ERR"]
 
 #La profundidad o magnitud límite se da en unidades de 5 veces el error estdístico. Debo por tanto igualar SNR (que era 1.086/magerr_auto) a 5, y despejar 
 #el valor del error de la magnitud(magerr), de forma que los objetos que tengan un error en la magnitud de ese valor despejado se detectan con la significancia
@@ -42,7 +43,7 @@ x=1.086/5
 #Con "acotado" genero una columna de booleanos (True o False) en función de si se cumple o no la condición establecida, que en
 #mi caso es que el valor de MAGERR_AUTO esté comprendido entre x-0.005 y x+0.005
 
-acotado = [(MAGERR_AUTO<=(x+0.005)) & (MAGERR_AUTO>=(x-0.005))]  
+acotado = [(MAGERR<=(x+0.005)) & (MAGERR>=(x-0.005))]  
 
 #print(acotado)
 
@@ -56,21 +57,22 @@ filtered_df=df.iloc[positions]   #Si quito el corchete en siguiente línea se im
 #Ahora selecciono de esa tabla (que pasa a tener 408 filas, pues es el número de valores de MAG_AUTO que cumplen la cota establecida)
 #la columna MAGERR_AUTO filtrada, con 408 filas, y la llamo "filtrado"
 
-filtrado=filtered_df["MAG_AUTO"]  #Si quito el corchete en la siguiente línea se imprime la columna MAG_AUTO filtrada.
+filtrado=filtered_df["APERMAG3ERR"]  #Si quito el corchete en la siguiente línea se imprime la columna MAG_AUTO filtrada.
 #print(filtrado)
 
 #Realizo ahora la media de los valores de MAG_AUTO filtrados (los que cumplen la condición establecida), y con eso
 #obtengo ya el valor de la profundidad de la imagen.
 
 profundidad_imagen=np.mean(filtrado)
-print("La profunidad de mi imagen es: %f" % profundidad_imagen)
+print("The image depth is: %f" % profundidad_imagen)
 
 #Por último realizo un histograma de los valores obtenidos tras el filtrado, aquellos MAG_AUTO que cumplen la condición dada.
 #(En internet salía que existía histplot en seaborn, pero a mí no me deja usarlo, así que he usado distplot).
 
-i1 = plt.figure("Valores de MAG_AUTO con un error de aprox. 0.21")    #Ese 0.21 es x=1.086/5
+i1 = plt.figure("Histogram of magnitude values with an error of approx. 0.21 (to obtain image depth)")    #Ese 0.21 es x=1.086/5
+plt.title("Histogram of magnitude values with an error of approx. 0.21 (to obtain image depth)")
 imag1 = seaborn.distplot(filtrado,kde=False,norm_hist=False)    #Debo quitar el KDE (un ajuste que hace seaborn) para poder quitar el histograma normalizado
 plt.ylabel("Photon counts")
-i1.savefig('Histograma de valores de MAG_AUTO con un error de aprox. 0.21.png')   #QUitando el hist normalizado ya sí obtengo el núm de cuentas en eje Y.
+i1.savefig('Histogram of magnitude values with an error of approx. 0.21 (to obtain image depth).png')   #QUitando el hist normalizado ya sí obtengo el núm de cuentas en eje Y.
 
  

@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sun Feb 21 19:59:06 2021
+Created on Wed Mar 10 21:35:31 2021
 
 @author: Sergio
 """
+
 
 import numpy as np
 
@@ -22,13 +23,13 @@ import smatch
 
 #Empiezo haciendo matching de los puntos captados en SHARKS y VIKING
 
-dat1=Table.read("Sharks_sgp_e_2_cat_small.fits", format="fits")
-dat2=Table.read("VIKING_Ks.fit", format="fits")   
+dat1=Table.read("sharks_sgpe.fits", format="fits")
+dat2=Table.read("viking_ks.fit", format="fits")   
 
-dec1 = dat1["DELTA_J2000"]
-ra1 = dat1["ALPHA_J2000"]
-mag1 = dat1["MAG_AUTO"]
-err_mag1 = dat1["MAGERR_AUTO"]
+dec1 = dat1["DEC"]
+ra1 = dat1["RA"]
+mag1 = dat1["APERMAG3"]
+err_mag1 = dat1["APERMAG3ERR"]
 
 
 dec2 = dat2["DEJ2000"]
@@ -66,65 +67,44 @@ ERROR_MAG_VIKING_NEW = ERROR_MAG_VIKING[mask]
 dif=MAG_VIKING_NEW-MAG_SHARKS_NEW
 
 
-
-
-"""
-#Figura 2 (Sharks eje x, Viking eje y)
-plt.figure()
-plt.plot(MAG_SHARKS_NEW, MAG_VIKING_NEW, ".")
-hola1=np.polyfit(MAG_SHARKS_NEW,MAG_VIKING_NEW,1)
-print(hola1)
-"""
 #Figura 1 (Viking eje x, sharks eje y)
-plt.figure()
-plt.plot(MAG_VIKING_NEW,MAG_SHARKS_NEW,".")
+image1 = plt.figure("Photometry for SHARKS-VIKING")
+plt.title("Photometry for SHARKS-VIKING")
+plt.plot([10,24],[10,24])
+plt.plot(MAG_VIKING_NEW,MAG_SHARKS_NEW,"r,", label="SHARKS magnitude not corrected")
 ajuste=np.polyfit(MAG_VIKING_NEW,dif,0)
-print(ajuste)
+#print(ajuste)
 #print(ajuste[1])
 MAG_SHARKS_corrected= MAG_SHARKS_NEW+ajuste[0]
-plt.plot([10,24],[10,24],MAG_VIKING_NEW,MAG_SHARKS_corrected,"g.")
+plt.plot(MAG_VIKING_NEW,MAG_SHARKS_corrected, "g,", label ="SHARKS magnitude corrected")
+plt.xlabel("VIKING magnitude")
+plt.ylabel("SHARKS magnitude")
+plt.legend()
 
 
 
 #Figura 2 Repito el proceso de la figura 2 considerando errores 
-plt.figure()
 xerr_=ERROR_MAG_SHARKS_NEW
 yerr_=ERROR_MAG_VIKING_NEW
-
 #Calculo el error total con la media aritmética de los errores de ambos surveys
 err_total= np.sqrt(xerr_**2 + yerr_**2)
 peso=1/err_total
-#print(xerr_)
-#print(yerr_)
 
-plt.errorbar(MAG_VIKING_NEW, MAG_SHARKS_NEW, xerr=xerr_, yerr=yerr_,fmt="g.")
+image2 = plt.figure("Photometry for SHARKS-VIKING with error bars")
+plt.title("Photometry for SHARKS-VIKING with error bars")
+plt.plot([10,24],[10,24])
+plt.errorbar(MAG_VIKING_NEW, MAG_SHARKS_NEW, xerr=xerr_, yerr=yerr_,fmt="r,", label="SHARKS magnitude not corrected")
 ajuste_err = np.polyfit(MAG_VIKING_NEW,dif,0,w=peso)
-print(ajuste_err)
+#print(ajuste_err)
 MAG_SHARKS_corrected_errors = MAG_SHARKS_NEW+ajuste_err[0]
-plt.plot([10,24],[10,24])#, MAG_SHARKS_corrected_errors,MAG_VIKING_NEW, "r.")
-plt.errorbar(MAG_VIKING_NEW, MAG_SHARKS_corrected_errors, xerr=xerr_, yerr=yerr_,fmt="r.")
-
-
-"""
-#Figura 3, imprimo solo el gráfico con las magnitudes de sharks ya corregidas usando las barras de error
-plt.figure()
-plt.plot([10,24],[10,24], MAG_SHARKS_corrected_errors,MAG_VIKING_NEW, "r.")
-"""
+plt.errorbar(MAG_VIKING_NEW, MAG_SHARKS_corrected_errors, xerr=xerr_, yerr=yerr_,fmt="g,", label ="SHARKS magnitude corrected")
+plt.xlabel("VIKING magnitude")
+plt.ylabel("SHARKS magnitude")
+plt.legend()
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#Guardo las figuras
+image1.savefig('Photometry for SHARKS-VIKING.png')
+image2.savefig('Photometry for SHARKS-VIKING with error bars.png')   
 

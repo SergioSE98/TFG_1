@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Feb  9 22:45:44 2021
+Created on Wed Mar 10 21:24:01 2021
 
 @author: Sergio
 """
+
 
 import numpy as np
 
@@ -21,19 +22,19 @@ import smatch
 
 #Leo los tres catálogos que voy a comparar.
 
-dat1=Table.read("Sharks_sgp_e_2_cat_small.fits", format="fits")
+dat1=Table.read("Sharks_sgpe.fits", format="fits")
 #df1=dat1.to_pandas()
 
 dat2=Table.read("2mass.fit", format="fits")
 #df2=dat2.to_pandas()
 
-dat3=Table.read("GAIA_2018_lite.fit", format="fits")
+dat3=Table.read("gaia.fit", format="fits")
 #df3=dat3.to_pandas()
 
 #Nombro las variables que voy a usar para hacer matching (declinación y ascención recta).
 
-dec1 = dat1["DELTA_J2000"]
-ra1 = dat1["ALPHA_J2000"]
+dec1 = dat1["DEC"]
+ra1 = dat1["RA"]
 
 dec2 = dat2["DEJ2000"]
 ra2 = dat2["RAJ2000"]
@@ -126,8 +127,8 @@ gamma_2mass= np.arccos(np.cos(90-dec1match_2mass)*np.cos(90-dec2match_2mass)+np.
 print("El valor medio de la distancia angular para SHARKS-2MASS es: %f" %np.mean(gamma_2mass))
 print("La desviación estándar de la distancia angular para SHARKS-2MASS es: %f"  %np.std(gamma_2mass))
 
-image1 = plt.figure("Photometry histogramas SHARKS-2MASS")
-plt.title("SHARKS-2MASS matched point sources histogram")
+image1 = plt.figure("Astrometry for SHARKS-2MASS")
+plt.title("Astrometry for SHARKS-2MASS")
 seaborn.distplot(dif_ra_2mass,bins=60, label= "Absolute value of RA diferences between matched point sources")
 seaborn.distplot(dif_dec_2mass,bins=60, label= "Absolute value of DEC diferences between matched point sources")
 seaborn.distplot(gamma_2mass,bins=60, label= "Angular distance between matched point sources") 
@@ -153,8 +154,8 @@ print("El valor medio de la distancia angular para SHARKS-GAIA es: %f" %np.mean(
 print("La desviación estándar de la distancia angular para SHARKS-GAIA es: %f" %np.std(gamma_gaia))
 
 
-image2 = plt.figure("Photometry histogramas SHARKS-GAIA")
-plt.title("SHARKS-GAIA matched point sources histogram")
+image2 = plt.figure("Astrometry for SHARKS-GAIA")
+plt.title("Astrometry for SHARKS-GAIA")
 seaborn.distplot(dif_ra_gaia,bins=60, label= "Absolute value of RA diferences between matched point sources")
 seaborn.distplot(dif_dec_gaia,bins=60, label= "Absolute value of DEC diferences between matched point sources")
 seaborn.distplot(gamma_gaia,bins=60, label= "Angular distance between matched point sources") 
@@ -165,8 +166,8 @@ plt.show()
 
 #Por último creo una última figura donde mostrar las distancias angulares obtenidas tanto en SHARKS-2MASS como en SHARKS-GAIA.
 
-image3 = plt.figure("Angular distances between matched point sources for SHARKS-2MASS and SHARKS-GAIA")
-plt.title("Angular distances between matched point sources for SHARKS-2MASS and SHARKS-GAIA")
+image3 = plt.figure("Astrometry for SHARKS-2MASS and SHARKS-GAIA")
+plt.title("Astrometry for SHARKS-2MASS and SHARKS-GAIA")
 seaborn.distplot(gamma_2mass,bins=60, label= "Angular distance between matched point sources for SHARKS-2MASS") 
 seaborn.distplot(gamma_gaia,bins=60, label= "Angular distance between matched point sources for SHARKS-GAIA") 
 plt.legend()
@@ -174,6 +175,6 @@ plt.xlabel("Seconds of arc")
 plt.tight_layout()
 plt.show()
 
-image1.savefig('Photometry histograms SHARKS-2MASS.png')
-image2.savefig('Photometry histograms SHARKS-GAIA.png')   
-image3.savefig("Angular distances between matched point sources for SHARKS-2MASS and SHARKS-GAIA.png")
+image1.savefig('Astrometry SHARKS-2MASS.png')
+image2.savefig('Astrometry SHARKS-GAIA.png')   
+image3.savefig("Astrometry for SHARKS-2MASS and SHARKS-GAIA.png")
