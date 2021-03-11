@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Mar 10 21:35:31 2021
+Created on Thu Mar 11 17:13:39 2021
 
 @author: Sergio
 """
-
 
 import numpy as np
 
@@ -41,8 +40,15 @@ rad=0.000277778   #Un segundo sexagesimal (segundo de arco en grados, las unidad
 nside=4096 # healpix nside
 maxmatch=1 # return closest match 
 
+mask1= (CLASSSTAT>0.95)
+
+dec1_ = dec1[mask1]
+ra1_ = ra1[mask1]
+#dec2_ = dec2[mask1]
+#ra2_ = ra2[mask1]
+
 #Uso la función match para hacer el matching de los catálogos, llamando a las funciones antes definidas. 
-matches_viking = smatch.match(ra1, dec1, rad, ra2, dec2, nside=nside, maxmatch=maxmatch)  #Matching SHARKS-VIKING
+matches_viking = smatch.match(ra1_, dec1_, rad, ra2, dec2, nside=nside, maxmatch=maxmatch)  #Matching SHARKS-VIKING
 
 MAG_SHARKS  = mag1[matches_viking['i1']]
 MAG_VIKING = mag2[matches_viking['i2']]
@@ -53,7 +59,7 @@ ERROR_MAG_VIKING = err_mag2[matches_viking["i2"]]
 
 
 #Creo mask para evitar valores nulos
-mask = (MAG_SHARKS>0)&(MAG_SHARKS<30)&(MAG_VIKING>0)&(MAG_VIKING<30)&(ERROR_MAG_SHARKS<0.3)&(ERROR_MAG_VIKING<0.3)
+mask = (MAG_SHARKS>0)&(MAG_SHARKS<30)&(MAG_VIKING>0)&(MAG_VIKING<30)&(ERROR_MAG_SHARKS<0.3)&(ERROR_MAG_VIKING<0.3) #Aquí no puedo poner classtat porque solo filtra SHARKS
 
 
 #MAGNITUDES "NEW" obtenidas una vez pasada la mask
@@ -77,7 +83,7 @@ ajuste=np.polyfit(MAG_VIKING_NEW,dif,0)
 print(ajuste)
 #print(ajuste[1])
 MAG_SHARKS_corrected= MAG_SHARKS_NEW+ajuste[0]
-plt.plot(MAG_VIKING_NEW,MAG_SHARKS_corrected, "g,", label ="SHARKS magnitude corrected (-1.86137091)")
+plt.plot(MAG_VIKING_NEW,MAG_SHARKS_corrected, "g,", label ="SHARKS magnitude corrected")
 plt.xlabel("VIKING magnitude")
 plt.ylabel("SHARKS magnitude")
 plt.legend()
@@ -98,10 +104,11 @@ plt.errorbar(MAG_VIKING_NEW, MAG_SHARKS_NEW, xerr=xerr_, yerr=yerr_,fmt="r,", la
 ajuste_err = np.polyfit(MAG_VIKING_NEW,dif,0,w=peso)
 print(ajuste_err)
 MAG_SHARKS_corrected_errors = MAG_SHARKS_NEW+ajuste_err[0]
-plt.errorbar(MAG_VIKING_NEW, MAG_SHARKS_corrected_errors, xerr=xerr_, yerr=yerr_,fmt="g,", label ="SHARKS magnitude corrected (-1.82983718)")
+plt.errorbar(MAG_VIKING_NEW, MAG_SHARKS_corrected_errors, xerr=xerr_, yerr=yerr_,fmt="g,", label ="SHARKS magnitude corrected")
 plt.xlabel("VIKING magnitude")
 plt.ylabel("SHARKS magnitude")
 plt.legend()
+
 
 
 #Guardo las figuras
