@@ -48,12 +48,12 @@ MAG_SHARKS  = mag1[matches_viking['i1']]
 MAG_VIKING = mag2[matches_viking['i2']]
 ERROR_MAG_SHARKS = err_mag1[matches_viking["i1"]]
 ERROR_MAG_VIKING = err_mag2[matches_viking["i2"]]
-
+CLASS_SHARKS = CLASSSTAT[matches_viking["i1"]]
 
 
 
 #Creo mask para evitar valores nulos
-mask = (MAG_SHARKS>0)&(MAG_SHARKS<30)&(MAG_VIKING>0)&(MAG_VIKING<30)&(ERROR_MAG_SHARKS<0.3)&(ERROR_MAG_VIKING<0.3)
+mask = (MAG_SHARKS>0)&(MAG_SHARKS<30)&(MAG_VIKING>0)&(MAG_VIKING<30)&(ERROR_MAG_SHARKS<0.3)&(ERROR_MAG_VIKING<0.3)&(CLASS_SHARKS>0.95)
 
 
 #MAGNITUDES "NEW" obtenidas una vez pasada la mask
@@ -77,7 +77,7 @@ ajuste=np.polyfit(MAG_VIKING_NEW,dif,0)
 print(ajuste)
 #print(ajuste[1])
 MAG_SHARKS_corrected= MAG_SHARKS_NEW+ajuste[0]
-plt.plot(MAG_VIKING_NEW,MAG_SHARKS_corrected, "g,", label ="SHARKS magnitude corrected (-1.86137091)")
+plt.plot(MAG_VIKING_NEW,MAG_SHARKS_corrected, "g,", label ="SHARKS magnitude corrected (%.3f)" %ajuste[0])
 plt.xlabel("VIKING magnitude")
 plt.ylabel("SHARKS magnitude")
 plt.legend()
@@ -98,7 +98,7 @@ plt.errorbar(MAG_VIKING_NEW, MAG_SHARKS_NEW, xerr=xerr_, yerr=yerr_,fmt="r,", la
 ajuste_err = np.polyfit(MAG_VIKING_NEW,dif,0,w=peso)
 print(ajuste_err)
 MAG_SHARKS_corrected_errors = MAG_SHARKS_NEW+ajuste_err[0]
-plt.errorbar(MAG_VIKING_NEW, MAG_SHARKS_corrected_errors, xerr=xerr_, yerr=yerr_,fmt="g,", label ="SHARKS magnitude corrected (-1.82983718)")
+plt.errorbar(MAG_VIKING_NEW, MAG_SHARKS_corrected_errors, xerr=xerr_, yerr=yerr_,fmt="g,", label ="SHARKS magnitude corrected (%.3f)" %ajuste_err[0])
 plt.xlabel("VIKING magnitude")
 plt.ylabel("SHARKS magnitude")
 plt.legend()

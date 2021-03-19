@@ -57,7 +57,9 @@ filtered_df=df.iloc[positions]   #Si quito el corchete en siguiente línea se im
 #Ahora selecciono de esa tabla (que pasa a tener 408 filas, pues es el número de valores de MAG_AUTO que cumplen la cota establecida)
 #la columna MAGERR_AUTO filtrada, con 408 filas, y la llamo "filtrado"
 
-filtrado=filtered_df["APERMAG3ERR"]  #Si quito el corchete en la siguiente línea se imprime la columna MAG_AUTO filtrada.
+filtrado=filtered_df["APERMAG3"]  #Si quito el corchete en la siguiente línea se imprime la columna MAG_AUTO filtrada.
+RA = filtered_df["RA"]
+DEC = filtered_df["DEC"]
 #print(filtrado)
 
 #Realizo ahora la media de los valores de MAG_AUTO filtrados (los que cumplen la condición establecida), y con eso
@@ -75,4 +77,7 @@ imag1 = seaborn.distplot(filtrado,kde=False,norm_hist=False)    #Debo quitar el 
 plt.ylabel("Photon counts")
 i1.savefig('Histogram of magnitude values with an error of approx. 0.21 (to obtain image depth).png')   #QUitando el hist normalizado ya sí obtengo el núm de cuentas en eje Y.
 
- 
+i2 = plt.figure("Magnitude values with an error of approx 0.21 (to obtain image depth)")
+imag2 = seaborn.scatterplot(RA, DEC, filtrado, s=7, legend = "brief")
+plt.title("Magnitude values with an error of approx. 0.21 (to obtain image depth)")
+i2.savefig("scatter_mag_image_depth.png")

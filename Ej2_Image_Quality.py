@@ -32,10 +32,16 @@ CLASSSTAT = df["CLASSSTAT"]
 APERMAG3ERR = df["APERMAG3ERR"]
 ELL = df["ELL"]
 
-mask1 = (CLASSSTAT>0.95)
-mask2 = (CLASSSTAT<0.05)
+mask1 = (CLASSSTAT>0.95) #Estrellas
+mask2 = (CLASSSTAT<0.05) #Galaxias
 ELL_masked1 = ELL[mask1]
 ELL_masked2 = ELL[mask2]
+RA_mask1 = RA[mask1]
+DEC_mask1 = DEC[mask1]
+RA_mask2 = RA[mask2]
+DEC_mask2 = DEC[mask2]
+
+
 
 #Imprimo las gráficas de dispersión de interés.
 i1=plt.figure("Local estimate of variation in sky level")
@@ -45,11 +51,11 @@ imag1 = seaborn.scatterplot(RA, DEC, SKYVAR, s=7, legend ="brief")  #Ese "s" que
 
 i2=plt.figure("Ellipticity of stars")
 plt.title("Ellipticity of stars")
-imag2 = seaborn.scatterplot(RA, DEC, ELL_masked1, s=7, legend = "brief")
+imag2 = seaborn.scatterplot(RA_mask1, DEC_mask1, ELL_masked1, s=7, legend = "brief")
 
 i3=plt.figure("Ellipticity of galaxies")
 plt.title("Ellipticity of galaxies")
-imag3 = seaborn.scatterplot(RA, DEC, ELL_masked2, s=7, legend = "brief")
+imag3 = seaborn.scatterplot(RA_mask2, DEC_mask2, ELL_masked2, s=7, legend = "brief")
 
 i4=plt.figure("1.086/Magnitude_Error (Signal to noise ratio)")   
 plt.title("1.086/Magnitude error (Signal to noise ratio)")
