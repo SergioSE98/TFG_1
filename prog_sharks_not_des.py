@@ -21,7 +21,7 @@ import smatch
 
 #Leo datos (SHARKS NOT DES)
 
-dat1=Table.read("sharks_only_not_des_lite.fits", format="fits")   
+dat1=Table.read("sharks_only_not_des_nodifrac_lite.fits", format="fits")   
 
 DEC = dat1["DEC"]
 RA = dat1["RA"]
