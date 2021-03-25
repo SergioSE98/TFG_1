@@ -57,7 +57,8 @@ plt.title("Petromag - Petromagerr of objects in SHARKS and not in DES")
 imag4 = plt.plot(mag_new,mag_err_new,".")
 plt.xlabel("Petromag")
 plt.ylabel("Petromagerr")
-plt.ylim(0,1)
+plt.yscale('log')
+#plt.ylim(0,1)
 i4.savefig('petromag_petromagerr_SHARKS_not_DES.png')   
 
 
