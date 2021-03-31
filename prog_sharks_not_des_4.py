@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Fri Mar 19 00:18:28 2021
+Created on Wed Mar 31 14:45:31 2021
 
 @author: Sergio
 """
@@ -21,7 +21,7 @@ import smatch
 
 #Leo datos (SHARKS NOT DES)
 
-dat1=Table.read("sharks_only_not_des_lite.fits", format="fits")   
+dat1=Table.read("sharks_only_not_des_nodifrac_sig_noise_3_lite_corrected.fits", format="fits")      
 
 DEC = dat1["DEC"]
 RA = dat1["RA"]
@@ -58,5 +58,3 @@ plt.ylabel("Petromagerr")
 plt.yscale('log')
 #plt.ylim(0,1)
 i4.savefig('petromag_petromagerr_SHARKS_not_DES.png')   
-
-

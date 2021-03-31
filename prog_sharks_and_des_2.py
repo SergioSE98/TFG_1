@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Fri Mar 19 00:29:05 2021
+Created on Wed Mar 31 15:28:47 2021
 
 @author: Sergio
 """
@@ -22,7 +22,7 @@ import smatch
 #Leo datos (Objetos comunes de SHARKS y DES)
  
 
-dat1=Table.read("sharks_and_des_lite.fits", format="fits")
+dat1=Table.read("sharks_and_des_EROS_lite.fits", format="fits")
 
 
 mag_SHARKS = dat1["PETROMAG"]
