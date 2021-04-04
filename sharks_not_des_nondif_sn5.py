@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Mar 31 14:45:31 2021
+Created on Sun Apr  4 13:52:54 2021
 
 @author: Sergio
 """
+
 
 import numpy as np
 
@@ -21,7 +22,7 @@ import smatch
 
 #Leo datos (SHARKS NOT DES)
 
-dat1=Table.read("sharks_only_not_des_nodifrac_sig_noise_3_lite_corrected.fits", format="fits")      
+dat1=Table.read("fits/sharks_only_not_des_nodifrac_sig_noise_5_lite.fits", format="fits")   
 
 DEC = dat1["DEC"]
 RA = dat1["RA"]
@@ -36,7 +37,7 @@ i1.fig.suptitle("Density distribution of objects in SHARKS and not in DES", font
 i1.savefig('Density_distrib_SHARKS_not_DES.png')   
 """
 
-i2 = plt.figure("(RA,DEC) of objects in SHARKS and not in DES")
+i2 = plt.figure("(RA,DEC) of objects in SHARKS and not in DES (s/n = 5)")
 plt.title("(RA,DEC) of objects in SHARKS and not in DES")
 imag2 = plt.plot(RA,DEC, ",")
 plt.xlabel("RA")
@@ -45,13 +46,13 @@ i2.savefig('RA_DEC_SHARKS_not_DES.png')
 
 
 i3= plt.figure("Petromag histogram")
-plt.title("Petromag histogram of objects in SHARKS and not in DES")
+plt.title("Petromag histogram of objects in SHARKS and not in DES (s/n = 5)")
 imag3 = seaborn.distplot(mag,kde=False,norm_hist=False)    
 plt.ylabel("Photon counts")
 i3.savefig('petromag_hist_SHARKS_not_DES.png')   
 
 i4= plt.figure("Petromag-Petromagerr")
-plt.title("Petromag - Petromagerr of objects in SHARKS and not in DES")
+plt.title("Petromag - Petromagerr of objects in SHARKS and not in DES (s/n = 5)")
 imag4 = plt.plot(mag,mag_err,".")
 plt.xlabel("Petromag")
 plt.ylabel("Petromagerr")

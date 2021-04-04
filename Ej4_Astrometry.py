@@ -22,13 +22,13 @@ import smatch
 
 #Leo los tres catálogos que voy a comparar.
 
-dat1=Table.read("Sharks_sgpe.fits", format="fits")
+dat1=Table.read("fits/sharks_sgpe.fits", format="fits")
 #df1=dat1.to_pandas()
 
-dat2=Table.read("2mass.fit", format="fits")
+dat2=Table.read("fits/2mass.fit", format="fits")
 #df2=dat2.to_pandas()
 
-dat3=Table.read("gaia.fit", format="fits")
+dat3=Table.read("fits/gaia.fit", format="fits")
 #df3=dat3.to_pandas()
 
 #Nombro las variables que voy a usar para hacer matching (declinación y ascención recta).

@@ -21,7 +21,7 @@ import matplotlib.pyplot as plt
 from astropy.table import Table    #Ojo importante aquí importar "Table" con mayuscula
 
 #Voy a leer el archivo fits
-dat=Table.read("Sharks_sgpe.fits", format="fits")
+dat=Table.read("fits/sharks_sgpe.fits", format="fits")
 df=dat.to_pandas()
 
 #Asigno variables a las columnas que me interesa usar

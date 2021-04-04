@@ -23,8 +23,8 @@ import smatch
 
 #Empiezo haciendo matching de los puntos captados en SHARKS y VIKING
 
-dat1=Table.read("sharks_sgpe.fits", format="fits")
-dat2=Table.read("viking_ksap3.fit", format="fits")   
+dat1=Table.read("fits/sharks_sgpe.fits", format="fits")
+dat2=Table.read("fits/viking_ksap3.fit", format="fits")   
 
 dec1 = dat1["DEC"]
 ra1 = dat1["RA"]

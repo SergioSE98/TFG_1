@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Mar 31 15:28:47 2021
+Created on Sun Apr  4 12:42:29 2021
 
 @author: Sergio
 """
@@ -22,7 +22,7 @@ import smatch
 #Leo datos (Objetos comunes de SHARKS y DES)
  
 
-dat1=Table.read("sharks_and_des_EROS_lite.fits", format="fits")
+dat1=Table.read("fits/sharks_and_des_sig_noise_3_EROS_R_lite.fits", format="fits")  #EROS, objetos con R-Ks mayor a 5.5
 
 
 mag_SHARKS = dat1["PETROMAG"]
@@ -33,10 +33,10 @@ mag_DES_R = dat1["MAG_AUTO_R_DERED"]
 
 mag_y = mag_DES_R - mag_SHARKS
 
-i1 = plt.figure("Magnitudes Sharks and DES objects")
+i1 = plt.figure("Magnitudes Sharks and DES objects (R detection) (s/n = 3)")
 plt.title("Magnitudes Sharks and DES objects")
 imag2 = plt.plot(mag_SHARKS,mag_y, ".")
 plt.xlabel("PETROMAG_")
 plt.ylabel("MAG_AUTO_R_DERED - PETROMAG_K")
 
-i1.savefig('Mag_R-Mag_K.png')   
+i1.savefig('Mag_R-Mag_K_R_detect.png')   
