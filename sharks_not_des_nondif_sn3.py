@@ -17,7 +17,6 @@ import matplotlib.pyplot as plt
 
 from astropy.table import Table    #Ojo importante aquí importar "Table" con mayuscula
 
-import smatch
 
 #Leo datos (SHARKS NOT DES)
 
