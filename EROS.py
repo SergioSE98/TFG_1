@@ -102,9 +102,7 @@ mask_16 = (mag_sharks_eros_r >= 21.7)&(mag_sharks_eros_r < 22.2)
 mask_17 = (mag_sharks_eros_r >= 22.2)&(mag_sharks_eros_r < 22.7)
 """
 
-ks_mitad_intervalos = ([13.95, 14.45, 14.95, 15.45, 15.95, 16.45, 16.95, 17.45, 17.95, 18.45, 18.95, 19.45, 19.95, 20.45, 20.95, 21.45, 21.95, 22.45])
 
-ks_mitad_intervalos_estrellas = ks_mitad_intervalos[0:14]
 
 
 """
@@ -285,7 +283,13 @@ star_11 = len(df_classstat_stars_11)
 star_12 = len(df_classstat_stars_12)
 star_13 = len(df_classstat_stars_13)
 
+
+#Lista de números de estrellas en cada intervalo
 stars_list = ([star_0, star_1, star_2, star_3, star_4, star_5, star_6, star_7, star_8, star_9, star_10, star_11, star_12, star_13])
+#Lista de valor medio de Ks de cada intervalo
+ks_mitad_intervalos = ([13.95, 14.45, 14.95, 15.45, 15.95, 16.45, 16.95, 17.45, 17.95, 18.45, 18.95, 19.45, 19.95, 20.45, 20.95, 21.45, 21.95, 22.45])
+#A partir del intervalo 13 todo son galaxias, por eso acoto la lista de intervalos de estrellas
+ks_mitad_intervalos_estrellas = ks_mitad_intervalos[0:14]
 
 print(stars_list)
 plt.figure()
