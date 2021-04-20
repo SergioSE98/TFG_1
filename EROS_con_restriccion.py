@@ -386,6 +386,8 @@ plt.legend()
 
 
 
+"""
+
 
 wb = Workbook()
 ruta = 'salida_EROS.xlsx'
@@ -413,3 +415,4 @@ for stars, galaxies, n_stars, n_galaxies, n_min_stars, n_min_galaxies in zip(sta
 
 
 wb.save(filename = ruta)
+"""

@@ -21,7 +21,7 @@ from openpyxl import Workbook
 
 #Leo datos (Objetos comunes de SHARKS y DES)
  
-
+"""
 df=Table.read("fits/sharks_sgpe.fits", format="fits")  #Obj en sharks y des, con 5sigma
 
 #Acoto objetos con signal/noise superior a 5 sigma.
@@ -42,6 +42,7 @@ df_5 = df[mask_5_sigma]
 #Creo lista con mis magnitudes que considero para crear intervalos
 
 """
+"""
 ks_mag_list = ([13.7, 14.2, 14.7, 15.2, 15.7, 16.2, 16.7, 17.2, 17.7, 18.2, 18.7, 19.2, 19.7, 20.2, 20.7, 21.2, 21.7, 22.2, 22.7])
 suma = 0
 numero_list =([])
@@ -55,6 +56,7 @@ for i in range(len(ks_mag_list)-1):
     
     
 print(numero_list)
+"""
 """  
 
 #Defino mis variables en el dataframe de objetos de sharks con 5 sigma
@@ -221,6 +223,58 @@ plt.xticks(ks_mitad_intervalos)
 plt.legend()
 plt.savefig("Stars_galaxies_all_sharks.png")
 
+"""
+#Ploteo también la gráfica del artículo de Daddi.
+
+ks_Daddi_vega = [12, 12.5, 13, 13.5, 14, 14.5, 15, 15.5, 16, 16.5, 17, 17.5, 18, 18.5, 19]
+
+ks_Daddi_AB = []
+
+for i in range(len(ks_Daddi_vega)):
+    ks_Daddi_AB.append(ks_Daddi_vega[i]+1.83)
+    
+#print(ks_Daddi_AB)
+
+stars_Daddi = [4, 7, 9, 17, 21, 38, 37, 62, 73, 88, 128, 127, 144, 185]#, 84]
+
+galaxies_Daddi = [0, 0, 0, 0, 4, 6, 16, 30, 74, 100, 178, 372, 633, 892]#, 628]
+
+#print(len(stars_Daddi))
+#print(len(galaxies_Daddi))
+
+area_min = 701/3600
+
+N_stars_mins_Daddi = list(map(lambda x: x/area_min, stars_Daddi))
+N_galaxies_mins_Daddi = list(map(lambda x: x/area_min, galaxies_Daddi))
+
+stars_Daddi_last = 84
+galaxies_Daddi_last = 628
+
+area_min_2 = 447.5/3600
+
+N_stars_mins_Daddi_last = stars_Daddi_last/area_min_2
+N_galaxies_mins_Daddi_last = galaxies_Daddi_last/area_min_2
+
+
+N_stars_mins_Daddi.append(N_stars_mins_Daddi_last)
+N_galaxies_mins_Daddi.append(N_galaxies_mins_Daddi_last)
+
+plt.figure()
+plt.plot(ks_Daddi_AB,np.log(N_stars_mins_Daddi), "*" ,label="Stars")
+plt.plot(ks_Daddi_AB,np.log(N_galaxies_mins_Daddi), "." ,label="Galaxies")
+#plt.yscale("log")
+plt.xlabel("Ks")
+plt.ylabel(r"$log N ~ (objects/deg^2/0.5 mag)$")
+#plt.ylim(0,10)
+#plt.xlim(13.45,22.95)
+plt.xticks(ks_Daddi_AB)
+plt.title("Stars and galaxies number of counts comparison (Daddi article)")
+plt.legend()
+
+
+
+"""
+
 wb = Workbook()
 ruta = 'salida_ALL.xlsx'
 
@@ -240,7 +294,7 @@ wb.save(filename = ruta)
 
 
 #Con esto sacaría la tabla y grafica 1, ahora puedo calcular el total de galaxias usando la restriccion de considerar todo galaxias por encima del 21.2 mag
-
+"""
 
 
 
