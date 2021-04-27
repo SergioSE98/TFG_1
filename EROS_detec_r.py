@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sat Apr 17 14:32:13 2021
+Created on Mon Apr 26 22:07:32 2021
 
 @author: Sergio
 """
@@ -19,8 +19,6 @@ from astropy.table import Table, vstack    #Ojo importante aquí importar "Table
 
 from openpyxl import Workbook
 
-#Leo datos (Objetos comunes de SHARKS y DES)
- 
 
 df_1=Table.read("fits/sharks_and_des_sig_noise_5_lite.fits", format="fits")  #Obj en sharks y des, con 5sigma
 
@@ -49,17 +47,16 @@ df_eros = df_1[eros_mask]   #Cambio mi df y lo acoto a EROS
 
 
 
+#Filtro los objetos que tienen detección en r
+
+mag_des_r = df_eros["MAG_AUTO_R_DERED"]
+
+mask_r_detec = (mag_des_r < 95)
+
+df = df_eros[mask_r_detec]  #Esto lo llamo al final del programa 
 
 
 
-
-#Esto anterior es para obtener info adicional, directamente puedo juntar los df df_2 y df_eros para sacar el dataframe total de eros (de sharks y des, y los exclusivos de sharks)
-
-
-df = vstack([df_eros,df_2])  #Este es el dataframe que recoge todos los eros
-
-
-#Uti
 mag_ks = df["PETROMAG"]
 
 mask_05 = (mag_ks<19.2)#&(mag_des_r <= 24.65)  #Si aplico las dos condiciones, se limita el numero de objetos (pierdo objetos)
@@ -97,7 +94,7 @@ mask_5_g = (mag_ks_g >= 16.2)&(mag_ks_g < 16.7)
 mask_6_g = (mag_ks_g >= 16.7)&(mag_ks_g < 17.2)
 mask_7_g = (mag_ks_g >= 17.2)&(mag_ks_g < 17.7)
 mask_8_g = (mag_ks_g >= 17.7)&(mag_ks_g < 18.2)
-mask_9_g = (mag_ks_g >= 18.2)&(mag_ks_g < 18.7)
+mask_9_g = (mag_ks_g >= 18.2)&(mag_ks_g < 18.7)  #A partir de 18.2 para EROs
 mask_10_g = (mag_ks_g >= 18.7)&(mag_ks_g < 19.2)
 mask_11_g = (mag_ks_g >= 19.2)&(mag_ks_g < 19.7)
 mask_12_g = (mag_ks_g >= 19.7)&(mag_ks_g < 20.2)
@@ -116,15 +113,21 @@ df_galaxies_5 = df_galaxies[mask_5_g]
 df_galaxies_6 = df_galaxies[mask_6_g]
 df_galaxies_7 = df_galaxies[mask_7_g]
 df_galaxies_8 = df_galaxies[mask_8_g]
-df_galaxies_9 = df_galaxies[mask_9_g]
-df_galaxies_10 = df_galaxies[mask_10_g]
-df_galaxies_11 = df_galaxies[mask_11_g]
-df_galaxies_12 = df_galaxies[mask_12_g]
-df_galaxies_13 = df_galaxies[mask_13_g]
-df_galaxies_14 = df_galaxies[mask_14_g]
-df_galaxies_15 = df_galaxies[mask_15_g]
-df_galaxies_16 = df_galaxies[mask_16_g]
-df_galaxies_17 = df_galaxies[mask_17_g]
+df_galaxies_9_05 = df_galaxies[mask_9_g]
+df_galaxies_10_05 = df_galaxies[mask_10_g]
+df_galaxies_11_05 = df_galaxies[mask_11_g]
+df_galaxies_12_05 = df_galaxies[mask_12_g]
+df_galaxies_13_05 = df_galaxies[mask_13_g]
+df_galaxies_14_05 = df_galaxies[mask_14_g]
+df_galaxies_15_05 = df_galaxies[mask_15_g]
+df_galaxies_16_05 = df_galaxies[mask_16_g]
+df_galaxies_17_05 = df_galaxies[mask_17_g]
+
+#Calculo los R-Ks de cada sección 
+
+
+
+
 
 mag_ks_s = df_stars["PETROMAG"]
 
@@ -179,15 +182,15 @@ galaxie_5 = len(df_galaxies_5)
 galaxie_6 = len(df_galaxies_6)
 galaxie_7 = len(df_galaxies_7)
 galaxie_8 = len(df_galaxies_8)
-galaxie_9 = len(df_galaxies_9)
-galaxie_10 = len(df_galaxies_10)
-galaxie_11 = len(df_galaxies_11)
-galaxie_12 = len(df_galaxies_12)
-galaxie_13 = len(df_galaxies_13)
-galaxie_14 = len(df_galaxies_14)
-galaxie_15 = len(df_galaxies_15)
-galaxie_16 = len(df_galaxies_16)
-galaxie_17 = len(df_galaxies_17)
+galaxie_9 = len(df_galaxies_9_05)
+galaxie_10 = len(df_galaxies_10_05)
+galaxie_11 = len(df_galaxies_11_05)
+galaxie_12 = len(df_galaxies_12_05)
+galaxie_13 = len(df_galaxies_13_05)
+galaxie_14 = len(df_galaxies_14_05)
+galaxie_15 = len(df_galaxies_15_05)
+galaxie_16 = len(df_galaxies_16_05)
+galaxie_17 = len(df_galaxies_17_05)
 
 
 
@@ -268,15 +271,22 @@ df_galaxies_5 = df_galaxies[mask_5_g]
 df_galaxies_6 = df_galaxies[mask_6_g]
 df_galaxies_7 = df_galaxies[mask_7_g]
 df_galaxies_8 = df_galaxies[mask_8_g]
-df_galaxies_9 = df_galaxies[mask_9_g]
-df_galaxies_10 = df_galaxies[mask_10_g]
-df_galaxies_11 = df_galaxies[mask_11_g]
-df_galaxies_12 = df_galaxies[mask_12_g]
-df_galaxies_13 = df_galaxies[mask_13_g]
-df_galaxies_14 = df_galaxies[mask_14_g]
-df_galaxies_15 = df_galaxies[mask_15_g]
-df_galaxies_16 = df_galaxies[mask_16_g]
-df_galaxies_17 = df_galaxies[mask_17_g]
+df_galaxies_9_098 = df_galaxies[mask_9_g]
+df_galaxies_10_098 = df_galaxies[mask_10_g]
+df_galaxies_11_098 = df_galaxies[mask_11_g]
+df_galaxies_12_098 = df_galaxies[mask_12_g]
+df_galaxies_13_098 = df_galaxies[mask_13_g]
+df_galaxies_14_098 = df_galaxies[mask_14_g]
+df_galaxies_15_098 = df_galaxies[mask_15_g]
+df_galaxies_16_098 = df_galaxies[mask_16_g]
+df_galaxies_17_098 = df_galaxies[mask_17_g]
+
+
+
+
+
+
+
 
 mag_ks_s = df_stars["PETROMAG"]
 
@@ -331,15 +341,15 @@ galaxie_5 = len(df_galaxies_5)
 galaxie_6 = len(df_galaxies_6)
 galaxie_7 = len(df_galaxies_7)
 galaxie_8 = len(df_galaxies_8)
-galaxie_9 = len(df_galaxies_9)
-galaxie_10 = len(df_galaxies_10)
-galaxie_11 = len(df_galaxies_11)
-galaxie_12 = len(df_galaxies_12)
-galaxie_13 = len(df_galaxies_13)
-galaxie_14 = len(df_galaxies_14)
-galaxie_15 = len(df_galaxies_15)
-galaxie_16 = len(df_galaxies_16)
-galaxie_17 = len(df_galaxies_17)
+galaxie_9 = len(df_galaxies_9_098)
+galaxie_10 = len(df_galaxies_10_098)
+galaxie_11 = len(df_galaxies_11_098)
+galaxie_12 = len(df_galaxies_12_098)
+galaxie_13 = len(df_galaxies_13_098)
+galaxie_14 = len(df_galaxies_14_098)
+galaxie_15 = len(df_galaxies_15_098)
+galaxie_16 = len(df_galaxies_16_098)
+galaxie_17 = len(df_galaxies_17_098)
 
 
 
@@ -373,6 +383,11 @@ stars_list_098 = np.array([star_0, star_1, star_2, star_3, star_4, star_5, star_
 stars_total = stars_list_05 + stars_list_098
 galaxies_total = galaxies_list_05 + galaxies_list_098
 
+
+
+#Haciendo esto tengo ya clasificados en estrella/galaxia mis EROs con detección en r
+
+
 area_sharks = 7.23 #revisar, este dato no lo recuero y perdí el correo que me decía Aurelio, es en grados de arco
 
 N_stars = stars_total/area_sharks
@@ -386,61 +401,70 @@ N_galaxies_mins = galaxies_total/area_sharks_mins
 
 ks_mitad_intervalos = ([14.2, 14.7, 15.2, 15.7, 16.2, 16.7, 17.2, 17.7, 18.2, 18.7, 19.2, 19.7, 20.2, 20.7, 21.2, 21.7, 22.2, 22.7])
 
-fig = plt.figure()
-plt.plot(ks_mitad_intervalos,np.log(N_stars)/2.33, "*" ,label="Stars in Sharks")
-plt.plot(ks_mitad_intervalos,np.log(N_galaxies)/2.33, "." ,label="Galaxies in Sharks")
-plt.xlabel("Ks")
-plt.ylabel(r"$log N ~ (objects/deg^2/ 0.5 mag)$")
-#fig.xaxis.set_major_locator(ticker.MultipleLocator(0.5))
-#fig.xaxis.set_minor_locator(ticker.MultipleLocator(0.1))
-plt.xticks([13, 15, 17, 19, 21, 23 ])
-plt.legend()
-
-plt.savefig("Stars_galaxies_all_sharks_restringido.png")
 
 
 
+#Junto todas las galaxias que me interesan de cada rango en dataframes
+
+df_galaxies_9 = vstack([df_galaxies_9_05, df_galaxies_9_098])
+df_galaxies_10 = vstack([df_galaxies_10_05, df_galaxies_10_098])
+df_galaxies_11 = vstack([df_galaxies_11_05, df_galaxies_11_098])
+df_galaxies_12 = vstack([df_galaxies_12_05, df_galaxies_12_098])
+df_galaxies_13 = vstack([df_galaxies_13_05, df_galaxies_13_098])
+df_galaxies_14 = vstack([df_galaxies_14_05, df_galaxies_14_098])
+df_galaxies_15 = vstack([df_galaxies_15_05, df_galaxies_15_098])
+df_galaxies_16 = vstack([df_galaxies_16_05, df_galaxies_16_098])
+df_galaxies_17 = vstack([df_galaxies_17_05, df_galaxies_17_098])
+
+df_galaxies_all = vstack([df_galaxies_9, df_galaxies_10, df_galaxies_11, df_galaxies_12, df_galaxies_13, df_galaxies_14, df_galaxies_15, df_galaxies_16, df_galaxies_17])
+#Con esto
 
 
+r_Ks_9 = df_galaxies_9["MAG_AUTO_R_DERED"] - df_galaxies_9["PETROMAG"]
+r_Ks_10 = df_galaxies_10["MAG_AUTO_R_DERED"] - df_galaxies_10["PETROMAG"]
+r_Ks_11 = df_galaxies_11["MAG_AUTO_R_DERED"] - df_galaxies_11["PETROMAG"]
+r_Ks_12 = df_galaxies_12["MAG_AUTO_R_DERED"] - df_galaxies_12["PETROMAG"]
+r_Ks_13= df_galaxies_13["MAG_AUTO_R_DERED"] - df_galaxies_13["PETROMAG"]
+r_Ks_14 = df_galaxies_14["MAG_AUTO_R_DERED"] - df_galaxies_14["PETROMAG"]
+r_Ks_15 = df_galaxies_15["MAG_AUTO_R_DERED"] - df_galaxies_15["PETROMAG"]
+r_Ks_16 = df_galaxies_16["MAG_AUTO_R_DERED"] - df_galaxies_16["PETROMAG"]
+r_Ks_17 = df_galaxies_17["MAG_AUTO_R_DERED"] - df_galaxies_17["PETROMAG"]
 
-wb = Workbook()
-ruta = 'salida_EROS_restriccion.xlsx'
-
-hoja1 = wb.active
-hoja1.title = "hoja"
-fila = 1 #Fila donde empezamos
-col_stars = 1 #Columna donde guardo los valores
-col_galaxies = 2
-col_n_stars = 3
-col_n_galaxies = 4
-col_n_min_stars = 5
-col_n_min_galaxies = 6
-
-for stars, galaxies, n_stars, n_galaxies, n_min_stars, n_min_galaxies in zip(stars_total, galaxies_total, N_stars, N_galaxies, N_stars_mins, N_galaxies_mins):  #Aquí pongo en "in" el valor que quiero sacar como columna
-    hoja1.cell(column=col_stars, row=fila, value=stars)
-    hoja1.cell(column=col_galaxies, row=fila, value=galaxies)
-    hoja1.cell(column=col_n_stars, row=fila, value=n_stars)
-    hoja1.cell(column=col_n_galaxies, row=fila, value=n_galaxies)
-    hoja1.cell(column=col_n_min_stars, row=fila, value=n_min_stars)
-    hoja1.cell(column=col_n_min_galaxies, row=fila, value=n_min_galaxies)
-    fila+=1
-    
-
-
-wb.save(filename = ruta)
-
-
-
+plt.figure()
+plt.subplot(421)
+plt.xlim(4,10)
+plt.hist(r_Ks_10,bins = 10)
+plt.subplot(422)
+plt.xlim(4,10)
+plt.hist(r_Ks_11,bins = 25)
+plt.subplot(423)
+plt.xlim(4,10)
+plt.hist(r_Ks_12,bins = 25)
+plt.subplot(424)
+plt.xlim(4,10)
+plt.hist(r_Ks_13,bins = 25)
+plt.subplot(425)
+plt.xlim(4,10)
+plt.hist(r_Ks_14,bins = 25)
+plt.subplot(426)
+plt.xlim(4,10)
+plt.hist(r_Ks_15,bins = 25)
+plt.subplot(427)
+plt.xlim(4,10)
+plt.hist(r_Ks_16,bins = 25)
+plt.subplot(428)
+plt.xlim(4,10)
+plt.hist(r_Ks_17,bins = 25)
+plt.show()
 
 
+plt.figure()
+plt.plot(df_galaxies_all["PETROMAG"], df_galaxies_all["MAG_AUTO_R_DERED"] - df_galaxies_all["PETROMAG"], marker = ".", markersize = 1, linestyle="None")
 
+#Puedo sacar tmbn las medias de cada R-Ks  en cada intervalo
 
-
-
-
-
-
-
+r_Ks_medios = [np.mean(r_Ks_10), np.mean(r_Ks_11), np.mean(r_Ks_12), np.mean(r_Ks_13), np.mean(r_Ks_14), np.mean(r_Ks_15), np.mean(r_Ks_16), np.mean(r_Ks_17)]
+print(r_Ks_medios)
 
 
 
