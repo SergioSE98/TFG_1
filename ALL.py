@@ -71,24 +71,24 @@ df_stars = df_05[mask_stars]
 
 mag_ks_g = df_galaxies["PETROMAG"]
 
-mask_0_g = (mag_ks_g >= 13.7)&(mag_ks_g < 14.2)
-mask_1_g = (mag_ks_g >= 14.2)&(mag_ks_g < 14.7)
-mask_2_g = (mag_ks_g >= 14.7)&(mag_ks_g < 15.2)
-mask_3_g = (mag_ks_g >= 15.2)&(mag_ks_g < 15.7)
-mask_4_g = (mag_ks_g >= 15.7)&(mag_ks_g < 16.2)
-mask_5_g = (mag_ks_g >= 16.2)&(mag_ks_g < 16.7)
-mask_6_g = (mag_ks_g >= 16.7)&(mag_ks_g < 17.2)
-mask_7_g = (mag_ks_g >= 17.2)&(mag_ks_g < 17.7)
-mask_8_g = (mag_ks_g >= 17.7)&(mag_ks_g < 18.2)
-mask_9_g = (mag_ks_g >= 18.2)&(mag_ks_g < 18.7)
-mask_10_g = (mag_ks_g >= 18.7)&(mag_ks_g < 19.2)
-mask_11_g = (mag_ks_g >= 19.2)&(mag_ks_g < 19.7)
-mask_12_g = (mag_ks_g >= 19.7)&(mag_ks_g < 20.2)
-mask_13_g = (mag_ks_g >= 20.2)&(mag_ks_g < 20.7)
-mask_14_g = (mag_ks_g >= 20.7)&(mag_ks_g < 21.2)
-mask_15_g = (mag_ks_g >= 21.2)&(mag_ks_g < 21.7)
-mask_16_g = (mag_ks_g >= 21.7)&(mag_ks_g < 22.2)
-mask_17_g = (mag_ks_g >= 22.2)&(mag_ks_g < 22.7)
+mask_0_g = (mag_ks_g > 13.7)&(mag_ks_g <= 14.2)
+mask_1_g = (mag_ks_g > 14.2)&(mag_ks_g <= 14.7)
+mask_2_g = (mag_ks_g > 14.7)&(mag_ks_g <= 15.2)
+mask_3_g = (mag_ks_g > 15.2)&(mag_ks_g <= 15.7)
+mask_4_g = (mag_ks_g > 15.7)&(mag_ks_g <= 16.2)
+mask_5_g = (mag_ks_g > 16.2)&(mag_ks_g <= 16.7)
+mask_6_g = (mag_ks_g > 16.7)&(mag_ks_g <= 17.2)
+mask_7_g = (mag_ks_g > 17.2)&(mag_ks_g <= 17.7)
+mask_8_g = (mag_ks_g > 17.7)&(mag_ks_g <= 18.2)
+mask_9_g = (mag_ks_g > 18.2)&(mag_ks_g <= 18.7)
+mask_10_g = (mag_ks_g > 18.7)&(mag_ks_g <= 19.2)
+mask_11_g = (mag_ks_g > 19.2)&(mag_ks_g <= 19.7)
+mask_12_g = (mag_ks_g > 19.7)&(mag_ks_g <= 20.2)
+mask_13_g = (mag_ks_g > 20.2)&(mag_ks_g <= 20.7)
+mask_14_g = (mag_ks_g > 20.7)&(mag_ks_g <= 21.2)
+mask_15_g = (mag_ks_g > 21.2)&(mag_ks_g <= 21.7)
+mask_16_g = (mag_ks_g > 21.7)&(mag_ks_g <= 22.2)
+mask_17_g = (mag_ks_g > 22.2)&(mag_ks_g <= 22.7)
 
 df_galaxies_0 = df_galaxies[mask_0_g]
 df_galaxies_1 = df_galaxies[mask_1_g]
@@ -111,24 +111,24 @@ df_galaxies_17 = df_galaxies[mask_17_g]
 
 mag_ks_s = df_stars["PETROMAG"]
 
-mask_0_s = (mag_ks_s >= 13.7)&(mag_ks_s < 14.2)
-mask_1_s =  (mag_ks_s >= 14.2)&(mag_ks_s < 14.7)
-mask_2_s = (mag_ks_s >= 14.7)&(mag_ks_s < 15.2)
-mask_3_s = (mag_ks_s >= 15.2)&(mag_ks_s < 15.7)
-mask_4_s = (mag_ks_s >= 15.7)&(mag_ks_s < 16.2)
-mask_5_s = (mag_ks_s >= 16.2)&(mag_ks_s < 16.7)
-mask_6_s = (mag_ks_s >= 16.7)&(mag_ks_s < 17.2)
-mask_7_s = (mag_ks_s >= 17.2)&(mag_ks_s < 17.7)
-mask_8_s = (mag_ks_s >= 17.7)&(mag_ks_s < 18.2)
-mask_9_s = (mag_ks_s >= 18.2)&(mag_ks_s < 18.7)
-mask_10_s = (mag_ks_s >= 18.7)&(mag_ks_s < 19.2)
-mask_11_s = (mag_ks_s >= 19.2)&(mag_ks_s < 19.7)
-mask_12_s = (mag_ks_s >= 19.7)&(mag_ks_s < 20.2)
-mask_13_s = (mag_ks_s >= 20.2)&(mag_ks_s < 20.7)
-mask_14_s = (mag_ks_s >= 20.7)&(mag_ks_s < 21.2)
-mask_15_s = (mag_ks_s >= 21.2)&(mag_ks_s < 21.7)
-mask_16_s = (mag_ks_s >= 21.7)&(mag_ks_s < 22.2)
-mask_17_s = (mag_ks_s >= 22.2)&(mag_ks_s < 22.7)
+mask_0_s = (mag_ks_s > 13.7)&(mag_ks_s <= 14.2)
+mask_1_s = (mag_ks_s > 14.2)&(mag_ks_s <= 14.7)
+mask_2_s = (mag_ks_s > 14.7)&(mag_ks_s <= 15.2)
+mask_3_s = (mag_ks_s > 15.2)&(mag_ks_s <= 15.7)
+mask_4_s = (mag_ks_s > 15.7)&(mag_ks_s <= 16.2)
+mask_5_s = (mag_ks_s > 16.2)&(mag_ks_s <= 16.7)
+mask_6_s = (mag_ks_s > 16.7)&(mag_ks_s <= 17.2)
+mask_7_s = (mag_ks_s > 17.2)&(mag_ks_s <= 17.7)
+mask_8_s = (mag_ks_s > 17.7)&(mag_ks_s <= 18.2)
+mask_9_s = (mag_ks_s > 18.2)&(mag_ks_s <= 18.7)
+mask_10_s = (mag_ks_s > 18.7)&(mag_ks_s <= 19.2)
+mask_11_s = (mag_ks_s > 19.2)&(mag_ks_s <= 19.7)
+mask_12_s = (mag_ks_s > 19.7)&(mag_ks_s <= 20.2)
+mask_13_s = (mag_ks_s > 20.2)&(mag_ks_s <= 20.7)
+mask_14_s = (mag_ks_s > 20.7)&(mag_ks_s <= 21.2)
+mask_15_s = (mag_ks_s > 21.2)&(mag_ks_s <= 21.7)
+mask_16_s = (mag_ks_s > 21.7)&(mag_ks_s <= 22.2)
+mask_17_s = (mag_ks_s > 22.2)&(mag_ks_s <= 22.7)
 
 df_stars_0 = df_stars[mask_0_s]
 df_stars_1 = df_stars[mask_1_s]
@@ -223,24 +223,24 @@ df_stars = df_098[mask_stars]
 
 mag_ks_g = df_galaxies["PETROMAG"]
 
-mask_0_g = (mag_ks_g >= 13.7)&(mag_ks_g < 14.2)
-mask_1_g = (mag_ks_g >= 14.2)&(mag_ks_g < 14.7)
-mask_2_g = (mag_ks_g >= 14.7)&(mag_ks_g < 15.2)
-mask_3_g = (mag_ks_g >= 15.2)&(mag_ks_g < 15.7)
-mask_4_g = (mag_ks_g >= 15.7)&(mag_ks_g < 16.2)
-mask_5_g = (mag_ks_g >= 16.2)&(mag_ks_g < 16.7)
-mask_6_g = (mag_ks_g >= 16.7)&(mag_ks_g < 17.2)
-mask_7_g = (mag_ks_g >= 17.2)&(mag_ks_g < 17.7)
-mask_8_g = (mag_ks_g >= 17.7)&(mag_ks_g < 18.2)
-mask_9_g = (mag_ks_g >= 18.2)&(mag_ks_g < 18.7)
-mask_10_g = (mag_ks_g >= 18.7)&(mag_ks_g < 19.2)
-mask_11_g = (mag_ks_g >= 19.2)&(mag_ks_g < 19.7)
-mask_12_g = (mag_ks_g >= 19.7)&(mag_ks_g < 20.2)
-mask_13_g = (mag_ks_g >= 20.2)&(mag_ks_g < 20.7)
-mask_14_g = (mag_ks_g >= 20.7)&(mag_ks_g < 21.2)
-mask_15_g = (mag_ks_g >= 21.2)&(mag_ks_g < 21.7)
-mask_16_g = (mag_ks_g >= 21.7)&(mag_ks_g < 22.2)
-mask_17_g = (mag_ks_g >= 22.2)&(mag_ks_g < 22.7)
+mask_0_g = (mag_ks_g > 13.7)&(mag_ks_g <= 14.2)
+mask_1_g = (mag_ks_g > 14.2)&(mag_ks_g <= 14.7)
+mask_2_g = (mag_ks_g > 14.7)&(mag_ks_g <= 15.2)
+mask_3_g = (mag_ks_g > 15.2)&(mag_ks_g <= 15.7)
+mask_4_g = (mag_ks_g > 15.7)&(mag_ks_g <= 16.2)
+mask_5_g = (mag_ks_g > 16.2)&(mag_ks_g <= 16.7)
+mask_6_g = (mag_ks_g > 16.7)&(mag_ks_g <= 17.2)
+mask_7_g = (mag_ks_g > 17.2)&(mag_ks_g <= 17.7)
+mask_8_g = (mag_ks_g > 17.7)&(mag_ks_g <= 18.2)
+mask_9_g = (mag_ks_g > 18.2)&(mag_ks_g <= 18.7)
+mask_10_g = (mag_ks_g > 18.7)&(mag_ks_g <= 19.2)
+mask_11_g = (mag_ks_g > 19.2)&(mag_ks_g <= 19.7)
+mask_12_g = (mag_ks_g > 19.7)&(mag_ks_g <= 20.2)
+mask_13_g = (mag_ks_g > 20.2)&(mag_ks_g <= 20.7)
+mask_14_g = (mag_ks_g > 20.7)&(mag_ks_g <= 21.2)
+mask_15_g = (mag_ks_g > 21.2)&(mag_ks_g <= 21.7)
+mask_16_g = (mag_ks_g > 21.7)&(mag_ks_g <= 22.2)
+mask_17_g = (mag_ks_g > 22.2)&(mag_ks_g <= 22.7)
 
 df_galaxies_0 = df_galaxies[mask_0_g]
 df_galaxies_1 = df_galaxies[mask_1_g]
@@ -263,24 +263,24 @@ df_galaxies_17 = df_galaxies[mask_17_g]
 
 mag_ks_s = df_stars["PETROMAG"]
 
-mask_0_s = (mag_ks_s >= 13.7)&(mag_ks_s < 14.2)
-mask_1_s =  (mag_ks_s >= 14.2)&(mag_ks_s < 14.7)
-mask_2_s = (mag_ks_s >= 14.7)&(mag_ks_s < 15.2)
-mask_3_s = (mag_ks_s >= 15.2)&(mag_ks_s < 15.7)
-mask_4_s = (mag_ks_s >= 15.7)&(mag_ks_s < 16.2)
-mask_5_s = (mag_ks_s >= 16.2)&(mag_ks_s < 16.7)
-mask_6_s = (mag_ks_s >= 16.7)&(mag_ks_s < 17.2)
-mask_7_s = (mag_ks_s >= 17.2)&(mag_ks_s < 17.7)
-mask_8_s = (mag_ks_s >= 17.7)&(mag_ks_s < 18.2)
-mask_9_s = (mag_ks_s >= 18.2)&(mag_ks_s < 18.7)
-mask_10_s = (mag_ks_s >= 18.7)&(mag_ks_s < 19.2)
-mask_11_s = (mag_ks_s >= 19.2)&(mag_ks_s < 19.7)
-mask_12_s = (mag_ks_s >= 19.7)&(mag_ks_s < 20.2)
-mask_13_s = (mag_ks_s >= 20.2)&(mag_ks_s < 20.7)
-mask_14_s = (mag_ks_s >= 20.7)&(mag_ks_s < 21.2)
-mask_15_s = (mag_ks_s >= 21.2)&(mag_ks_s < 21.7)
-mask_16_s = (mag_ks_s >= 21.7)&(mag_ks_s < 22.2)
-mask_17_s = (mag_ks_s >= 22.2)&(mag_ks_s < 22.7)
+mask_0_s = (mag_ks_s > 13.7)&(mag_ks_s <= 14.2)
+mask_1_s = (mag_ks_s > 14.2)&(mag_ks_s <= 14.7)
+mask_2_s = (mag_ks_s > 14.7)&(mag_ks_s <= 15.2)
+mask_3_s = (mag_ks_s > 15.2)&(mag_ks_s <= 15.7)
+mask_4_s = (mag_ks_s > 15.7)&(mag_ks_s <= 16.2)
+mask_5_s = (mag_ks_s > 16.2)&(mag_ks_s <= 16.7)
+mask_6_s = (mag_ks_s > 16.7)&(mag_ks_s <= 17.2)
+mask_7_s = (mag_ks_s > 17.2)&(mag_ks_s <= 17.7)
+mask_8_s = (mag_ks_s > 17.7)&(mag_ks_s <= 18.2)
+mask_9_s = (mag_ks_s > 18.2)&(mag_ks_s <= 18.7)
+mask_10_s = (mag_ks_s > 18.7)&(mag_ks_s <= 19.2)
+mask_11_s = (mag_ks_s > 19.2)&(mag_ks_s <= 19.7)
+mask_12_s = (mag_ks_s > 19.7)&(mag_ks_s <= 20.2)
+mask_13_s = (mag_ks_s > 20.2)&(mag_ks_s <= 20.7)
+mask_14_s = (mag_ks_s > 20.7)&(mag_ks_s <= 21.2)
+mask_15_s = (mag_ks_s > 21.2)&(mag_ks_s <= 21.7)
+mask_16_s = (mag_ks_s > 21.7)&(mag_ks_s <= 22.2)
+mask_17_s = (mag_ks_s > 22.2)&(mag_ks_s <= 22.7)
 
 df_stars_0 = df_stars[mask_0_s]
 df_stars_1 = df_stars[mask_1_s]
@@ -356,13 +356,28 @@ stars_list_098 = np.array([star_0, star_1, star_2, star_3, star_4, star_5, star_
 stars_total = stars_list_05 + stars_list_098
 galaxies_total = galaxies_list_05 + galaxies_list_098
 
+stars_total_sin_0 = stars_total[0:17]
+
+
+error_stars_total_sin_0 = 1/np.sqrt(stars_total_sin_0)
+error_galaxies_total = 1/np.sqrt(galaxies_total)
+
+
+
 area_sharks = 7.23 #revisar, este dato no lo recuero y perdí el correo que me decía Aurelio, es en grados de arco
 
-N_stars = stars_total/area_sharks
+N_stars = stars_total_sin_0/area_sharks
 N_galaxies = galaxies_total/area_sharks
 
-N_stars_err = np.sqrt(stars_total)/area_sharks
-N_galaxies_err = np.sqrt(galaxies_total)/area_sharks
+print(N_stars)
+print(N_galaxies)
+
+N_stars_err = error_stars_total_sin_0/area_sharks
+N_galaxies_err = error_galaxies_total/area_sharks
+
+print(N_stars_err)
+print(N_galaxies_err)
+
 
 ks_sharks_vega = [12, 12.5, 13, 13.5, 14, 14.5, 15, 15.5, 16, 16.5, 17, 17.5, 18, 18.5, 19, 19.5, 20, 20.5]
 
@@ -370,6 +385,13 @@ ks_sharks_AB = []
 
 for i in range(len(ks_sharks_vega)):
     ks_sharks_AB.append(ks_sharks_vega[i]+1.83)
+
+
+ks_sharks_AB_stars = ks_sharks_AB[0:17]
+
+
+
+
 
 
 ks_Daddi_vega = [12, 12.5, 13, 13.5, 14, 14.5, 15, 15.5, 16, 16.5, 17, 17.5, 18, 18.5, 19]
@@ -406,9 +428,9 @@ N_galaxies_Daddi = np.append(N_galaxies_Daddi, galaxies_Daddi[14]/area_Daddi_2)
 plt.figure()
 #plt.plot(ks_Daddi_AB,np.log(N_stars_Daddi), "x" ,label="Stars in Daddi´s article")         
 #plt.plot(ks_Daddi_AB,np.log(N_galaxies_Daddi), "s" ,label="Galaxies in Daddi´s article")  
-plt.errorbar(ks_sharks_AB,np.log(N_stars), np.log(N_stars_err), elinewidth=0.5, barsabove= True, color = "cornflowerblue", marker = "*" , linestyle="None", label="Stars in Sharks")
+plt.errorbar(ks_sharks_AB_stars,np.log(N_stars), 1/np.sqrt(np.log(N_stars)), elinewidth=0.5, barsabove= True, color = "orangered", marker = "*" , linestyle="None", label="Stars in Sharks")
 #plt.plot(ks_sharks_AB,np.log(N_stars), "*" ,label="Stars in Sharks")      
-plt.errorbar(ks_sharks_AB,np.log(N_galaxies), np.log(N_galaxies_err), elinewidth=0.5, barsabove= True , color = "royalblue", marker = "." , linestyle="None", label="Galaxies in Sharks")         
+plt.errorbar(ks_sharks_AB,np.log(N_galaxies), 1/np.sqrt(np.log(N_galaxies)), elinewidth=0.5, barsabove= True , color = "royalblue", marker = "." , linestyle="None", label="Galaxies in Sharks")         
 #plt.plot(ks_sharks_AB,np.log(N_galaxies), "." ,label="Galaxies in Sharks")
 plt.xlabel("Ks", fontsize = 12)
 plt.ylabel(r"$log N ~ (objects/deg^2)$", fontsize=12)
@@ -425,7 +447,7 @@ plt.figure()
 plt.plot(ks_Daddi_AB,np.log(N_stars_Daddi),  "*" , color = "sandybrown", label="Stars in Daddi´s article")         
 plt.plot(ks_Daddi_AB,np.log(N_galaxies_Daddi), "." ,color = "orangered", label="Galaxies in Daddi´s article")  
 #plt.errorbar(ks_sharks_AB,np.log(N_stars), np.log(N_stars_err), elinewidth=0.5, barsabove= True , marker = "*" , linestyle="None", label="Stars in Sharks")
-plt.plot(ks_sharks_AB,np.log(N_stars), "*" ,color = "cornflowerblue", label="Stars in Sharks")      
+plt.plot(ks_sharks_AB_stars,np.log(N_stars), "*" ,color = "cornflowerblue", label="Stars in Sharks")      
 #plt.errorbar(ks_sharks_AB,np.log(N_galaxies), np.log(N_galaxies_err), elinewidth=0.5, barsabove= True , marker = "." , linestyle="None", label="Galaxies in Sharks")         
 plt.plot(ks_sharks_AB,np.log(N_galaxies), "." , color = "royalblue", label="Galaxies in Sharks")
 plt.xlabel("Ks", fontsize = 12)
@@ -435,7 +457,7 @@ plt.xticks([13, 15, 17, 19, 21, 23 ])
 plt.title("Stars and galaxies number of counts comparison")
 plt.grid(linestyle="--", linewidth=0.2)
 plt.legend()
-plt.savefig("Stars_galaxies_comparison_with_Daddi_RESTRICTED.png")
+plt.savefig("Stars_galaxies_comparison_with_Daddi.png")
 
 
 
@@ -444,7 +466,7 @@ plt.savefig("Stars_galaxies_comparison_with_Daddi_RESTRICTED.png")
 
 
 wb = Workbook()
-ruta = 'salida_ALL_restriccion.xlsx'
+ruta = 'salida_ALL.xlsx'
 
 hoja = wb.active
 hoja.title = "ALL"

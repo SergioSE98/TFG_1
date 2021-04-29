@@ -20,40 +20,14 @@ from astropy.table import Table, vstack    #Ojo importante aquí importar "Table
 from openpyxl import Workbook
 
 
-df_1=Table.read("fits/sharks_and_des_sig_noise_5_lite.fits", format="fits")  #Obj en sharks y des, con 5sigma
+df_1=Table.read("fits/all_EROs.fits", format="fits")  #Obj en sharks y des, con 5sigma
 
-df_2 = Table.read("fits/sharks_only_not_des_lite.fits", format="fits") #Obj solo en Sharks, muestra ya limpiada de difracciones y grandes errores
 
-#El dataframe 1 ya está limpio de sig/noise menor a 5, el 2 lo limpio ahora.
-
-ks_mag_error = df_2["PETROMAGERR"]
-mask_5_sigma = (ks_mag_error <= 1.086/5)
-
-#Filtro mi dataframe y lo renombro, ahora solo con objetos que considero validos (con signal/noise mayor que 5)
-
-df_2 = df_2[mask_5_sigma]
-
-#Ahora diferencio EROS en el dataframe1, los del taframe 2 son todo EROS.
-
-mag_sharks = df_1["PETROMAG"]   #Consultar si debería cambiar esto por magnitud de otra apertura.
-mag_err_sharks = df_1["PETROMAGERR"]
-mag_des_i = df_1["MAG_AUTO_I_DERED"]
-mag_des_g = df_1["MAG_AUTO_G_DERED"]
 mag_des_r = df_1["MAG_AUTO_R_DERED"]
-
-eros_mask = ((mag_des_r - mag_sharks) > 4.32)   #En primer lugar filtro los EROS del df con obj en sharks y des, los de solo sharks es pq directamente ya se pueden tratar como eros (no se detectan en optico)
-
-df_eros = df_1[eros_mask]   #Cambio mi df y lo acoto a EROS
-
-
-
-#Filtro los objetos que tienen detección en r
-
-mag_des_r = df_eros["MAG_AUTO_R_DERED"]
 
 mask_r_detec = (mag_des_r < 95)
 
-df = df_eros[mask_r_detec]  #Esto lo llamo al final del programa 
+df = df_1[mask_r_detec]  #Esto lo llamo al final del programa 
 
 
 
@@ -85,24 +59,24 @@ df_stars = df_05[mask_stars]
 
 mag_ks_g = df_galaxies["PETROMAG"]
 
-mask_0_g = (mag_ks_g >= 13.7)&(mag_ks_g < 14.2)
-mask_1_g = (mag_ks_g >= 14.2)&(mag_ks_g < 14.7)
-mask_2_g = (mag_ks_g >= 14.7)&(mag_ks_g < 15.2)
-mask_3_g = (mag_ks_g >= 15.2)&(mag_ks_g < 15.7)
-mask_4_g = (mag_ks_g >= 15.7)&(mag_ks_g < 16.2)
-mask_5_g = (mag_ks_g >= 16.2)&(mag_ks_g < 16.7)
-mask_6_g = (mag_ks_g >= 16.7)&(mag_ks_g < 17.2)
-mask_7_g = (mag_ks_g >= 17.2)&(mag_ks_g < 17.7)
-mask_8_g = (mag_ks_g >= 17.7)&(mag_ks_g < 18.2)
-mask_9_g = (mag_ks_g >= 18.2)&(mag_ks_g < 18.7)  #A partir de 18.2 para EROs
-mask_10_g = (mag_ks_g >= 18.7)&(mag_ks_g < 19.2)
-mask_11_g = (mag_ks_g >= 19.2)&(mag_ks_g < 19.7)
-mask_12_g = (mag_ks_g >= 19.7)&(mag_ks_g < 20.2)
-mask_13_g = (mag_ks_g >= 20.2)&(mag_ks_g < 20.7)
-mask_14_g = (mag_ks_g >= 20.7)&(mag_ks_g < 21.2)
-mask_15_g = (mag_ks_g >= 21.2)&(mag_ks_g < 21.7)
-mask_16_g = (mag_ks_g >= 21.7)&(mag_ks_g < 22.2)
-mask_17_g = (mag_ks_g >= 22.2)&(mag_ks_g < 22.7)
+mask_0_g = (mag_ks_g > 13.7)&(mag_ks_g <= 14.2)
+mask_1_g = (mag_ks_g > 14.2)&(mag_ks_g <= 14.7)
+mask_2_g = (mag_ks_g > 14.7)&(mag_ks_g <= 15.2)
+mask_3_g = (mag_ks_g > 15.2)&(mag_ks_g <= 15.7)
+mask_4_g = (mag_ks_g > 15.7)&(mag_ks_g <= 16.2)
+mask_5_g = (mag_ks_g > 16.2)&(mag_ks_g <= 16.7)
+mask_6_g = (mag_ks_g > 16.7)&(mag_ks_g <= 17.2)
+mask_7_g = (mag_ks_g > 17.2)&(mag_ks_g <= 17.7)
+mask_8_g = (mag_ks_g > 17.7)&(mag_ks_g <= 18.2)
+mask_9_g = (mag_ks_g > 18.2)&(mag_ks_g <= 18.7)
+mask_10_g = (mag_ks_g > 18.7)&(mag_ks_g <= 19.2)
+mask_11_g = (mag_ks_g > 19.2)&(mag_ks_g <= 19.7)
+mask_12_g = (mag_ks_g > 19.7)&(mag_ks_g <= 20.2)
+mask_13_g = (mag_ks_g > 20.2)&(mag_ks_g <= 20.7)
+mask_14_g = (mag_ks_g > 20.7)&(mag_ks_g <= 21.2)
+mask_15_g = (mag_ks_g > 21.2)&(mag_ks_g <= 21.7)
+mask_16_g = (mag_ks_g > 21.7)&(mag_ks_g <= 22.2)
+mask_17_g = (mag_ks_g > 22.2)&(mag_ks_g <= 22.7)
 
 df_galaxies_0 = df_galaxies[mask_0_g]
 df_galaxies_1 = df_galaxies[mask_1_g]
@@ -131,24 +105,24 @@ df_galaxies_17_05 = df_galaxies[mask_17_g]
 
 mag_ks_s = df_stars["PETROMAG"]
 
-mask_0_s = (mag_ks_s >= 13.7)&(mag_ks_s < 14.2)
-mask_1_s =  (mag_ks_s >= 14.2)&(mag_ks_s < 14.7)
-mask_2_s = (mag_ks_s >= 14.7)&(mag_ks_s < 15.2)
-mask_3_s = (mag_ks_s >= 15.2)&(mag_ks_s < 15.7)
-mask_4_s = (mag_ks_s >= 15.7)&(mag_ks_s < 16.2)
-mask_5_s = (mag_ks_s >= 16.2)&(mag_ks_s < 16.7)
-mask_6_s = (mag_ks_s >= 16.7)&(mag_ks_s < 17.2)
-mask_7_s = (mag_ks_s >= 17.2)&(mag_ks_s < 17.7)
-mask_8_s = (mag_ks_s >= 17.7)&(mag_ks_s < 18.2)
-mask_9_s = (mag_ks_s >= 18.2)&(mag_ks_s < 18.7)
-mask_10_s = (mag_ks_s >= 18.7)&(mag_ks_s < 19.2)
-mask_11_s = (mag_ks_s >= 19.2)&(mag_ks_s < 19.7)
-mask_12_s = (mag_ks_s >= 19.7)&(mag_ks_s < 20.2)
-mask_13_s = (mag_ks_s >= 20.2)&(mag_ks_s < 20.7)
-mask_14_s = (mag_ks_s >= 20.7)&(mag_ks_s < 21.2)
-mask_15_s = (mag_ks_s >= 21.2)&(mag_ks_s < 21.7)
-mask_16_s = (mag_ks_s >= 21.7)&(mag_ks_s < 22.2)
-mask_17_s = (mag_ks_s >= 22.2)&(mag_ks_s < 22.7)
+mask_0_s = (mag_ks_s > 13.7)&(mag_ks_s <= 14.2)
+mask_1_s = (mag_ks_s > 14.2)&(mag_ks_s <= 14.7)
+mask_2_s = (mag_ks_s > 14.7)&(mag_ks_s <= 15.2)
+mask_3_s = (mag_ks_s > 15.2)&(mag_ks_s <= 15.7)
+mask_4_s = (mag_ks_s > 15.7)&(mag_ks_s <= 16.2)
+mask_5_s = (mag_ks_s > 16.2)&(mag_ks_s <= 16.7)
+mask_6_s = (mag_ks_s > 16.7)&(mag_ks_s <= 17.2)
+mask_7_s = (mag_ks_s > 17.2)&(mag_ks_s <= 17.7)
+mask_8_s = (mag_ks_s > 17.7)&(mag_ks_s <= 18.2)
+mask_9_s = (mag_ks_s > 18.2)&(mag_ks_s <= 18.7)
+mask_10_s = (mag_ks_s > 18.7)&(mag_ks_s <= 19.2)
+mask_11_s = (mag_ks_s > 19.2)&(mag_ks_s <= 19.7)
+mask_12_s = (mag_ks_s > 19.7)&(mag_ks_s <= 20.2)
+mask_13_s = (mag_ks_s > 20.2)&(mag_ks_s <= 20.7)
+mask_14_s = (mag_ks_s > 20.7)&(mag_ks_s <= 21.2)
+mask_15_s = (mag_ks_s > 21.2)&(mag_ks_s <= 21.7)
+mask_16_s = (mag_ks_s > 21.7)&(mag_ks_s <= 22.2)
+mask_17_s = (mag_ks_s > 22.2)&(mag_ks_s <= 22.7)
 
 df_stars_0 = df_stars[mask_0_s]
 df_stars_1 = df_stars[mask_1_s]
@@ -243,24 +217,24 @@ df_stars = df_098[mask_stars]
 
 mag_ks_g = df_galaxies["PETROMAG"]
 
-mask_0_g = (mag_ks_g >= 13.7)&(mag_ks_g < 14.2)
-mask_1_g = (mag_ks_g >= 14.2)&(mag_ks_g < 14.7)
-mask_2_g = (mag_ks_g >= 14.7)&(mag_ks_g < 15.2)
-mask_3_g = (mag_ks_g >= 15.2)&(mag_ks_g < 15.7)
-mask_4_g = (mag_ks_g >= 15.7)&(mag_ks_g < 16.2)
-mask_5_g = (mag_ks_g >= 16.2)&(mag_ks_g < 16.7)
-mask_6_g = (mag_ks_g >= 16.7)&(mag_ks_g < 17.2)
-mask_7_g = (mag_ks_g >= 17.2)&(mag_ks_g < 17.7)
-mask_8_g = (mag_ks_g >= 17.7)&(mag_ks_g < 18.2)
-mask_9_g = (mag_ks_g >= 18.2)&(mag_ks_g < 18.7)
-mask_10_g = (mag_ks_g >= 18.7)&(mag_ks_g < 19.2)
-mask_11_g = (mag_ks_g >= 19.2)&(mag_ks_g < 19.7)
-mask_12_g = (mag_ks_g >= 19.7)&(mag_ks_g < 20.2)
-mask_13_g = (mag_ks_g >= 20.2)&(mag_ks_g < 20.7)
-mask_14_g = (mag_ks_g >= 20.7)&(mag_ks_g < 21.2)
-mask_15_g = (mag_ks_g >= 21.2)&(mag_ks_g < 21.7)
-mask_16_g = (mag_ks_g >= 21.7)&(mag_ks_g < 22.2)
-mask_17_g = (mag_ks_g >= 22.2)&(mag_ks_g < 22.7)
+mask_0_g = (mag_ks_g > 13.7)&(mag_ks_g <= 14.2)
+mask_1_g = (mag_ks_g > 14.2)&(mag_ks_g <= 14.7)
+mask_2_g = (mag_ks_g > 14.7)&(mag_ks_g <= 15.2)
+mask_3_g = (mag_ks_g > 15.2)&(mag_ks_g <= 15.7)
+mask_4_g = (mag_ks_g > 15.7)&(mag_ks_g <= 16.2)
+mask_5_g = (mag_ks_g > 16.2)&(mag_ks_g <= 16.7)
+mask_6_g = (mag_ks_g > 16.7)&(mag_ks_g <= 17.2)
+mask_7_g = (mag_ks_g > 17.2)&(mag_ks_g <= 17.7)
+mask_8_g = (mag_ks_g > 17.7)&(mag_ks_g <= 18.2)
+mask_9_g = (mag_ks_g > 18.2)&(mag_ks_g <= 18.7)
+mask_10_g = (mag_ks_g > 18.7)&(mag_ks_g <= 19.2)
+mask_11_g = (mag_ks_g > 19.2)&(mag_ks_g <= 19.7)
+mask_12_g = (mag_ks_g > 19.7)&(mag_ks_g <= 20.2)
+mask_13_g = (mag_ks_g > 20.2)&(mag_ks_g <= 20.7)
+mask_14_g = (mag_ks_g > 20.7)&(mag_ks_g <= 21.2)
+mask_15_g = (mag_ks_g > 21.2)&(mag_ks_g <= 21.7)
+mask_16_g = (mag_ks_g > 21.7)&(mag_ks_g <= 22.2)
+mask_17_g = (mag_ks_g > 22.2)&(mag_ks_g <= 22.7)
 
 df_galaxies_0 = df_galaxies[mask_0_g]
 df_galaxies_1 = df_galaxies[mask_1_g]
@@ -290,24 +264,24 @@ df_galaxies_17_098 = df_galaxies[mask_17_g]
 
 mag_ks_s = df_stars["PETROMAG"]
 
-mask_0_s = (mag_ks_s >= 13.7)&(mag_ks_s < 14.2)
-mask_1_s =  (mag_ks_s >= 14.2)&(mag_ks_s < 14.7)
-mask_2_s = (mag_ks_s >= 14.7)&(mag_ks_s < 15.2)
-mask_3_s = (mag_ks_s >= 15.2)&(mag_ks_s < 15.7)
-mask_4_s = (mag_ks_s >= 15.7)&(mag_ks_s < 16.2)
-mask_5_s = (mag_ks_s >= 16.2)&(mag_ks_s < 16.7)
-mask_6_s = (mag_ks_s >= 16.7)&(mag_ks_s < 17.2)
-mask_7_s = (mag_ks_s >= 17.2)&(mag_ks_s < 17.7)
-mask_8_s = (mag_ks_s >= 17.7)&(mag_ks_s < 18.2)
-mask_9_s = (mag_ks_s >= 18.2)&(mag_ks_s < 18.7)
-mask_10_s = (mag_ks_s >= 18.7)&(mag_ks_s < 19.2)
-mask_11_s = (mag_ks_s >= 19.2)&(mag_ks_s < 19.7)
-mask_12_s = (mag_ks_s >= 19.7)&(mag_ks_s < 20.2)
-mask_13_s = (mag_ks_s >= 20.2)&(mag_ks_s < 20.7)
-mask_14_s = (mag_ks_s >= 20.7)&(mag_ks_s < 21.2)
-mask_15_s = (mag_ks_s >= 21.2)&(mag_ks_s < 21.7)
-mask_16_s = (mag_ks_s >= 21.7)&(mag_ks_s < 22.2)
-mask_17_s = (mag_ks_s >= 22.2)&(mag_ks_s < 22.7)
+mask_0_s = (mag_ks_s > 13.7)&(mag_ks_s <= 14.2)
+mask_1_s = (mag_ks_s > 14.2)&(mag_ks_s <= 14.7)
+mask_2_s = (mag_ks_s > 14.7)&(mag_ks_s <= 15.2)
+mask_3_s = (mag_ks_s > 15.2)&(mag_ks_s <= 15.7)
+mask_4_s = (mag_ks_s > 15.7)&(mag_ks_s <= 16.2)
+mask_5_s = (mag_ks_s > 16.2)&(mag_ks_s <= 16.7)
+mask_6_s = (mag_ks_s > 16.7)&(mag_ks_s <= 17.2)
+mask_7_s = (mag_ks_s > 17.2)&(mag_ks_s <= 17.7)
+mask_8_s = (mag_ks_s > 17.7)&(mag_ks_s <= 18.2)
+mask_9_s = (mag_ks_s > 18.2)&(mag_ks_s <= 18.7)
+mask_10_s = (mag_ks_s > 18.7)&(mag_ks_s <= 19.2)
+mask_11_s = (mag_ks_s > 19.2)&(mag_ks_s <= 19.7)
+mask_12_s = (mag_ks_s > 19.7)&(mag_ks_s <= 20.2)
+mask_13_s = (mag_ks_s > 20.2)&(mag_ks_s <= 20.7)
+mask_14_s = (mag_ks_s > 20.7)&(mag_ks_s <= 21.2)
+mask_15_s = (mag_ks_s > 21.2)&(mag_ks_s <= 21.7)
+mask_16_s = (mag_ks_s > 21.7)&(mag_ks_s <= 22.2)
+mask_17_s = (mag_ks_s > 22.2)&(mag_ks_s <= 22.7)
 
 df_stars_0 = df_stars[mask_0_s]
 df_stars_1 = df_stars[mask_1_s]
