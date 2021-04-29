@@ -349,97 +349,105 @@ star_15 = len(df_stars_15)
 star_16 = len(df_stars_16)
 star_17 = len(df_stars_17)
 
-
 stars_list_098 = np.array([star_0, star_1, star_2, star_3, star_4, star_5, star_6, star_7, star_8, star_9, star_10, star_11, star_12, star_13, star_14, star_15, star_16, star_17])
 
+
+#Saco ta la lista total de estrellas y galaxias (En número)
 
 stars_total = stars_list_05 + stars_list_098
 galaxies_total = galaxies_list_05 + galaxies_list_098
 
+#Retiro último valor de estrellas, que es cero, para evitar problemas
+
 stars_total_sin_0 = stars_total[0:17]
 
+#Calculo "N", cuentas/deg^2
 
-error_stars_total_sin_0 = 1/np.sqrt(stars_total_sin_0)
-error_galaxies_total = 1/np.sqrt(galaxies_total)
-
-
-
-area_sharks = 7.23 #revisar, este dato no lo recuero y perdí el correo que me decía Aurelio, es en grados de arco
+area_sharks = 7.23 
 
 N_stars = stars_total_sin_0/area_sharks
 N_galaxies = galaxies_total/area_sharks
 
-print(N_stars)
-print(N_galaxies)
+#El error lo calculo con la raíz del número de cuentas
 
-N_stars_err = error_stars_total_sin_0/area_sharks
-N_galaxies_err = error_galaxies_total/area_sharks
-
-print(N_stars_err)
-print(N_galaxies_err)
+N_stars_error = np.sqrt(stars_total_sin_0)/area_sharks
+N_galaxies_error = np.sqrt(galaxies_total)/area_sharks
 
 
 ks_sharks_vega = [12, 12.5, 13, 13.5, 14, 14.5, 15, 15.5, 16, 16.5, 17, 17.5, 18, 18.5, 19, 19.5, 20, 20.5]
-
 ks_sharks_AB = []
-
 for i in range(len(ks_sharks_vega)):
     ks_sharks_AB.append(ks_sharks_vega[i]+1.83)
 
-
+#Para Ks de estrellas quito el último valor(porque antes quité el último de estrellas)
 ks_sharks_AB_stars = ks_sharks_AB[0:17]
 
 
-
-
+#Calculo ahora el N de Daddi (con los datos del artículo)
 
 
 ks_Daddi_vega = [12, 12.5, 13, 13.5, 14, 14.5, 15, 15.5, 16, 16.5, 17, 17.5, 18, 18.5, 19]
-
 ks_Daddi_AB = []
-
 for i in range(len(ks_Daddi_vega)):
     ks_Daddi_AB.append(ks_Daddi_vega[i]+1.83)
     
-
 stars_Daddi = np.array([4, 7, 9, 17, 21, 38, 37, 62, 73, 88, 128, 127, 144, 185, 84])  #El intervalo 18.7-18.8 no lo representa
-
 galaxies_Daddi = np.array([0, 0, 0, 0, 4, 6, 16, 30, 74, 100, 178, 372, 633, 892, 628])
-
 area_Daddi_1 = 701/3600   #En deg^2 (paso de arcmin^2 a deg^2)
-
 N_stars_Daddi = stars_Daddi[0:14]/area_Daddi_1           #De 0 al 13
 N_galaxies_Daddi = galaxies_Daddi[0:14]/area_Daddi_1
-
-
 area_Daddi_2 = 447.5/3600
-
-
 N_stars_Daddi = np.append(N_stars_Daddi, stars_Daddi[14]/area_Daddi_2)
 N_galaxies_Daddi = np.append(N_galaxies_Daddi, galaxies_Daddi[14]/area_Daddi_2)
 
 
-#Log(N) viene dividido siempre por 2.33, que es 0.5+1.83. Esto es un poco raro, pero así parece que salen los números del artículo de Daddi, 
-#aunque no tiene mucho sentido. En el TFG puedo omitir esto. 
 
-#Añado el error poissoniano también de mis muestras, que es la raíz del número de cuentas.
+#Ploteo
 
 
-plt.figure()
-#plt.plot(ks_Daddi_AB,np.log(N_stars_Daddi), "x" ,label="Stars in Daddi´s article")         
-#plt.plot(ks_Daddi_AB,np.log(N_galaxies_Daddi), "s" ,label="Galaxies in Daddi´s article")  
-plt.errorbar(ks_sharks_AB_stars,np.log(N_stars), 1/np.sqrt(np.log(N_stars)), elinewidth=0.5, barsabove= True, color = "orangered", marker = "*" , linestyle="None", label="Stars in Sharks")
-#plt.plot(ks_sharks_AB,np.log(N_stars), "*" ,label="Stars in Sharks")      
-plt.errorbar(ks_sharks_AB,np.log(N_galaxies), 1/np.sqrt(np.log(N_galaxies)), elinewidth=0.5, barsabove= True , color = "royalblue", marker = "." , linestyle="None", label="Galaxies in Sharks")         
-#plt.plot(ks_sharks_AB,np.log(N_galaxies), "." ,label="Galaxies in Sharks")
+#Intento 1 error
+
+plt.figure() 
+plt.errorbar(ks_sharks_AB_stars,np.log(N_stars), (1/(np.log(np.sqrt(N_stars))))/2.33, elinewidth=0.5, barsabove= True, color = "orangered", marker = "*" , linestyle="None", label="Stars in Sharks")      
+plt.errorbar(ks_sharks_AB,np.log(N_galaxies), (1/(np.log(np.sqrt(N_galaxies))))/2.33, elinewidth=0.5, barsabove= True , color = "royalblue", marker = "." , linestyle="None", label="Galaxies in Sharks")         
 plt.xlabel("Ks", fontsize = 12)
 plt.ylabel(r"$log N ~ (objects/deg^2)$", fontsize=12)
 plt.xticks([13, 15, 17, 19, 21, 23 ])
 #plt.yticks([])   #Conviene añadir un yticks para quitarse los logaritmos negativos/menores a uno.
-plt.title("Stars and galaxies number of counts comparison")
+plt.title("$Error = 1/ln(\sqrt{N})$ (N = num/deg^2) [DIVISIÓN DADDI]")
 plt.grid(linestyle="--", linewidth=0.2)
 plt.legend()
-plt.savefig("Stars_galaxies_of_sharks_with_errors.png")
+plt.savefig("Stars_galaxies_of_sharks_with_errors_sqrt_log_dad.png")
+
+#Intento 2 error 
+
+plt.figure() 
+plt.errorbar(ks_sharks_AB_stars,np.log(N_stars), (1/(np.sqrt(np.log(N_stars))))/2.33, elinewidth=0.5, barsabove= True, color = "orangered", marker = "*" , linestyle="None", label="Stars in Sharks")      
+plt.errorbar(ks_sharks_AB,np.log(N_galaxies), (1/(np.sqrt(np.log(N_galaxies))))/2.33, elinewidth=0.5, barsabove= True , color = "royalblue", marker = "." , linestyle="None", label="Galaxies in Sharks")         
+plt.xlabel("Ks", fontsize = 12)
+plt.ylabel(r"$log N ~ (objects/deg^2)$", fontsize=12)
+plt.xticks([13, 15, 17, 19, 21, 23 ])
+#plt.yticks([])   #Conviene añadir un yticks para quitarse los logaritmos negativos/menores a uno.
+plt.title("$Error = 1/\sqrt{ln(N)}$ (N = num/deg^2) [DIVISIÓN DADDI]")
+plt.grid(linestyle="--", linewidth=0.2)
+plt.legend()
+plt.savefig("Stars_galaxies_of_sharks_with_errors_log_sqrt_dad.png")
+
+#Intento 3 error 
+
+plt.figure() 
+plt.errorbar(ks_sharks_AB_stars,np.log(N_stars), (1/(np.log(N_stars_error)))/2.33, elinewidth=0.5, barsabove= True, color = "orangered", marker = "*" , linestyle="None", label="Stars in Sharks")     
+plt.errorbar(ks_sharks_AB,np.log(N_galaxies), (1/(np.log(N_galaxies_error)))/2.33, elinewidth=0.5, barsabove= True , color = "royalblue", marker = "." , linestyle="None", label="Galaxies in Sharks")         
+plt.xlabel("Ks", fontsize = 12)
+plt.ylabel(r"$log N ~ (objects/deg^2)$", fontsize=12)
+plt.xticks([13, 15, 17, 19, 21, 23 ])
+#plt.yticks([])   #Conviene añadir un yticks para quitarse los logaritmos negativos/menores a uno.
+plt.title("$Error = 1/\ln(N_{error})$ $(N_{error} = \sqrt{num}/deg^2) [DIVISIÓN DADDI]$")
+plt.grid(linestyle="--", linewidth=0.2)
+plt.legend()
+plt.savefig("Stars_galaxies_of_sharks_with_errors_N_error_dad.png")
+
+
 
 
 
