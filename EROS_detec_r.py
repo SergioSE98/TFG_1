@@ -20,14 +20,9 @@ from astropy.table import Table, vstack    #Ojo importante aquí importar "Table
 from openpyxl import Workbook
 
 
-df_1=Table.read("fits/all_EROs.fits", format="fits")  #Obj en sharks y des, con 5sigma
+df=Table.read("fits/sharks_sgpe_nodif_signoise5_ALL_EROS_r_detections.fits", format="fits")  #Obj en sharks y des, con 5sigma
 
 
-mag_des_r = df_1["MAG_AUTO_R_DERED"]
-
-mask_r_detec = (mag_des_r < 95)
-
-df = df_1[mask_r_detec]  #Esto lo llamo al final del programa 
 
 
 

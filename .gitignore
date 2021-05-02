@@ -36,3 +36,15 @@ fits/viejos/sharks_and_des_sig_noise_5_lite.fits
 fits/sharks_only_not_des_lite_sig_noise_5.fits
 fits/sharks_and_des_sig_noise_5_lite_EROs.fits
 fits/all_EROs.fits
+fits/viejos_2/sharks_only_not_des_lite_sig_noise_5.fits
+fits/viejos_2/sharks_and_des_sig_noise_5_lite_EROs.fits
+fits/viejos_2/sharks_and_des_sig_noise_5_lite.fits
+fits/viejos_2/all_EROs_nodifrac.fits
+fits/viejos_2/all_EROs.fits
+fits/sharks_sgpe_nodif_signoise5_ALL_r_detections.fits
+fits/sharks_sgpe_nodif_signoise5_ALL_EROS_r_detections.fits
+fits/sharks_sgpe_nodif_signoise5_ALL_EROs.fits
+fits/sharks_sgpe_nodif_signoise5_ALL.fits
+fits/exptime/sharks_withexptime.fits
+fits/exptime/EROs_withexptime.fits
+fits/exptime/des_area_healsparse_exptime.fits

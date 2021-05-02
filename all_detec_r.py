@@ -21,16 +21,8 @@ from astropy.table import Table, vstack    #Ojo importante aquí importar "Table
 from openpyxl import Workbook
 
 
-df_1=Table.read("fits/sharks_and_des_sig_noise_5_lite.fits", format="fits")  #Obj en sharks y des, con 5sigma
+df=Table.read("fits/sharks_sgpe_nodif_signoise5_ALL_r_detections.fits", format="fits")  #Obj en sharks y des, con 5sigma
 
-
-#Filtro los objetos que tienen detección en r
-
-mag_des_r = df_1["MAG_AUTO_R_DERED"]
-
-mask_r_detec = (mag_des_r < 95)
-
-df = df_1[mask_r_detec]  #Esto lo llamo al final del programa 
 
 
 
@@ -127,75 +119,24 @@ mask_15_s = (mag_ks_s > 21.2)&(mag_ks_s <= 21.7)
 mask_16_s = (mag_ks_s > 21.7)&(mag_ks_s <= 22.2)
 mask_17_s = (mag_ks_s > 22.2)&(mag_ks_s <= 22.7)
 
-df_stars_0 = df_stars[mask_0_s]
-df_stars_1 = df_stars[mask_1_s]
-df_stars_2 = df_stars[mask_2_s]
-df_stars_3 = df_stars[mask_3_s]
-df_stars_4 = df_stars[mask_4_s]
-df_stars_5 = df_stars[mask_5_s]
-df_stars_6 = df_stars[mask_6_s]
-df_stars_7 = df_stars[mask_7_s]
-df_stars_8 = df_stars[mask_8_s]
-df_stars_9 = df_stars[mask_9_s]
-df_stars_10 = df_stars[mask_10_s]
-df_stars_11 = df_stars[mask_11_s]
-df_stars_12 = df_stars[mask_12_s]
-df_stars_13 = df_stars[mask_13_s]
-df_stars_14 = df_stars[mask_14_s]
-df_stars_15 = df_stars[mask_15_s]
-df_stars_16 = df_stars[mask_16_s]
-df_stars_17 = df_stars[mask_17_s]
-
-
-
-#Ahora calculo el num de estrellas y galaxias, para cada rango.
-
-galaxie_0 = len(df_galaxies_0_05)
-galaxie_1 = len(df_galaxies_1_05)
-galaxie_2 = len(df_galaxies_2_05)
-galaxie_3 = len(df_galaxies_3_05)
-galaxie_4 = len(df_galaxies_4_05)
-galaxie_5 = len(df_galaxies_5_05)
-galaxie_6 = len(df_galaxies_6_05)
-galaxie_7 = len(df_galaxies_7_05)
-galaxie_8 = len(df_galaxies_8_05)
-galaxie_9 = len(df_galaxies_9_05)
-galaxie_10 = len(df_galaxies_10_05)
-galaxie_11 = len(df_galaxies_11_05)
-galaxie_12 = len(df_galaxies_12_05)
-galaxie_13 = len(df_galaxies_13_05)
-galaxie_14 = len(df_galaxies_14_05)
-galaxie_15 = len(df_galaxies_15_05)
-galaxie_16 = len(df_galaxies_16_05)
-galaxie_17 = len(df_galaxies_17_05)
-
-
-
-galaxies_list_05 = np.array([galaxie_0, galaxie_1, galaxie_2, galaxie_3, galaxie_4, galaxie_5, galaxie_6, galaxie_7, galaxie_8, galaxie_9, galaxie_10, galaxie_11, galaxie_12, galaxie_13, galaxie_14, galaxie_15, galaxie_16, galaxie_17])
-
-
-
-star_0 = len(df_stars_0)
-star_1 = len(df_stars_1)
-star_2 = len(df_stars_2)
-star_3 = len(df_stars_3)
-star_4 = len(df_stars_4)
-star_5 = len(df_stars_5)
-star_6 = len(df_stars_6)
-star_7 = len(df_stars_7)
-star_8 = len(df_stars_8)
-star_9 = len(df_stars_9)
-star_10 = len(df_stars_10)
-star_11 = len(df_stars_11)
-star_12 = len(df_stars_12)
-star_13 = len(df_stars_13)
-star_14 = len(df_stars_14)
-star_15 = len(df_stars_15)
-star_16 = len(df_stars_16)
-star_17 = len(df_stars_17)
-
-
-stars_list_05 = np.array([star_0, star_1, star_2, star_3, star_4, star_5, star_6, star_7, star_8, star_9, star_10, star_11, star_12, star_13, star_14, star_15, star_16, star_17])
+df_stars_0_05 = df_stars[mask_0_s]
+df_stars_1_05 = df_stars[mask_1_s]
+df_stars_2_05 = df_stars[mask_2_s]
+df_stars_3_05 = df_stars[mask_3_s]
+df_stars_4_05 = df_stars[mask_4_s]
+df_stars_5_05 = df_stars[mask_5_s]
+df_stars_6_05 = df_stars[mask_6_s]
+df_stars_7_05 = df_stars[mask_7_s]
+df_stars_8_05 = df_stars[mask_8_s]
+df_stars_9_05 = df_stars[mask_9_s]
+df_stars_10_05 = df_stars[mask_10_s]
+df_stars_11_05 = df_stars[mask_11_s]
+df_stars_12_05 = df_stars[mask_12_s]
+df_stars_13_05 = df_stars[mask_13_s]
+df_stars_14_05 = df_stars[mask_14_s]
+df_stars_15_05 = df_stars[mask_15_s]
+df_stars_16_05 = df_stars[mask_16_s]
+df_stars_17_05 = df_stars[mask_17_s]
 
 
 
@@ -286,102 +227,58 @@ mask_15_s = (mag_ks_s > 21.2)&(mag_ks_s <= 21.7)
 mask_16_s = (mag_ks_s > 21.7)&(mag_ks_s <= 22.2)
 mask_17_s = (mag_ks_s > 22.2)&(mag_ks_s <= 22.7)
 
-df_stars_0 = df_stars[mask_0_s]
-df_stars_1 = df_stars[mask_1_s]
-df_stars_2 = df_stars[mask_2_s]
-df_stars_3 = df_stars[mask_3_s]
-df_stars_4 = df_stars[mask_4_s]
-df_stars_5 = df_stars[mask_5_s]
-df_stars_6 = df_stars[mask_6_s]
-df_stars_7 = df_stars[mask_7_s]
-df_stars_8 = df_stars[mask_8_s]
-df_stars_9 = df_stars[mask_9_s]
-df_stars_10 = df_stars[mask_10_s]
-df_stars_11 = df_stars[mask_11_s]
-df_stars_12 = df_stars[mask_12_s]
-df_stars_13 = df_stars[mask_13_s]
-df_stars_14 = df_stars[mask_14_s]
-df_stars_15 = df_stars[mask_15_s]
-df_stars_16 = df_stars[mask_16_s]
-df_stars_17 = df_stars[mask_17_s]
-
-
-
-#Ahora calculo el num de estrellas y galaxias, para cada rango.
-
-galaxie_0 = len(df_galaxies_0_098)
-galaxie_1 = len(df_galaxies_1_098)
-galaxie_2 = len(df_galaxies_2_098)
-galaxie_3 = len(df_galaxies_3_098)
-galaxie_4 = len(df_galaxies_4_098)
-galaxie_5 = len(df_galaxies_5_098)
-galaxie_6 = len(df_galaxies_6_098)
-galaxie_7 = len(df_galaxies_7_098)
-galaxie_8 = len(df_galaxies_8_098)
-galaxie_9 = len(df_galaxies_9_098)
-galaxie_10 = len(df_galaxies_10_098)
-galaxie_11 = len(df_galaxies_11_098)
-galaxie_12 = len(df_galaxies_12_098)
-galaxie_13 = len(df_galaxies_13_098)
-galaxie_14 = len(df_galaxies_14_098)
-galaxie_15 = len(df_galaxies_15_098)
-galaxie_16 = len(df_galaxies_16_098)
-galaxie_17 = len(df_galaxies_17_098)
-
-
-
-galaxies_list_098 = np.array([galaxie_0, galaxie_1, galaxie_2, galaxie_3, galaxie_4, galaxie_5, galaxie_6, galaxie_7, galaxie_8, galaxie_9, galaxie_10, galaxie_11, galaxie_12, galaxie_13, galaxie_14, galaxie_15, galaxie_16, galaxie_17])
-
-
-
-star_0 = len(df_stars_0)
-star_1 = len(df_stars_1)
-star_2 = len(df_stars_2)
-star_3 = len(df_stars_3)
-star_4 = len(df_stars_4)
-star_5 = len(df_stars_5)
-star_6 = len(df_stars_6)
-star_7 = len(df_stars_7)
-star_8 = len(df_stars_8)
-star_9 = len(df_stars_9)
-star_10 = len(df_stars_10)
-star_11 = len(df_stars_11)
-star_12 = len(df_stars_12)
-star_13 = len(df_stars_13)
-star_14 = len(df_stars_14)
-star_15 = len(df_stars_15)
-star_16 = len(df_stars_16)
-star_17 = len(df_stars_17)
-
-
-stars_list_098 = np.array([star_0, star_1, star_2, star_3, star_4, star_5, star_6, star_7, star_8, star_9, star_10, star_11, star_12, star_13, star_14, star_15, star_16, star_17])
-
-
-stars_total = stars_list_05 + stars_list_098
-galaxies_total = galaxies_list_05 + galaxies_list_098
-
-
-
-#Haciendo esto tengo ya clasificados en estrella/galaxia mis EROs con detección en r
-
-
-area_sharks = 7.23 #revisar, este dato no lo recuero y perdí el correo que me decía Aurelio, es en grados de arco
-
-N_stars = stars_total/area_sharks
-N_galaxies = galaxies_total/area_sharks
-
-area_sharks_mins = 7.23*3600 #revisar, este dato no lo recuero y perdí el correo que me decía Aurelio, es en grados de arco
-
-N_stars_mins = stars_total/area_sharks_mins
-N_galaxies_mins = galaxies_total/area_sharks_mins
-
-
-ks_mitad_intervalos = ([14.2, 14.7, 15.2, 15.7, 16.2, 16.7, 17.2, 17.7, 18.2, 18.7, 19.2, 19.7, 20.2, 20.7, 21.2, 21.7, 22.2, 22.7])
+df_stars_0_098 = df_stars[mask_0_s]
+df_stars_1_098 = df_stars[mask_1_s]
+df_stars_2_098 = df_stars[mask_2_s]
+df_stars_3_098 = df_stars[mask_3_s]
+df_stars_4_098 = df_stars[mask_4_s]
+df_stars_5_098 = df_stars[mask_5_s]
+df_stars_6_098 = df_stars[mask_6_s]
+df_stars_7_098 = df_stars[mask_7_s]
+df_stars_8_098 = df_stars[mask_8_s]
+df_stars_9_098 = df_stars[mask_9_s]
+df_stars_10_098 = df_stars[mask_10_s]
+df_stars_11_098 = df_stars[mask_11_s]
+df_stars_12_098 = df_stars[mask_12_s]
+df_stars_13_098 = df_stars[mask_13_s]
+df_stars_14_098 = df_stars[mask_14_s]
+df_stars_15_098 = df_stars[mask_15_s]
+df_stars_16_098 = df_stars[mask_16_s]
+df_stars_17_098 = df_stars[mask_17_s]
 
 
 
 
-#Junto todas las galaxias que me interesan de cada rango en dataframes
+
+#Junto todas las estrellas
+
+df_stars_0 = vstack([df_stars_0_05, df_stars_0_098])
+df_stars_1 = vstack([df_stars_1_05, df_stars_1_098])
+df_stars_2 = vstack([df_stars_2_05, df_stars_2_098])
+df_stars_3 = vstack([df_stars_3_05, df_stars_3_098])
+df_stars_4 = vstack([df_stars_4_05, df_stars_4_098])
+df_stars_5 = vstack([df_stars_5_05, df_stars_5_098])
+df_stars_6 = vstack([df_stars_6_05, df_stars_6_098])
+df_stars_7 = vstack([df_stars_7_05, df_stars_7_098])
+df_stars_8 = vstack([df_stars_8_05, df_stars_8_098])
+df_stars_9 = vstack([df_stars_9_05, df_stars_9_098])
+df_stars_10 = vstack([df_stars_10_05, df_stars_10_098])
+df_stars_11 = vstack([df_stars_11_05, df_stars_11_098])
+df_stars_12 = vstack([df_stars_12_05, df_stars_12_098])
+df_stars_13 = vstack([df_stars_13_05, df_stars_13_098])
+df_stars_14 = vstack([df_stars_14_05, df_stars_14_098])
+df_stars_15 = vstack([df_stars_15_05, df_stars_15_098])
+df_stars_16 = vstack([df_stars_16_05, df_stars_16_098])
+df_stars_17 = vstack([df_stars_17_05, df_stars_17_098])
+
+df_stars_all = vstack([df_stars_0, df_stars_1, df_stars_2, df_stars_3, df_stars_4, df_stars_5, df_stars_6, df_stars_7, df_stars_8, df_stars_9, df_stars_10, df_stars_11, df_stars_12, df_stars_13, df_stars_14, df_stars_15, df_stars_16, df_stars_17])
+
+stars_list = np.array([len(df_stars_0), len(df_stars_1), len(df_stars_2), len(df_stars_3), len(df_stars_4), len(df_stars_5), len(df_stars_6), len(df_stars_7), len(df_stars_8), len(df_stars_9), len(df_stars_10), len(df_stars_11), len(df_stars_12), len(df_stars_13), len(df_stars_14),  len(df_stars_15), len(df_stars_16), len(df_stars_17),])
+total_stars = len(df_stars_all)
+
+
+
+#Junto todas las galaxias
 
 df_galaxies_0 = vstack([df_galaxies_0_05, df_galaxies_0_098])
 df_galaxies_1 = vstack([df_galaxies_1_05, df_galaxies_1_098])
@@ -403,8 +300,24 @@ df_galaxies_16 = vstack([df_galaxies_16_05, df_galaxies_16_098])
 df_galaxies_17 = vstack([df_galaxies_17_05, df_galaxies_17_098])
 
 df_galaxies_all = vstack([df_galaxies_0, df_galaxies_1, df_galaxies_2, df_galaxies_3, df_galaxies_4, df_galaxies_5, df_galaxies_6, df_galaxies_7, df_galaxies_8, df_galaxies_9, df_galaxies_10, df_galaxies_11, df_galaxies_12, df_galaxies_13, df_galaxies_14, df_galaxies_15, df_galaxies_16, df_galaxies_17])
-#Con esto
 
+galaxies_list = np.array([len(df_galaxies_0), len(df_galaxies_1), len(df_galaxies_2), len(df_galaxies_3), len(df_galaxies_4), len(df_galaxies_5), len(df_galaxies_6), len(df_galaxies_7), len(df_galaxies_8), len(df_galaxies_9), len(df_galaxies_10), len(df_galaxies_11), len(df_galaxies_12), len(df_galaxies_13), len(df_galaxies_14),  len(df_galaxies_15), len(df_galaxies_16), len(df_galaxies_17),])
+total_galaxies = len(df_galaxies_all)
+
+
+
+area_sharks = 7.23 #revisar, este dato no lo recuero y perdí el correo que me decía Aurelio, es en grados de arco
+
+N_stars = stars_list/area_sharks
+N_galaxies = galaxies_list/area_sharks
+
+area_sharks_mins = 7.23*3600 #revisar, este dato no lo recuero y perdí el correo que me decía Aurelio, es en grados de arco
+
+N_stars_mins = stars_list/area_sharks_mins
+N_galaxies_mins = galaxies_list/area_sharks_mins
+
+
+ks_mitad_intervalos = ([14.2, 14.7, 15.2, 15.7, 16.2, 16.7, 17.2, 17.7, 18.2, 18.7, 19.2, 19.7, 20.2, 20.7, 21.2, 21.7, 22.2, 22.7])
 
 
 
@@ -428,43 +341,48 @@ r_Ks_16 = df_galaxies_16["MAG_AUTO_R_DERED"] - df_galaxies_16["PETROMAG"]
 r_Ks_17 = df_galaxies_17["MAG_AUTO_R_DERED"] - df_galaxies_17["PETROMAG"]
 
 
+
+
+
 fig, axs = plt.subplots(4,2, sharex= True)#, sharey = True)
 plt.xlim(-2,6)
 
 plt.axes(axs[0,0])
 #plt.xlim(-2,6)
-plt.hist(r_Ks_10,bins = 30, color = "steelblue", ec = "black" )
+plt.hist(r_Ks_10,bins = 30, color = "grey", ec = "black" )
 plt.axes(axs[0,1])
 #plt.xlim(-2,6)
-plt.hist(r_Ks_11,bins = 60, color = "steelblue", ec = "black" )
+plt.hist(r_Ks_11,bins = 60, color = "grey", ec = "black" )
 plt.axes(axs[1,0])
 #plt.xlim(-2,6)
-plt.hist(r_Ks_12,bins = 60, color = "steelblue", ec = "black" )
+plt.hist(r_Ks_12,bins = 60, color = "grey", ec = "black" )
 plt.axes(axs[1,1])
 #plt.xlim(-2,6)
-plt.hist(r_Ks_13,bins = 60, color = "steelblue", ec = "black" )
+plt.hist(r_Ks_13,bins = 60, color = "grey", ec = "black" )
 plt.axes(axs[2,0])
 #plt.xlim(-2,6)
-plt.hist(r_Ks_14,bins = 60, color = "steelblue", ec = "black" )
+plt.hist(r_Ks_14,bins = 60, color = "grey", ec = "black" )
 plt.axes(axs[2,1])
 #plt.xlim(-2,6)
-plt.hist(r_Ks_15,bins = 60, color = "steelblue", ec = "black" )
+plt.hist(r_Ks_15,bins = 60, color = "grey", ec = "black" )
 plt.axes(axs[3,0])
 #plt.xlim(-2,6)
-plt.hist(r_Ks_16,bins = 60, color = "steelblue", ec = "black" )
+plt.hist(r_Ks_16,bins = 60, color = "grey", ec = "black" )
 plt.axes(axs[3,1])
 #plt.xlim(-2,6)
-plt.hist(r_Ks_17,bins = 60, color = "steelblue", ec = "black" )
+plt.hist(r_Ks_17,bins = 60, color = "grey", ec = "black" )
 fig.add_subplot(111, frame_on=False)
 plt.tick_params(labelcolor="none", bottom=False, left=False)
 plt.xlabel("$r - K_s$", fontsize = 12)
+plt.ylabel("    Galaxies", fontsize = 12)
+
 #÷plt.ylabel("Common Y-Axis")
 plt.savefig("Figura_4.png")
 plt.show()
 
 
 plt.figure()
-plt.plot(df_galaxies_all["PETROMAG"], df_galaxies_all["MAG_AUTO_R_DERED"] - df_galaxies_all["PETROMAG"], marker = ".", markersize = 1.5, linestyle="None", color = "steelblue")
+plt.plot(df_galaxies_all["PETROMAG"], df_galaxies_all["MAG_AUTO_R_DERED"] - df_galaxies_all["PETROMAG"], marker = ".", markersize = 1, linestyle="None", color = "grey")
 plt.xlabel("$Ks$", fontsize = 12)
 plt.ylabel("$r - K_s$", fontsize = 12)
 plt.savefig("Figura_3.png")
