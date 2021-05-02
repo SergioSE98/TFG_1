@@ -54,13 +54,13 @@ imagen3.set_axis_labels('L (Right ascension)', 'B (Declination)', fontsize=11)
 
 
 #Guardo ahora las imagenes con las distintas representaciones del paralaje
-imagen1.savefig('Density distribution (ALPHA_J2000, DELTA_J2000) in spacial coordinates.png')  
+imagen1.savefig('ej1_sharks_sgpe_distribution_in_spacial_coords.png')  
 #plt.close(imagen1.fig)  Esto podría activarlo si solo quisiera mostrar la imágen con ambas representaciones a la vez.
 """
 imagen2.savefig('Density distribution (L,B) in galactic coordinates.png')
 #plt.close(imagen2.fig)
 """
-imagen3.savefig('Density distribution (L,B) in galactic coordinates.png')
+imagen3.savefig("ej1_sharks_sgpe_distribution_in_galactic_coords.png")
 
 #A continuación creo una figura con dos subplots, y en cada uno de ellos añadiré las dos imágenes antes obtenidas
 f, axarr = plt.subplots(1,2)
@@ -73,6 +73,6 @@ axarr[1].imshow(mpimg.imread('Density distribution (L,B) in galactic coordinates
 
 
 #Por último guardo la figura que contiene ambas distribuciones de densidad
-f.savefig("Density distribution (right ascension,declination) in spacial and galactic coordinates.png")
+f.savefig("ej1_sharks_sgpe_distribution_in_both_coords.png")
 plt.show()
 plt.tight_layout()

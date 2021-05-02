@@ -105,6 +105,6 @@ plt.legend()
 
 
 #Guardo las figuras
-image1.savefig('Photometry for SHARKS-VIKING.png')
-image2.savefig('Photometry for SHARKS-VIKING with error bars.png')   
+image1.savefig('ej5_Photometry_SHARKS-VIKING.png')
+image2.savefig('ej5_Photometry_SHARKS-VIKING_error_bars.png')   
 

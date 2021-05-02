@@ -71,13 +71,13 @@ print("The image depth is: %f" % profundidad_imagen)
 #Por último realizo un histograma de los valores obtenidos tras el filtrado, aquellos MAG_AUTO que cumplen la condición dada.
 #(En internet salía que existía histplot en seaborn, pero a mí no me deja usarlo, así que he usado distplot).
 
-i1 = plt.figure("Histogram of magnitude values with an error of approx. 0.21 (to obtain image depth)")    #Ese 0.21 es x=1.086/5
-plt.title("Histogram of magnitude values with an error of approx. 0.21 (to obtain image depth)")
-imag1 = seaborn.distplot(filtrado,kde=False,norm_hist=False)    #Debo quitar el KDE (un ajuste que hace seaborn) para poder quitar el histograma normalizado
+i1 = plt.figure("Magnitude values with an error of approx. 0.21 (to obtain image depth)")    #Ese 0.21 es x=1.086/5
+plt.title("Magnitude of objects with $signal/noise \simeq 5$")
+imag1 = seaborn.distplot(filtrado,kde=False,norm_hist=False,bins = 60, hist_kws=dict(edgecolor="k", linewidth=2))    #Debo quitar el KDE (un ajuste que hace seaborn) para poder quitar el histograma normalizado
 plt.ylabel("Photon counts")
-i1.savefig('Histogram of magnitude values with an error of approx. 0.21 (to obtain image depth).png')   #QUitando el hist normalizado ya sí obtengo el núm de cuentas en eje Y.
+i1.savefig('ej_3_hist_image_depth.png')   #QUitando el hist normalizado ya sí obtengo el núm de cuentas en eje Y.
 
 i2 = plt.figure("Magnitude values with an error of approx 0.21 (to obtain image depth)")
 imag2 = seaborn.scatterplot(RA, DEC, filtrado, s=7, legend = "brief")
-plt.title("Magnitude values with an error of approx. 0.21 (to obtain image depth)")
-i2.savefig("scatter_mag_image_depth.png")
+plt.title("Magnitude of objects with $signal/noise \simeq 5$")
+i2.savefig("ej_3_scatter_image_depth.png")

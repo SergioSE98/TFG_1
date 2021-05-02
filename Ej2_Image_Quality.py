@@ -48,7 +48,7 @@ i1=plt.figure("Local estimate of variation in sky level")
 plt.title("Local estimate of variation in sky level")
 imag1 = seaborn.scatterplot(RA, DEC, SKYVAR, s=7, legend ="brief")  #Ese "s" que añado en "size" cambia tamaño de puntos
 
-
+"""
 i2=plt.figure("Ellipticity of stars")
 plt.title("Ellipticity of stars")
 imag2 = seaborn.scatterplot(RA_mask1, DEC_mask1, ELL_masked1, s=7, legend = "brief")
@@ -56,15 +56,66 @@ imag2 = seaborn.scatterplot(RA_mask1, DEC_mask1, ELL_masked1, s=7, legend = "bri
 i3=plt.figure("Ellipticity of galaxies")
 plt.title("Ellipticity of galaxies")
 imag3 = seaborn.scatterplot(RA_mask2, DEC_mask2, ELL_masked2, s=7, legend = "brief")
+"""
 
 i4=plt.figure("1.086/Magnitude_Error (Signal to noise ratio)")   
 plt.title("1.086/Magnitude error (Signal to noise ratio)")
-imag4 = seaborn.scatterplot(RA, DEC,1.086/APERMAG3ERR, s=7, legend = "brief")   #Importante que la leyenda está mal, sale la señal/ruido, no la APERMAG3ERR
-
-
+imag4 = seaborn.scatterplot(RA, DEC,1.086/APERMAG3ERR, s=7, legend_out = True)   #Importante que la leyenda está mal, sale la señal/ruido, no la APERMAG3ERR
+new_legend = 'Signal to noise'
+g._legend.set_title(new_legend)
 #Guardo las imágenes en formato png
 
-i1.savefig('Local estimate of variation in sky level.png')  
-i2.savefig('Ellipticity of stars.png')  
-i3.savefig("Ellipticity of galaxies.png")
-i4.savefig('1.086_Magnitude_Error (Signal to noise ratio).png')    #La leyenda en esta figura no muestra el 1.086/, pero va dividiendo.
+i1.savefig('ej_2_skyvar_scatter.png')  
+
+i4.savefig('ej_2_signal_noise_scatter.png')    #La leyenda en esta figura no muestra el 1.086/, pero va dividiendo.
+
+
+mag_ks = df["PETROMAG"]
+
+mask_05 = (mag_ks<19.2)#&(mag_des_r <= 24.65)  #Si aplico las dos condiciones, se limita el numero de objetos (pierdo objetos)
+mask_098 = (mag_ks>=19.2)#&(mag_des_r > 24.65)
+
+df_098 = df[mask_098]
+df_05 = df[mask_05]
+
+#Empiezo con 0.5
+
+
+
+mask_galaxies = (df_05["CLASSSTAT"] < 0.5)
+
+mask_stars = (df_05["CLASSSTAT"] >= 0.5)
+
+df_galaxies_05 = df_05[mask_galaxies]
+
+df_stars_05 = df_05[mask_stars]
+
+
+
+mask_galaxies = (df_098["CLASSSTAT"] < 0.975)
+
+mask_stars = (df_098["CLASSSTAT"]>= 0.975)
+
+df_galaxies_098 = df_098[mask_galaxies]
+
+df_stars_098 = df_098[mask_stars]
+
+
+df_stars_all = astropy.vstack([df_stars_05,df_stars_098])
+df_galaxies_all = astropy.vstack([df_galaxies_05,df_galaxies_098])
+
+
+i2=plt.figure("Ellipticity of stars")
+plt.title("Ellipticity of stars")
+imag2 = seaborn.scatterplot(df_stars_all["RA"], df_stars_all["DEC"], df_stars_all["ELLIPTICITY"], s=7, legend = "brief")
+
+i3=plt.figure("Ellipticity of galaxies")
+plt.title("Ellipticity of galaxies")
+imag3 = seaborn.scatterplot(df_galaxies_all["RA"], df_galaxies_all["DEC"], df_galaxies_all["ELLIPTICITY"], s=7, legend = "brief")
+
+i2.savefig('ej2_ellipticity_stars_scatter.png')  
+i3.savefig("ej2_ellipticity_of_galaxies_scatter.png")
+
+
+
+
