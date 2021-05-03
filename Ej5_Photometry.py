@@ -53,7 +53,7 @@ CLASS_SHARKS = CLASSSTAT[matches_viking["i1"]]
 
 
 #Creo mask para evitar valores nulos
-mask = (MAG_SHARKS>0)&(MAG_SHARKS<30)&(MAG_VIKING>0)&(MAG_VIKING<30)&(ERROR_MAG_SHARKS<0.3)&(ERROR_MAG_VIKING<0.3)&(CLASS_SHARKS>0.95)
+mask = (MAG_SHARKS>0)&(MAG_SHARKS<30)&(MAG_VIKING>0)&(MAG_VIKING<30)&(ERROR_MAG_SHARKS<0.3)&(ERROR_MAG_VIKING<0.3)
 
 
 #MAGNITUDES "NEW" obtenidas una vez pasada la mask

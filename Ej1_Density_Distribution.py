@@ -32,8 +32,8 @@ L = df["L"]
 B = df["B"]
 #Ploteo la distribución de densidad de las fuentes contenidas en el archivo fits (añado título y nombre a ejes)
 imagen1 = seaborn.jointplot(RA, DEC, kind="hex")
-imagen1.fig.suptitle("Density distribution (ALPHA_J2000, DELTA_J2000) in spacial coordinates", fontsize=11)
-imagen1.set_axis_labels('ALPHA_J2000 (Right ascension)', 'DELTA_J2000 (Declination)', fontsize=11)
+imagen1.fig.suptitle(r"Density distribution ($\alpha_{J2000}$, $\delta_{J2000}$) in spacial coordinates", fontsize=11)
+imagen1.set_axis_labels(r'$\alpha_{J2000}$ (Right ascension)', '$\delta_{J2000}$ (Declination)', fontsize=11)
 
 
 
@@ -64,8 +64,8 @@ imagen3.savefig("ej1_sharks_sgpe_distribution_in_galactic_coords.png")
 
 #A continuación creo una figura con dos subplots, y en cada uno de ellos añadiré las dos imágenes antes obtenidas
 f, axarr = plt.subplots(1,2)
-axarr[0].imshow(mpimg.imread('Density distribution (ALPHA_J2000, DELTA_J2000) in spacial coordinates.png'))
-axarr[1].imshow(mpimg.imread('Density distribution (L,B) in galactic coordinates.png'))
+axarr[0].imshow(mpimg.imread('ej1_sharks_sgpe_distribution_in_spacial_coords.png'))
+axarr[1].imshow(mpimg.imread('ej1_sharks_sgpe_distribution_in_galactic_coords.png'))
 
 # turn off x and y axis, lo uso para quitar los ejes que el propio subplot introduce.
 [ax.set_axis_off() for ax in axarr.ravel()]

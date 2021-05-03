@@ -48,3 +48,4 @@ fits/sharks_sgpe_nodif_signoise5_ALL.fits
 fits/exptime/sharks_withexptime.fits
 fits/exptime/EROs_withexptime.fits
 fits/exptime/des_area_healsparse_exptime.fits
+*.png

@@ -52,7 +52,7 @@ print (EE)
 import matplotlib.pyplot as plt
 #plt.errorbar(np.array(cc),np.array(ff),yerr=EE,label='Frac',fmt='--o')
 plt.errorbar(np.array(cc),np.array(FF),yerr=EE,label='Unity',fmt='--o')
-plt.xlabel('RA')
+plt.xlabel('EXPTIME')
 plt.ylabel('Density [arcmin square]')
 plt.legend()
 plt.savefig('exptime_eros_density.png' .format(tag))

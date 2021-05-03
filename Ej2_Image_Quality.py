@@ -18,7 +18,7 @@ import seaborn as seaborn
 
 import matplotlib.pyplot as plt
 
-from astropy.table import Table    #Ojo importante aquí importar "Table" con mayuscula
+from astropy.table import Table, vstack    #Ojo importante aquí importar "Table" con mayuscula
 
 #Voy a leer el archivo fits
 dat=Table.read("fits/sharks_sgpe.fits", format="fits")
@@ -57,12 +57,12 @@ i3=plt.figure("Ellipticity of galaxies")
 plt.title("Ellipticity of galaxies")
 imag3 = seaborn.scatterplot(RA_mask2, DEC_mask2, ELL_masked2, s=7, legend = "brief")
 """
+signal_to_noise = 1.086/APERMAG3ERR
 
 i4=plt.figure("1.086/Magnitude_Error (Signal to noise ratio)")   
 plt.title("1.086/Magnitude error (Signal to noise ratio)")
-imag4 = seaborn.scatterplot(RA, DEC,1.086/APERMAG3ERR, s=7, legend_out = True)   #Importante que la leyenda está mal, sale la señal/ruido, no la APERMAG3ERR
-new_legend = 'Signal to noise'
-g._legend.set_title(new_legend)
+imag4 = seaborn.scatterplot(RA, DEC, signal_to_noise, s=7, legend = "brief")   #Importante que la leyenda está mal, sale la señal/ruido, no la APERMAG3ERR
+imag4.legend(title = "Signal to noise ratio")
 #Guardo las imágenes en formato png
 
 i1.savefig('ej_2_skyvar_scatter.png')  
@@ -101,17 +101,20 @@ df_galaxies_098 = df_098[mask_galaxies]
 df_stars_098 = df_098[mask_stars]
 
 
-df_stars_all = astropy.vstack([df_stars_05,df_stars_098])
-df_galaxies_all = astropy.vstack([df_galaxies_05,df_galaxies_098])
+
+
+
+df_stars_all = pandas.concat([df_stars_05, df_stars_098])
+df_galaxies_all = pandas.concat([df_galaxies_05, df_galaxies_098])
 
 
 i2=plt.figure("Ellipticity of stars")
 plt.title("Ellipticity of stars")
-imag2 = seaborn.scatterplot(df_stars_all["RA"], df_stars_all["DEC"], df_stars_all["ELLIPTICITY"], s=7, legend = "brief")
+imag2 = seaborn.scatterplot(df_stars_all["RA"], df_stars_all["DEC"], df_stars_all["ELL"], s=7, legend = "brief")
 
 i3=plt.figure("Ellipticity of galaxies")
 plt.title("Ellipticity of galaxies")
-imag3 = seaborn.scatterplot(df_galaxies_all["RA"], df_galaxies_all["DEC"], df_galaxies_all["ELLIPTICITY"], s=7, legend = "brief")
+imag3 = seaborn.scatterplot(df_galaxies_all["RA"], df_galaxies_all["DEC"], df_galaxies_all["ELL"], s=7, legend = "brief")
 
 i2.savefig('ej2_ellipticity_stars_scatter.png')  
 i3.savefig("ej2_ellipticity_of_galaxies_scatter.png")

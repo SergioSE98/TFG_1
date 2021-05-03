@@ -319,6 +319,7 @@ print(galaxies_list)
 
 
 
+
 #Retiro último valor de estrellas, que es cero, para evitar problemas
 
 stars_list_sin_0 = stars_list[0:17]
