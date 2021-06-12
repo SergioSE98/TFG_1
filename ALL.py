@@ -27,7 +27,7 @@ from openpyxl import Workbook
 #Leo datos (Objetos comunes de SHARKS y DES)
  
 
-df=Table.read("fits/sharks_sgpe_nodif_signoise5_ALL.fits", format="fits")  #Obj en sharks y des, con 5sigma
+df=Table.read("fits/sharks_and_des.fits", format="fits")  #Obj en sharks y des, con 5sigma
 
 
 #Acoto objetos con signal/noise superior a 5 sigma.
@@ -314,6 +314,7 @@ total_galaxies = len(df_galaxies_all)
 
 print(stars_list)
 print(galaxies_list)
+
 
 
 

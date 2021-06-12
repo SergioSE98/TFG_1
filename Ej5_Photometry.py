@@ -8,6 +8,8 @@ Created on Wed Mar 10 21:35:31 2021
 
 import numpy as np
 
+import scipy.stats as scp
+
 import astropy as astropy 
 
 import pandas as pandas
@@ -23,7 +25,7 @@ import smatch
 
 #Empiezo haciendo matching de los puntos captados en SHARKS y VIKING
 
-dat1=Table.read("fits/sharks_sgpe.fits", format="fits")
+dat1=Table.read("fits/sharks_sgpe_nodif_signoise5_ALL.fits", format="fits")
 dat2=Table.read("fits/viking_ksap3.fit", format="fits")   
 
 dec1 = dat1["DEC"]
@@ -53,7 +55,8 @@ CLASS_SHARKS = CLASSSTAT[matches_viking["i1"]]
 
 
 #Creo mask para evitar valores nulos
-mask = (MAG_SHARKS>0)&(MAG_SHARKS<30)&(MAG_VIKING>0)&(MAG_VIKING<30)&(ERROR_MAG_SHARKS<0.3)&(ERROR_MAG_VIKING<0.3)&(CLASS_SHARKS>0.95)
+mask = (MAG_SHARKS>0)&(MAG_SHARKS<30)&(MAG_VIKING>0)&(MAG_VIKING<30)&(ERROR_MAG_SHARKS<0.217)&(ERROR_MAG_VIKING<0.217)&(CLASS_SHARKS >0.9)
+
 
 
 #MAGNITUDES "NEW" obtenidas una vez pasada la mask
@@ -74,10 +77,11 @@ plt.title("Photometry for SHARKS-VIKING")
 plt.plot([10,24],[10,24])
 plt.plot(MAG_VIKING_NEW,MAG_SHARKS_NEW,"r,", label="SHARKS magnitude not corrected")
 ajuste=np.polyfit(MAG_VIKING_NEW,dif,0)
+
 print(ajuste)
 #print(ajuste[1])
 MAG_SHARKS_corrected= MAG_SHARKS_NEW+ajuste[0]
-plt.plot(MAG_VIKING_NEW,MAG_SHARKS_corrected, "g,", label ="SHARKS magnitude corrected (%.3f)" %ajuste[0])
+plt.plot(MAG_VIKING_NEW,MAG_SHARKS_corrected, "g,", label ="SHARKS magnitude corrected $(%.3f)$" %(ajuste[0]))
 plt.xlabel("VIKING magnitude")
 plt.ylabel("SHARKS magnitude")
 plt.legend()
@@ -98,11 +102,26 @@ plt.errorbar(MAG_VIKING_NEW, MAG_SHARKS_NEW, xerr=xerr_, yerr=yerr_,fmt="r,", la
 ajuste_err = np.polyfit(MAG_VIKING_NEW,dif,0,w=peso)
 print(ajuste_err)
 MAG_SHARKS_corrected_errors = MAG_SHARKS_NEW+ajuste_err[0]
-plt.errorbar(MAG_VIKING_NEW, MAG_SHARKS_corrected_errors, xerr=xerr_, yerr=yerr_,fmt="g,", label ="SHARKS magnitude corrected (%.3f)" %ajuste_err[0])
+plt.errorbar(MAG_VIKING_NEW, MAG_SHARKS_corrected_errors, xerr=xerr_, yerr=yerr_,fmt="g,", label ="SHARKS magnitude corrected $(%.3f)$" %(ajuste_err[0]))
 plt.xlabel("VIKING magnitude")
 plt.ylabel("SHARKS magnitude")
 plt.legend()
+plt.tight_layout()
 
+image3 = plt.figure("Photometry for SHARKS-VIKING both corrected")
+plt.title("Photometry for SHARKS-VIKING")
+plt.plot([10,24],[10,24])
+plt.plot(MAG_VIKING_NEW,MAG_SHARKS_NEW,"r,", label="SHARKS magnitude not corrected")
+ajuste =np.polyfit(MAG_VIKING_NEW,dif,0)
+
+print(ajuste)
+#print(ajuste[1])
+MAG_SHARKS_corrected= MAG_SHARKS_NEW+ajuste[0]
+MAG_VIKING_NEW_CORRECTED = MAG_VIKING_NEW +1.839
+plt.plot(MAG_VIKING_NEW_CORRECTED,MAG_SHARKS_corrected, "g,", label ="SHARKS magnitude corrected $(%.3f)$" %(ajuste[0]))
+plt.xlabel("VIKING magnitude")
+plt.ylabel("SHARKS magnitude")
+plt.legend()
 
 #Guardo las figuras
 image1.savefig('ej5_Photometry_SHARKS-VIKING.png')
