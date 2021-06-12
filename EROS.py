@@ -366,7 +366,7 @@ plt.savefig("Stars_galaxies_eros.png")
 #Ploteo también distribución espacial de EROs. El dataframe de todos los eros se llama simplemente df
 
 plt.figure()
-plt.plot(df["RA"], df["DEC"], ".", markersize = 1)
+plt.plot(df["RA"], df["DEC"], ",", markersize = 1)
 plt.xlabel("RA")
 plt.ylabel("DEC")
 plt.title("EROs distribution")
@@ -376,8 +376,8 @@ plt.savefig("EROs_distribution_RA_DEC.png")
 #Ploteo la distribución de galaxias y estrellas por separado
 
 plt.figure()
-plt.plot(df_galaxies_all["RA"], df_galaxies_all["DEC"], ".", markersize = 1, label = "EROs galaxies", color = "grey")
-plt.plot(df_stars_all["RA"], df_stars_all["DEC"], "*", markersize = 1, label = "EROs stars", color = "darkorange")
+plt.plot(df_galaxies_all["RA"], df_galaxies_all["DEC"], ",", markersize = 1, label = "EROs galaxies", color = "tab:blue")
+#plt.plot(df_stars_all["RA"], df_stars_all["DEC"], "*", markersize = 1, label = "EROs stars", color = "darkorange")
 plt.xlabel("RA")
 plt.ylabel("DEC")
 plt.title("EROs galaxies/stars distribution")

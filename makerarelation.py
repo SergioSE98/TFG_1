@@ -1,7 +1,7 @@
 import pyfits as pf
 import numpy as np
 
-data_ = pf.open('fits\exptime\EROs_withexptime.fits')[1].data
+data_ = pf.open('fits\exptime\sharks_sgpe_nodif_signoise5_EROs_galaxies_exptime.fits')[1].data
 tag = 'EROs'
 #maskfile = 'Y3Goldv2_lssred_April2018_MASK4096.fits'
 maskfile = 'fits\exptime\des_area_healsparse_exptime.fits'
@@ -52,7 +52,7 @@ print (EE)
 import matplotlib.pyplot as plt
 #plt.errorbar(np.array(cc),np.array(ff),yerr=EE,label='Frac',fmt='--o')
 plt.errorbar(np.array(cc),np.array(FF),yerr=EE,label='Unity',fmt='--o')
-plt.xlabel('EXPTIME')
+plt.xlabel('EXPTIME [seconds]')
 plt.ylabel('Density [arcmin square]')
-plt.legend()
+#plt.legend()
 plt.savefig('exptime_eros_density.png' .format(tag))

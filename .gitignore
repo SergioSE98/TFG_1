@@ -49,3 +49,9 @@ fits/exptime/sharks_withexptime.fits
 fits/exptime/EROs_withexptime.fits
 fits/exptime/des_area_healsparse_exptime.fits
 *.png
+fits/sharks_sgpe_nodif_signoise5_EROs_galaxies.fits
+fits/exptime/sharks_sgpe_nodif_signoise5_EROs_galaxies_exptime.fits
+fits/EROs.fits
+fits/sharks_and_des_detec_r.fits
+fits/sharks_and_des_EROs_DES.fits
+fits/sharks_not_des.fits
