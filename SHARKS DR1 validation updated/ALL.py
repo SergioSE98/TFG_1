@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sat Apr 17 14:32:13 2021
+Created on Mon Apr 26 20:52:25 2021
 
 @author: Sergio
 """
+
 
 import numpy as np
 
@@ -15,6 +16,10 @@ import seaborn as seaborn
 
 import matplotlib.pyplot as plt
 
+import matplotlib.ticker as ticker
+
+import matplotlib.axis as ax
+
 from astropy.table import Table, vstack    #Ojo importante aquí importar "Table" con mayuscula
 
 from openpyxl import Workbook
@@ -22,7 +27,12 @@ from openpyxl import Workbook
 #Leo datos (Objetos comunes de SHARKS y DES)
  
 
-df=Table.read("fits/sharks_sgpe_nodif_signoise5_ALL_EROs.fits", format="fits")  #Obj en sharks y des, con 5sigma
+df=Table.read("fits/sharks_and_des.fits", format="fits")  #Obj en sharks y des, con 5sigma
+
+
+#Acoto objetos con signal/noise superior a 5 sigma.
+
+#Para ello considero solo valores de magerr menores a 1.086/5
 
 mag_ks = df["PETROMAG"]
 
@@ -299,11 +309,12 @@ df_galaxies_17 = vstack([df_galaxies_17_05, df_galaxies_17_098])
 
 df_galaxies_all = vstack([df_galaxies_0, df_galaxies_1, df_galaxies_2, df_galaxies_3, df_galaxies_4, df_galaxies_5, df_galaxies_6, df_galaxies_7, df_galaxies_8, df_galaxies_9, df_galaxies_10, df_galaxies_11, df_galaxies_12, df_galaxies_13, df_galaxies_14, df_galaxies_15, df_galaxies_16, df_galaxies_17])
 
-galaxies_list = np.array([len(df_galaxies_0), len(df_galaxies_1), len(df_galaxies_2), len(df_galaxies_3), len(df_galaxies_4), len(df_galaxies_5), len(df_galaxies_6), len(df_galaxies_7), len(df_galaxies_8), len(df_galaxies_9), len(df_galaxies_10), len(df_galaxies_11), len(df_galaxies_12), len(df_galaxies_13), len(df_galaxies_14),  len(df_galaxies_15), len(df_galaxies_16), len(df_galaxies_17)])
+galaxies_list = np.array([len(df_galaxies_0), len(df_galaxies_1), len(df_galaxies_2), len(df_galaxies_3), len(df_galaxies_4), len(df_galaxies_5), len(df_galaxies_6), len(df_galaxies_7), len(df_galaxies_8), len(df_galaxies_9), len(df_galaxies_10), len(df_galaxies_11), len(df_galaxies_12), len(df_galaxies_13), len(df_galaxies_14),  len(df_galaxies_15), len(df_galaxies_16), len(df_galaxies_17),])
 total_galaxies = len(df_galaxies_all)
 
 print(stars_list)
 print(galaxies_list)
+
 
 
 
@@ -344,93 +355,106 @@ ks_Daddi_AB = []
 for i in range(len(ks_Daddi_vega)):
     ks_Daddi_AB.append(ks_Daddi_vega[i]+1.83)
     
+stars_Daddi = np.array([4, 7, 9, 17, 21, 38, 37, 62, 73, 88, 128, 127, 144, 185, 84])  #El intervalo 18.7-18.8 no lo representa
+galaxies_Daddi = np.array([0, 0, 0, 0, 4, 6, 16, 30, 74, 100, 178, 372, 633, 892, 628])
+area_Daddi_1 = 701/3600   #En deg^2 (paso de arcmin^2 a deg^2)
+N_stars_Daddi = stars_Daddi[0:14]/area_Daddi_1           #De 0 al 13
+N_galaxies_Daddi = galaxies_Daddi[0:14]/area_Daddi_1
+area_Daddi_2 = 447.5/3600
+N_stars_Daddi = np.append(N_stars_Daddi, stars_Daddi[14]/area_Daddi_2)
+N_galaxies_Daddi = np.append(N_galaxies_Daddi, galaxies_Daddi[14]/area_Daddi_2)
 
 
-"""
-fig = plt.figure()
-plt.plot(ks_mitad_intervalos,np.log(N_stars), "*" ,label="Stars in Sharks")
-plt.plot(ks_mitad_intervalos,np.log(N_galaxies), "." ,label="Galaxies in Sharks")
-plt.xlabel("Ks")
-plt.ylabel(r"$log N ~ (objects/deg^2/ 0.5 mag)$")
-#fig.xaxis.set_major_locator(ticker.MultipleLocator(0.5))
-#fig.xaxis.set_minor_locator(ticker.MultipleLocator(0.1))
+
+#Ploteo
+
+#El área de Daddi menor, por eso sus N son iguales para menos cuentas, por eso nuestros errores menores casi siempre. 
+
+plt.figure() 
+plt.errorbar(ks_sharks_AB_stars,np.log10(N_stars), 1/np.sqrt(N_stars), elinewidth=1.5, barsabove= True, color = "darkorange", marker = "*" , linestyle="None", label="Stars in Sharks", markersize = 8)      
+plt.errorbar(ks_sharks_AB,np.log10(N_galaxies), 1/np.sqrt(N_galaxies), elinewidth=1.5, barsabove= True , color = "grey", marker = "." , linestyle="None", label="Galaxies in Sharks", markersize = 8)         
+plt.xlabel("$K_s ~ intervals$", fontsize=12)
+plt.ylabel(r"$log N ~ (objects/deg^2) ~ (error = 1/\sqrt{N})$", fontsize=12)
 plt.xticks([13, 15, 17, 19, 21, 23 ])
+plt.ylim(-0.2,4.5)
+plt.yticks(np.arange(0,5,0.5))
+plt.title("Stars and galaxies numbers of counts in SHARKS ")
+plt.grid(linestyle="--", linewidth=0.2)
 plt.legend()
+plt.savefig("Stars_galaxies_of_sharks_with_errors_N.png")
 
-plt.savefig("Stars_galaxies_eros.png")
-"""
+plt.figure() 
+plt.errorbar(ks_sharks_AB_stars,np.log10(N_stars),1/np.sqrt(stars_list_sin_0), elinewidth=1.5, barsabove= True, color = "darkorange", marker = "*" , linestyle="None", label="Stars in Sharks", markersize = 8)      
+plt.errorbar(ks_sharks_AB,np.log10(N_galaxies), 1/np.sqrt(galaxies_list), elinewidth=1.5, barsabove= True , color = "grey", marker = "." , linestyle="None", label="Galaxies in Sharks", markersize = 8)         
+plt.xlabel("$K_s ~ intervals$", fontsize=12)
+plt.ylabel(r"$log N ~ (objects/deg^2) ~  (error = 1/\sqrt{objects})$", fontsize=12)
+plt.xticks([13, 15, 17, 19, 21, 23 ])
+plt.ylim(0,4.5)
+plt.yticks(np.arange(0,5,0.5))
+plt.title("Stars and galaxies numbers of counts in SHARKS ")
+plt.grid(linestyle="--", linewidth=0.2)
+plt.legend()
+plt.savefig("Stars_galaxies_of_sharks_with_errors_numbers.png")
 
 
-
-
-#Ploteo también distribución espacial de EROs. El dataframe de todos los eros se llama simplemente df
 
 plt.figure()
-plt.plot(df["RA"], df["DEC"], ",", markersize = 1)
+plt.plot(ks_Daddi_AB,np.log10(N_stars_Daddi),  "*" , color = "black", label="Stars in Daddi´s article", markersize = 8, alpha = 0.8)         
+plt.plot(ks_Daddi_AB,np.log10(N_galaxies_Daddi), "." ,color = "black", label="Galaxies in Daddi´s article", markersize = 8, alpha = 0.8)  
+#plt.errorbar(ks_sharks_AB,np.log(N_stars), np.log(N_stars_err), elinewidth=0.5, barsabove= True , marker = "*" , linestyle="None", label="Stars in Sharks")
+plt.plot(ks_sharks_AB_stars,np.log10(N_stars), "*" ,color = "red", label="Stars in Sharks", markersize = 8, alpha = 0.8)      
+#plt.errorbar(ks_sharks_AB,np.log(N_galaxies), np.log(N_galaxies_err), elinewidth=0.5, barsabove= True , marker = "." , linestyle="None", label="Galaxies in Sharks")         
+plt.plot(ks_sharks_AB,np.log10(N_galaxies), "." , color = "red", label="Galaxies in Sharks", markersize = 8, alpha = 0.8)
+plt.ylabel(r"$log N ~ (objects/deg^2)$", fontsize=12)
+plt.xlabel("$K_s ~  intervals$", fontsize=12)
+plt.ylim(0,4.5)
+plt.yticks(np.arange(0,5,0.5))
+plt.xticks([13, 15, 17, 19, 21, 23 ])
+#plt.yticks([])   #Conviene añadir un yticks para quitarse los logaritmos negativos/menores a uno.
+plt.title("Stars and galaxies number of counts comparison")
+plt.grid(linestyle="--", linewidth=0.2)
+plt.legend()
+plt.savefig("Stars_galaxies_comparison_with_Daddi.png")
+
+
+
+plt.figure()
+plt.plot(df["RA"], df["DEC"], ".", markersize = 0.5)
 plt.xlabel("RA")
 plt.ylabel("DEC")
-plt.invert_xaxis()
-plt.title("EROs distribution")
-plt.savefig("EROs_distribution_RA_DEC.png")
+plt.title("All SHARKS objects distribution")
+plt.savefig("ALL_distribution_RA_DEC.png")
 
 
 #Ploteo la distribución de galaxias y estrellas por separado
 
 plt.figure()
-plt.plot(df_galaxies_all["RA"], df_galaxies_all["DEC"], ",", markersize = 1, label = "EROs detected as galaxies", color = "grey", alpha =1)
-#plt.plot(df_stars_all["RA"], df_stars_all["DEC"], ",", markersize = 1, label = "EROs detected as stars", color = "red", alpha =1)
-plt.xlabel("RA [deg]")
-plt.ylabel("Dec [deg]")
-plt.title("EROs  distribution")
-plt.invert_xaxis()
+plt.plot(df_galaxies_all["RA"], df_galaxies_all["DEC"], ".", markersize = 0.5, label = "Galaxies", color = "grey")
+plt.plot(df_stars_all["RA"], df_stars_all["DEC"], "*", markersize = 0.5, label = "Stars", color = "darkorange")
+plt.xlabel("RA")
+plt.ylabel("DEC")
+plt.title("All SHARKS galaxies/stars distribution")
 plt.legend()
-plt.savefig("EROs_galax_stars_distribution_RA_DEC.png")
+plt.savefig("ALL_galax_star_distribution_RA_DEC.png")
 
-"""
+
+
 wb = Workbook()
-ruta = 'salida_EROS.xlsx'
+ruta = 'salida_ALL.xlsx'
 
-hoja1 = wb.active
-hoja1.title = "hoja"
+hoja = wb.active
+hoja.title = "ALL"
+
 fila = 1 #Fila donde empezamos
 col_stars = 1 #Columna donde guardo los valores
 col_galaxies = 2
-col_n_stars = 3
-col_n_galaxies = 4
 
-
-for stars, galaxies, n_stars, n_galaxies in zip(stars_list, galaxies_list, N_stars, N_galaxies):
-    hoja1.cell(column=col_stars, row=fila, value=stars)
-    hoja1.cell(column=col_galaxies, row=fila, value=galaxies)
-    hoja1.cell(column=col_n_stars, row=fila, value=n_stars)
-    hoja1.cell(column=col_n_galaxies, row=fila, value=n_galaxies)
+for stars, galaxies in zip(stars_list, galaxies_list):  #Aquí pongo en "in" el valor que quiero sacar como columna
+    hoja.cell(column=col_stars, row=fila, value=stars)
+    hoja.cell(column=col_galaxies, row=fila, value=galaxies)
     fila+=1
-    
-
 
 wb.save(filename = ruta)
-
-"""
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

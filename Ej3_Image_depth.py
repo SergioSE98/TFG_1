@@ -79,5 +79,16 @@ i1.savefig('ej_3_hist_image_depth.png')   #QUitando el hist normalizado ya sí o
 
 i2 = plt.figure("Magnitude values with an error of approx 0.21 (to obtain image depth)")
 imag2 = seaborn.scatterplot(RA, DEC, filtrado, s=7, legend = "brief")
-plt.title("Magnitude of objects with $signal/noise \simeq 5$")
+imag2.set_xlabel("RA [$deg$]" )
+imag2.set_ylabel("Dec [$deg$]" )
+imag2.invert_xaxis()
+#plt.title("Magnitude of objects with $signal/noise \simeq 5$")
 i2.savefig("ej_3_scatter_image_depth.png")
+
+
+
+imag1 = filtered_df.plot.scatter(x = "RA", y= "DEC", c= "APERMAG3", s=0.1, colormap=cm.jet)
+imag1.set_xlabel("RA [$deg$]" )
+imag1.set_ylabel("Dec [$deg$]" )
+imag1.invert_xaxis()
+

@@ -23,9 +23,9 @@ from openpyxl import Workbook
 #Leo datos (Objetos comunes de SHARKS y DES)
  
 
-df=Table.read("fits/sharks_sgpe_nodif_signoise5_ALL_EROs.fits", format="fits")  #Obj en sharks y des, con 5sigma
+df=Table.read("fits/EROs.fits", format="fits")  #Obj en sharks y des, con 5sigma
 
-mag_ks = df["PETROMAG"]
+mag_ks = df["APERMAG3"]
 
 mask_05 = (mag_ks<19.2)#&(mag_des_r <= 24.65)  #Si aplico las dos condiciones, se limita el numero de objetos (pierdo objetos)
 mask_098 = (mag_ks>=19.2)#&(mag_des_r > 24.65)
@@ -51,7 +51,7 @@ df_stars = df_05[mask_stars]
 
 #El sufijo "g" lo uso de ahora en adelante para considerar galaxias, y el sufijo "s" para estrellas (stars)
 
-mag_ks_g = df_galaxies["PETROMAG"]
+mag_ks_g = df_galaxies["APERMAG3"]
 
 mask_00_g = (mag_ks_g <= 13.7)
 mask_0_g = (mag_ks_g > 13.7)&(mag_ks_g <= 14.2)
@@ -101,7 +101,7 @@ df_galaxies_18_05 = df_galaxies[mask_18_g]
 
 
 
-mag_ks_s = df_stars["PETROMAG"]
+mag_ks_s = df_stars["APERMAG3"]
 
 mask_00_s = (mag_ks_s <= 13.7)
 mask_0_s = (mag_ks_s > 13.7)&(mag_ks_s <= 14.2)
@@ -165,7 +165,7 @@ df_stars = df_098[mask_stars]
 
 #El sufijo "g" lo uso de ahora en adelante para considerar galaxias, y el sufijo "s" para estrellas (stars)
 
-mag_ks_g = df_galaxies["PETROMAG"]
+mag_ks_g = df_galaxies["APERMAG3"]
 
 mask_00_g = (mag_ks_g <= 13.7)
 mask_0_g = (mag_ks_g > 13.7)&(mag_ks_g <= 14.2)
@@ -216,7 +216,7 @@ df_galaxies_18_098 = df_galaxies[mask_18_g]
 
 
 
-mag_ks_s = df_stars["PETROMAG"]
+mag_ks_s = df_stars["APERMAG3"]
 
 mask_00_s = (mag_ks_s <= 13.7)
 mask_0_s = (mag_ks_s > 13.7)&(mag_ks_s <= 14.2)
@@ -377,18 +377,20 @@ plt.legend()
 
 plt.savefig("Stars_galaxies_eros.png")
 """
-
+"""
 imagen1 = seaborn.jointplot(df["RA"], df["DEC"], kind="hex")
 imagen1.fig.suptitle("EROs distribution", fontsize=11)
 imagen1.set_axis_labels(r'RA $[deg]$', 'DEC $[deg]$', fontsize=11)
 imagen1.fig.axes[0].invert_xaxis()
-
+"""
 imagen2 = seaborn.jointplot(df_galaxies_all["RA"], df_galaxies_all["DEC"], kind="hex")
-imagen2.fig.suptitle("EROs galaxies distribution", fontsize=11)
-imagen2.set_axis_labels(r'RA $[deg]$', 'DEC $[deg]$', fontsize=11)
+imagen2.fig.suptitle("EROs distribution", fontsize=11)
+imagen2.set_axis_labels(r'RA $[deg]$', 'Dec $[deg]$', fontsize=11)
 imagen2.fig.axes[0].invert_xaxis()
+plt.tight_layout()
+plt.show()
 #Ploteo también distribución espacial de EROs. El dataframe de todos los eros se llama simplemente df
-
+"""
 plt.figure()
 plt.plot(df["RA"], df["DEC"], ",", markersize = 1)
 plt.xlabel("RA [$deg$]")
@@ -397,42 +399,17 @@ plt.title("EROs distribution")
 plt.gca().invert_xaxis()
 plt.show()
 plt.savefig("EROs_distribution_RA_DEC.png")
-
+"""
 
 #Ploteo la distribución de galaxias y estrellas por separado
-
+"""
 fig = plt.figure()
-plt.plot(df_galaxies_all["RA"], df_galaxies_all["DEC"], ",", markersize = 1, label = "EROs detected as galaxies", color = "grey", alpha =0.8)
-plt.plot(df_stars_all["RA"], df_stars_all["DEC"], ",", markersize = 1, label = "EROs detected as stars", color = "red", alpha =1)
+plt.plot(df_galaxies_all["RA"], df_galaxies_all["DEC"], ",")
+#plt.plot(df_stars_all["RA"], df_stars_all["DEC"], ",", markersize = 1, label = "EROs detected as stars", color = "red", alpha =1)
 plt.xlabel("RA [$deg$]")
 plt.ylabel("Dec [$deg$]")
-plt.title("EROs galaxies/stars distribution")
+plt.title("EROs distribution")
 plt.gca().invert_xaxis()
 plt.show()
-plt.legend()
-plt.savefig("EROs_galax_stars_distribution_RA_DEC.png")
-
-"""
-wb = Workbook()
-ruta = 'salida_EROS.xlsx'
-
-hoja1 = wb.active
-hoja1.title = "hoja"
-fila = 1 #Fila donde empezamos
-col_stars = 1 #Columna donde guardo los valores
-col_galaxies = 2
-col_n_stars = 3
-col_n_galaxies = 4
-
-
-for stars, galaxies, n_stars, n_galaxies in zip(stars_list, galaxies_list, N_stars, N_galaxies):
-    hoja1.cell(column=col_stars, row=fila, value=stars)
-    hoja1.cell(column=col_galaxies, row=fila, value=galaxies)
-    hoja1.cell(column=col_n_stars, row=fila, value=n_stars)
-    hoja1.cell(column=col_n_galaxies, row=fila, value=n_galaxies)
-    fila+=1
-    
-
-
-wb.save(filename = ruta)
+plt.savefig("EROs_galax_dist.png")
 """

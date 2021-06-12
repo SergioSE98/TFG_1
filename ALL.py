@@ -27,14 +27,13 @@ from openpyxl import Workbook
 #Leo datos (Objetos comunes de SHARKS y DES)
  
 
-df=Table.read("fits/sharks_and_des.fits", format="fits")  #Obj en sharks y des, con 5sigma
 
-
+print(len(df))
 #Acoto objetos con signal/noise superior a 5 sigma.
 
 #Para ello considero solo valores de magerr menores a 1.086/5
 
-mag_ks = df["PETROMAG"]
+mag_ks = df["APERMAG3"]
 
 mask_05 = (mag_ks<19.2)#&(mag_des_r <= 24.65)  #Si aplico las dos condiciones, se limita el numero de objetos (pierdo objetos)
 mask_098 = (mag_ks>=19.2)#&(mag_des_r > 24.65)
@@ -60,8 +59,9 @@ df_stars = df_05[mask_stars]
 
 #El sufijo "g" lo uso de ahora en adelante para considerar galaxias, y el sufijo "s" para estrellas (stars)
 
-mag_ks_g = df_galaxies["PETROMAG"]
+mag_ks_g = df_galaxies["APERMAG3"]
 
+mask_00_g = (mag_ks_g <= 13.7)
 mask_0_g = (mag_ks_g > 13.7)&(mag_ks_g <= 14.2)
 mask_1_g = (mag_ks_g > 14.2)&(mag_ks_g <= 14.7)
 mask_2_g = (mag_ks_g > 14.7)&(mag_ks_g <= 15.2)
@@ -80,7 +80,9 @@ mask_14_g = (mag_ks_g > 20.7)&(mag_ks_g <= 21.2)
 mask_15_g = (mag_ks_g > 21.2)&(mag_ks_g <= 21.7)
 mask_16_g = (mag_ks_g > 21.7)&(mag_ks_g <= 22.2)
 mask_17_g = (mag_ks_g > 22.2)&(mag_ks_g <= 22.7)
+mask_18_g = (mag_ks_g > 22.7)
 
+df_galaxies_00_05 = df_galaxies[mask_00_g]
 df_galaxies_0_05 = df_galaxies[mask_0_g]
 df_galaxies_1_05 = df_galaxies[mask_1_g]
 df_galaxies_2_05 = df_galaxies[mask_2_g]
@@ -99,6 +101,7 @@ df_galaxies_14_05 = df_galaxies[mask_14_g]
 df_galaxies_15_05 = df_galaxies[mask_15_g]
 df_galaxies_16_05 = df_galaxies[mask_16_g]
 df_galaxies_17_05 = df_galaxies[mask_17_g]
+df_galaxies_18_05 = df_galaxies[mask_18_g]
 
 #Calculo los R-Ks de cada sección 
 
@@ -106,8 +109,9 @@ df_galaxies_17_05 = df_galaxies[mask_17_g]
 
 
 
-mag_ks_s = df_stars["PETROMAG"]
+mag_ks_s = df_stars["APERMAG3"]
 
+mask_00_s = (mag_ks_s <= 13.7)
 mask_0_s = (mag_ks_s > 13.7)&(mag_ks_s <= 14.2)
 mask_1_s = (mag_ks_s > 14.2)&(mag_ks_s <= 14.7)
 mask_2_s = (mag_ks_s > 14.7)&(mag_ks_s <= 15.2)
@@ -126,7 +130,9 @@ mask_14_s = (mag_ks_s > 20.7)&(mag_ks_s <= 21.2)
 mask_15_s = (mag_ks_s > 21.2)&(mag_ks_s <= 21.7)
 mask_16_s = (mag_ks_s > 21.7)&(mag_ks_s <= 22.2)
 mask_17_s = (mag_ks_s > 22.2)&(mag_ks_s <= 22.7)
+mask_18_s = (mag_ks_s > 22.7)
 
+df_stars_00_05 = df_stars[mask_00_s]
 df_stars_0_05 = df_stars[mask_0_s]
 df_stars_1_05 = df_stars[mask_1_s]
 df_stars_2_05 = df_stars[mask_2_s]
@@ -145,7 +151,7 @@ df_stars_14_05 = df_stars[mask_14_s]
 df_stars_15_05 = df_stars[mask_15_s]
 df_stars_16_05 = df_stars[mask_16_s]
 df_stars_17_05 = df_stars[mask_17_s]
-
+df_stars_18_05 = df_stars[mask_18_s]
 
 
 #Sigo con 0.98
@@ -167,8 +173,9 @@ df_stars = df_098[mask_stars]
 
 #El sufijo "g" lo uso de ahora en adelante para considerar galaxias, y el sufijo "s" para estrellas (stars)
 
-mag_ks_g = df_galaxies["PETROMAG"]
+mag_ks_g = df_galaxies["APERMAG3"]
 
+mask_00_g = (mag_ks_g <= 13.7)
 mask_0_g = (mag_ks_g > 13.7)&(mag_ks_g <= 14.2)
 mask_1_g = (mag_ks_g > 14.2)&(mag_ks_g <= 14.7)
 mask_2_g = (mag_ks_g > 14.7)&(mag_ks_g <= 15.2)
@@ -187,7 +194,9 @@ mask_14_g = (mag_ks_g > 20.7)&(mag_ks_g <= 21.2)
 mask_15_g = (mag_ks_g > 21.2)&(mag_ks_g <= 21.7)
 mask_16_g = (mag_ks_g > 21.7)&(mag_ks_g <= 22.2)
 mask_17_g = (mag_ks_g > 22.2)&(mag_ks_g <= 22.7)
+mask_18_g = (mag_ks_g > 22.7)
 
+df_galaxies_00_098 = df_galaxies[mask_00_g]
 df_galaxies_0_098 = df_galaxies[mask_0_g]
 df_galaxies_1_098 = df_galaxies[mask_1_g]
 df_galaxies_2_098 = df_galaxies[mask_2_g]
@@ -206,6 +215,7 @@ df_galaxies_14_098 = df_galaxies[mask_14_g]
 df_galaxies_15_098 = df_galaxies[mask_15_g]
 df_galaxies_16_098 = df_galaxies[mask_16_g]
 df_galaxies_17_098 = df_galaxies[mask_17_g]
+df_galaxies_18_098 = df_galaxies[mask_18_g]
 
 
 
@@ -213,9 +223,9 @@ df_galaxies_17_098 = df_galaxies[mask_17_g]
 
 
 
+mag_ks_s = df_stars["APERMAG3"]
 
-mag_ks_s = df_stars["PETROMAG"]
-
+mask_00_s = (mag_ks_s <= 13.7)
 mask_0_s = (mag_ks_s > 13.7)&(mag_ks_s <= 14.2)
 mask_1_s = (mag_ks_s > 14.2)&(mag_ks_s <= 14.7)
 mask_2_s = (mag_ks_s > 14.7)&(mag_ks_s <= 15.2)
@@ -234,7 +244,9 @@ mask_14_s = (mag_ks_s > 20.7)&(mag_ks_s <= 21.2)
 mask_15_s = (mag_ks_s > 21.2)&(mag_ks_s <= 21.7)
 mask_16_s = (mag_ks_s > 21.7)&(mag_ks_s <= 22.2)
 mask_17_s = (mag_ks_s > 22.2)&(mag_ks_s <= 22.7)
+mask_18_s = (mag_ks_s > 22.7)
 
+df_stars_00_098 = df_stars[mask_00_s]
 df_stars_0_098 = df_stars[mask_0_s]
 df_stars_1_098 = df_stars[mask_1_s]
 df_stars_2_098 = df_stars[mask_2_s]
@@ -253,13 +265,14 @@ df_stars_14_098 = df_stars[mask_14_s]
 df_stars_15_098 = df_stars[mask_15_s]
 df_stars_16_098 = df_stars[mask_16_s]
 df_stars_17_098 = df_stars[mask_17_s]
-
+df_stars_18_098 = df_stars[mask_18_s]
 
 
 
 
 #Junto todas las estrellas
 
+df_stars_00 = vstack([df_stars_00_05, df_stars_00_098])
 df_stars_0 = vstack([df_stars_0_05, df_stars_0_098])
 df_stars_1 = vstack([df_stars_1_05, df_stars_1_098])
 df_stars_2 = vstack([df_stars_2_05, df_stars_2_098])
@@ -278,16 +291,21 @@ df_stars_14 = vstack([df_stars_14_05, df_stars_14_098])
 df_stars_15 = vstack([df_stars_15_05, df_stars_15_098])
 df_stars_16 = vstack([df_stars_16_05, df_stars_16_098])
 df_stars_17 = vstack([df_stars_17_05, df_stars_17_098])
+df_stars_18 = vstack([df_stars_18_05, df_stars_18_098])
 
-df_stars_all = vstack([df_stars_0, df_stars_1, df_stars_2, df_stars_3, df_stars_4, df_stars_5, df_stars_6, df_stars_7, df_stars_8, df_stars_9, df_stars_10, df_stars_11, df_stars_12, df_stars_13, df_stars_14, df_stars_15, df_stars_16, df_stars_17])
+df_stars_all = vstack([df_stars_0, df_stars_1, df_stars_2, df_stars_3, df_stars_4, df_stars_5, df_stars_6, df_stars_7, df_stars_8, df_stars_9, df_stars_10, df_stars_11, df_stars_12, df_stars_13, df_stars_14, df_stars_15, df_stars_16, df_stars_17, df_stars_18])
 
-stars_list = np.array([len(df_stars_0), len(df_stars_1), len(df_stars_2), len(df_stars_3), len(df_stars_4), len(df_stars_5), len(df_stars_6), len(df_stars_7), len(df_stars_8), len(df_stars_9), len(df_stars_10), len(df_stars_11), len(df_stars_12), len(df_stars_13), len(df_stars_14),  len(df_stars_15), len(df_stars_16), len(df_stars_17),])
+stars_list = np.array([len(df_stars_0), len(df_stars_1), len(df_stars_2), len(df_stars_3), len(df_stars_4), len(df_stars_5), len(df_stars_6), len(df_stars_7), len(df_stars_8), len(df_stars_9), len(df_stars_10), len(df_stars_11), len(df_stars_12), len(df_stars_13), len(df_stars_14),  len(df_stars_15), len(df_stars_16), len(df_stars_17), len(df_stars_18)])
+df_stars_all_00 = vstack([df_stars_00,df_stars_0, df_stars_1, df_stars_2, df_stars_3, df_stars_4, df_stars_5, df_stars_6, df_stars_7, df_stars_8, df_stars_9, df_stars_10, df_stars_11, df_stars_12, df_stars_13, df_stars_14, df_stars_15, df_stars_16, df_stars_17, df_stars_18])
+
+stars_list_00 = np.array([len(df_stars_00),len(df_stars_0), len(df_stars_1), len(df_stars_2), len(df_stars_3), len(df_stars_4), len(df_stars_5), len(df_stars_6), len(df_stars_7), len(df_stars_8), len(df_stars_9), len(df_stars_10), len(df_stars_11), len(df_stars_12), len(df_stars_13), len(df_stars_14),  len(df_stars_15), len(df_stars_16), len(df_stars_17), len(df_stars_18)])
 total_stars = len(df_stars_all)
 
-
+#Las cantidades completas son 00, las separo pq en grafica de daddi no incuyo.
 
 #Junto todas las galaxias
 
+df_galaxies_00 = vstack([df_galaxies_00_05, df_galaxies_00_098])
 df_galaxies_0 = vstack([df_galaxies_0_05, df_galaxies_0_098])
 df_galaxies_1 = vstack([df_galaxies_1_05, df_galaxies_1_098])
 df_galaxies_2 = vstack([df_galaxies_2_05, df_galaxies_2_098])
@@ -306,10 +324,12 @@ df_galaxies_14 = vstack([df_galaxies_14_05, df_galaxies_14_098])
 df_galaxies_15 = vstack([df_galaxies_15_05, df_galaxies_15_098])
 df_galaxies_16 = vstack([df_galaxies_16_05, df_galaxies_16_098])
 df_galaxies_17 = vstack([df_galaxies_17_05, df_galaxies_17_098])
+df_galaxies_18 = vstack([df_galaxies_18_05, df_galaxies_18_098])
 
-df_galaxies_all = vstack([df_galaxies_0, df_galaxies_1, df_galaxies_2, df_galaxies_3, df_galaxies_4, df_galaxies_5, df_galaxies_6, df_galaxies_7, df_galaxies_8, df_galaxies_9, df_galaxies_10, df_galaxies_11, df_galaxies_12, df_galaxies_13, df_galaxies_14, df_galaxies_15, df_galaxies_16, df_galaxies_17])
-
-galaxies_list = np.array([len(df_galaxies_0), len(df_galaxies_1), len(df_galaxies_2), len(df_galaxies_3), len(df_galaxies_4), len(df_galaxies_5), len(df_galaxies_6), len(df_galaxies_7), len(df_galaxies_8), len(df_galaxies_9), len(df_galaxies_10), len(df_galaxies_11), len(df_galaxies_12), len(df_galaxies_13), len(df_galaxies_14),  len(df_galaxies_15), len(df_galaxies_16), len(df_galaxies_17),])
+df_galaxies_all = vstack([df_galaxies_0, df_galaxies_1, df_galaxies_2, df_galaxies_3, df_galaxies_4, df_galaxies_5, df_galaxies_6, df_galaxies_7, df_galaxies_8, df_galaxies_9, df_galaxies_10, df_galaxies_11, df_galaxies_12, df_galaxies_13, df_galaxies_14, df_galaxies_15, df_galaxies_16, df_galaxies_17,  df_galaxies_18])
+df_galaxies_all_00 = vstack([df_galaxies_00,df_galaxies_0, df_galaxies_1, df_galaxies_2, df_galaxies_3, df_galaxies_4, df_galaxies_5, df_galaxies_6, df_galaxies_7, df_galaxies_8, df_galaxies_9, df_galaxies_10, df_galaxies_11, df_galaxies_12, df_galaxies_13, df_galaxies_14, df_galaxies_15, df_galaxies_16, df_galaxies_17,  df_galaxies_18])
+galaxies_list = np.array([len(df_galaxies_0), len(df_galaxies_1), len(df_galaxies_2), len(df_galaxies_3), len(df_galaxies_4), len(df_galaxies_5), len(df_galaxies_6), len(df_galaxies_7), len(df_galaxies_8), len(df_galaxies_9), len(df_galaxies_10), len(df_galaxies_11), len(df_galaxies_12), len(df_galaxies_13), len(df_galaxies_14),  len(df_galaxies_15), len(df_galaxies_16), len(df_galaxies_17),len(df_galaxies_18)])
+galaxies_list_00 = np.array([len(df_galaxies_00),len(df_galaxies_0), len(df_galaxies_1), len(df_galaxies_2), len(df_galaxies_3), len(df_galaxies_4), len(df_galaxies_5), len(df_galaxies_6), len(df_galaxies_7), len(df_galaxies_8), len(df_galaxies_9), len(df_galaxies_10), len(df_galaxies_11), len(df_galaxies_12), len(df_galaxies_13), len(df_galaxies_14),  len(df_galaxies_15), len(df_galaxies_16), len(df_galaxies_17),len(df_galaxies_18)])
 total_galaxies = len(df_galaxies_all)
 
 print(stars_list)
@@ -323,14 +343,14 @@ print(galaxies_list)
 #Retiro último valor de estrellas, que es cero, para evitar problemas
 
 stars_list_sin_0 = stars_list[0:17]
-
+galaxies_list_sin_0 = galaxies_list[4:]
 #Calculo "N", cuentas/deg^2
 
 area_sharks = 7.23 
 
 
 N_stars = stars_list_sin_0/area_sharks
-N_galaxies = galaxies_list/area_sharks
+N_galaxies = galaxies_list_sin_0/area_sharks
 
 
 
@@ -338,19 +358,19 @@ N_galaxies = galaxies_list/area_sharks
 
 #Creo mis ejes x, y los ejes de Daddi.
 
-ks_sharks_vega = [12, 12.5, 13, 13.5, 14, 14.5, 15, 15.5, 16, 16.5, 17, 17.5, 18, 18.5, 19, 19.5, 20, 20.5]
+ks_sharks_vega = [12, 12.5, 13, 13.5, 14, 14.5, 15, 15.5, 16, 16.5, 17, 17.5, 18, 18.5, 19, 19.5, 20, 20.5, 21]
 ks_sharks_AB = []
 for i in range(len(ks_sharks_vega)):
     ks_sharks_AB.append(ks_sharks_vega[i]+1.83)
 
 #Para Ks de estrellas quito el último valor(porque antes quité el último de estrellas)
 ks_sharks_AB_stars = ks_sharks_AB[0:17]
-
+ks_sharks_AB_galaxies = ks_sharks_AB[4:]
 
 #Calculo ahora el N de Daddi (con los datos del artículo)
 
 
-ks_Daddi_vega = [12, 12.5, 13, 13.5, 14, 14.5, 15, 15.5, 16, 16.5, 17, 17.5, 18, 18.5, 19]
+ks_Daddi_vega = [12, 12.5, 13, 13.5, 14, 14.5, 15, 15.5, 16, 16.5, 17, 17.5, 18, 18.5, 18.8]
 ks_Daddi_AB = []
 for i in range(len(ks_Daddi_vega)):
     ks_Daddi_AB.append(ks_Daddi_vega[i]+1.83)
@@ -369,7 +389,7 @@ N_galaxies_Daddi = np.append(N_galaxies_Daddi, galaxies_Daddi[14]/area_Daddi_2)
 #Ploteo
 
 #El área de Daddi menor, por eso sus N son iguales para menos cuentas, por eso nuestros errores menores casi siempre. 
-
+"""
 plt.figure() 
 plt.errorbar(ks_sharks_AB_stars,np.log10(N_stars), 1/np.sqrt(N_stars), elinewidth=1.5, barsabove= True, color = "darkorange", marker = "*" , linestyle="None", label="Stars in Sharks", markersize = 8)      
 plt.errorbar(ks_sharks_AB,np.log10(N_galaxies), 1/np.sqrt(N_galaxies), elinewidth=1.5, barsabove= True , color = "grey", marker = "." , linestyle="None", label="Galaxies in Sharks", markersize = 8)         
@@ -382,32 +402,18 @@ plt.title("Stars and galaxies numbers of counts in SHARKS ")
 plt.grid(linestyle="--", linewidth=0.2)
 plt.legend()
 plt.savefig("Stars_galaxies_of_sharks_with_errors_N.png")
-
-plt.figure() 
-plt.errorbar(ks_sharks_AB_stars,np.log10(N_stars),1/np.sqrt(stars_list_sin_0), elinewidth=1.5, barsabove= True, color = "darkorange", marker = "*" , linestyle="None", label="Stars in Sharks", markersize = 8)      
-plt.errorbar(ks_sharks_AB,np.log10(N_galaxies), 1/np.sqrt(galaxies_list), elinewidth=1.5, barsabove= True , color = "grey", marker = "." , linestyle="None", label="Galaxies in Sharks", markersize = 8)         
-plt.xlabel("$K_s ~ intervals$", fontsize=12)
-plt.ylabel(r"$log N ~ (objects/deg^2) ~  (error = 1/\sqrt{objects})$", fontsize=12)
-plt.xticks([13, 15, 17, 19, 21, 23 ])
-plt.ylim(0,4.5)
-plt.yticks(np.arange(0,5,0.5))
-plt.title("Stars and galaxies numbers of counts in SHARKS ")
-plt.grid(linestyle="--", linewidth=0.2)
-plt.legend()
-plt.savefig("Stars_galaxies_of_sharks_with_errors_numbers.png")
-
-
+"""
 
 plt.figure()
-plt.plot(ks_Daddi_AB,np.log10(N_stars_Daddi),  "*" , color = "black", label="Stars in Daddi´s article", markersize = 8, alpha = 0.8)         
-plt.plot(ks_Daddi_AB,np.log10(N_galaxies_Daddi), "." ,color = "black", label="Galaxies in Daddi´s article", markersize = 8, alpha = 0.8)  
+plt.errorbar(ks_Daddi_AB,np.log10(N_stars_Daddi), 1/np.sqrt(N_stars_Daddi), marker = "*" , elinewidth=1.5, barsabove= True, color = "black",linestyle="None", label="Stars in Daddi $et ~ al.$ 2000", markersize = 8, alpha = 0.8)         
+plt.errorbar(ks_Daddi_AB,np.log10(N_galaxies_Daddi), 1/np.sqrt(N_galaxies_Daddi), marker = "." ,elinewidth=1.5, barsabove= True, color = "black",linestyle="None", label="Galaxies in Daddi $et ~ al.$ 2000", markersize = 8, alpha = 0.8)  
 #plt.errorbar(ks_sharks_AB,np.log(N_stars), np.log(N_stars_err), elinewidth=0.5, barsabove= True , marker = "*" , linestyle="None", label="Stars in Sharks")
-plt.plot(ks_sharks_AB_stars,np.log10(N_stars), "*" ,color = "red", label="Stars in Sharks", markersize = 8, alpha = 0.8)      
+plt.errorbar(ks_sharks_AB_stars,np.log10(N_stars),1/np.sqrt(N_stars), marker= "*" , elinewidth=1.5, barsabove= True, color = "red",linestyle="None", label="Stars in SHARKS", markersize = 8, alpha = 0.8)      
 #plt.errorbar(ks_sharks_AB,np.log(N_galaxies), np.log(N_galaxies_err), elinewidth=0.5, barsabove= True , marker = "." , linestyle="None", label="Galaxies in Sharks")         
-plt.plot(ks_sharks_AB,np.log10(N_galaxies), "." , color = "red", label="Galaxies in Sharks", markersize = 8, alpha = 0.8)
-plt.ylabel(r"$log N ~ (objects/deg^2)$", fontsize=12)
+plt.errorbar(ks_sharks_AB_galaxies,np.log10(N_galaxies),1/np.sqrt(N_galaxies), marker= "." , elinewidth=1.5, barsabove= True, color = "red", linestyle="None",label="Galaxies in SHARKS", markersize = 8, alpha = 0.8)
+plt.ylabel(r"$log N ~ (objects/deg^2)$", fontsize=12) 
 plt.xlabel("$K_s ~  intervals$", fontsize=12)
-plt.ylim(0,4.5)
+plt.ylim(0,5)
 plt.yticks(np.arange(0,5,0.5))
 plt.xticks([13, 15, 17, 19, 21, 23 ])
 #plt.yticks([])   #Conviene añadir un yticks para quitarse los logaritmos negativos/menores a uno.
@@ -416,7 +422,73 @@ plt.grid(linestyle="--", linewidth=0.2)
 plt.legend()
 plt.savefig("Stars_galaxies_comparison_with_Daddi.png")
 
+"""
+plt.figure()
+plt.errorbar(ks_Daddi_AB,np.log10(N_stars_Daddi), np.log10(1/np.sqrt(stars_Daddi)), marker = "*" , elinewidth=1.5, barsabove= True, color = "black",linestyle="None", label="Stars in Daddi´s article", markersize = 8, alpha = 0.8)         
+plt.errorbar(ks_Daddi_AB,np.log10(N_galaxies_Daddi), np.log10(1/np.sqrt(galaxies_Daddi)), marker = "." ,elinewidth=1.5, barsabove= True, color = "black",linestyle="None", label="Galaxies in Daddi´s article", markersize = 8, alpha = 0.8)  
+#plt.errorbar(ks_sharks_AB,np.log(N_stars), np.log(N_stars_err), elinewidth=0.5, barsabove= True , marker = "*" , linestyle="None", label="Stars in Sharks")
+plt.errorbar(ks_sharks_AB_stars,np.log10(N_stars),np.log10(1/np.sqrt(stars_list_sin_0)), marker= "*" , elinewidth=1.5, barsabove= True, color = "red",linestyle="None", label="Stars in Sharks", markersize = 8, alpha = 0.8)      
+#plt.errorbar(ks_sharks_AB,np.log(N_galaxies), np.log(N_galaxies_err), elinewidth=0.5, barsabove= True , marker = "." , linestyle="None", label="Galaxies in Sharks")         
+plt.errorbar(ks_sharks_AB_galaxies,np.log10(N_galaxies),np.log10(1/np.sqrt(galaxies_list_sin_0)), marker= "." , elinewidth=1.5, barsabove= True, color = "red", linestyle="None",label="Galaxies in Sharks", markersize = 8, alpha = 0.8)
+plt.ylabel(r"$log N ~ (objects/deg^2)$", fontsize=12) 
+plt.xlabel("$K_s ~  intervals$", fontsize=12)
+plt.ylim(-0.5,4.5)
+plt.yticks(np.arange(0,5,0.5))
+plt.xticks([13, 15, 17, 19, 21, 23 ])
+#plt.yticks([])   #Conviene añadir un yticks para quitarse los logaritmos negativos/menores a uno.
+plt.title("Stars and galaxies number of counts comparison")
+plt.grid(linestyle="--", linewidth=0.2)
+plt.legend()
+plt.savefig("Stars_galaxies_comparison_with_Daddi.png")
 
+"""
+
+
+
+
+
+
+#yscale = log
+"""
+plt.figure()
+plt.errorbar(ks_Daddi_AB,N_stars_Daddi, 1/np.sqrt(stars_Daddi), marker = "*" , elinewidth=1.5, barsabove= True, color = "black",linestyle="None", label="Stars in Daddi´s article", markersize = 8, alpha = 0.8)         
+plt.errorbar(ks_Daddi_AB,N_galaxies_Daddi, 1/np.sqrt(galaxies_Daddi), marker = "." ,elinewidth=1.5, barsabove= True, color = "black",linestyle="None", label="Galaxies in Daddi´s article", markersize = 8, alpha = 0.8)  
+#plt.errorbar(ks_sharks_AB,np.log(N_stars), np.log(N_stars_err), elinewidth=0.5, barsabove= True , marker = "*" , linestyle="None", label="Stars in Sharks")
+plt.errorbar(ks_sharks_AB_stars,N_stars, 1/np.sqrt(stars_list_sin_0), marker= "*" , elinewidth=1.5, barsabove= True, color = "red",linestyle="None", label="Stars in Sharks", markersize = 8, alpha = 0.8)      
+#plt.errorbar(ks_sharks_AB,np.log(N_galaxies), np.log(N_galaxies_err), elinewidth=0.5, barsabove= True , marker = "." , linestyle="None", label="Galaxies in Sharks")         
+plt.errorbar(ks_sharks_AB_galaxies,N_galaxies, 1/np.sqrt(galaxies_list_sin_0), marker= "." , elinewidth=1.5, barsabove= True, color = "red", linestyle="None",label="Galaxies in Sharks", markersize = 8, alpha = 0.8)
+plt.ylabel(r"$log N ~ (objects/deg^2)$", fontsize=12) 
+plt.xlabel("$K_s ~  intervals$", fontsize=12)
+plt.xticks([13, 15, 17, 19, 21, 23 ])
+#plt.yticks([])   #Conviene añadir un yticks para quitarse los logaritmos negativos/menores a uno.
+plt.title("Stars and galaxies number of counts comparison")
+plt.grid(linestyle="--", linewidth=0.2)
+plt.legend()
+plt.yscale("log")
+plt.savefig("Stars_galaxies_comparison_with_Daddi.png")
+
+plt.figure()
+plt.errorbar(ks_Daddi_AB,N_stars_Daddi, 1/np.sqrt(N_stars_Daddi), marker = "*" , elinewidth=1.5, barsabove= True, color = "black",linestyle="None", label="Stars in Daddi´s article", markersize = 8, alpha = 0.8)         
+plt.errorbar(ks_Daddi_AB,N_galaxies_Daddi, 1/np.sqrt(N_galaxies_Daddi), marker = "." ,elinewidth=1.5, barsabove= True, color = "black",linestyle="None", label="Galaxies in Daddi´s article", markersize = 8, alpha = 0.8)  
+#plt.errorbar(ks_sharks_AB,np.log(N_stars), np.log(N_stars_err), elinewidth=0.5, barsabove= True , marker = "*" , linestyle="None", label="Stars in Sharks")
+plt.errorbar(ks_sharks_AB_stars,N_stars, 1/np.sqrt(N_stars), marker= "*" , elinewidth=1.5, barsabove= True, color = "red",linestyle="None", label="Stars in Sharks", markersize = 8, alpha = 0.8)      
+#plt.errorbar(ks_sharks_AB,np.log(N_galaxies), np.log(N_galaxies_err), elinewidth=0.5, barsabove= True , marker = "." , linestyle="None", label="Galaxies in Sharks")         
+plt.errorbar(ks_sharks_AB_galaxies,N_galaxies, 1/np.sqrt(N_galaxies), marker= "." , elinewidth=1.5, barsabove= True, color = "red", linestyle="None",label="Galaxies in Sharks", markersize = 8, alpha = 0.8)
+plt.ylabel(r"$log N ~ (objects/deg^2)$", fontsize=12) 
+plt.xlabel("$K_s ~  intervals$", fontsize=12)
+plt.xticks([13, 15, 17, 19, 21, 23 ])
+#plt.yticks([])   #Conviene añadir un yticks para quitarse los logaritmos negativos/menores a uno.
+plt.title("Stars and galaxies number of counts comparison")
+plt.grid(linestyle="--", linewidth=0.2)
+plt.legend()
+plt.yscale("log")
+plt.savefig("Stars_galaxies_comparison_with_Daddi.png")
+
+#imagen1 = seaborn.jointplot(RA, DEC, kind="hex")
+#imagen1.fig.suptitle(r"Density distribution ($\alpha_{J2000}$, $\delta_{J2000}$) in spacial coordinates", fontsize=11)
+#imagen1.set_axis_labels(r'RA $[deg]$', 'DEC $[deg]$', fontsize=11)
+"""
+"""
 
 plt.figure()
 plt.plot(df["RA"], df["DEC"], ".", markersize = 0.5)
@@ -427,6 +499,7 @@ plt.savefig("ALL_distribution_RA_DEC.png")
 
 
 #Ploteo la distribución de galaxias y estrellas por separado
+
 
 plt.figure()
 plt.plot(df_galaxies_all["RA"], df_galaxies_all["DEC"], ".", markersize = 0.5, label = "Galaxies", color = "grey")
@@ -456,6 +529,6 @@ for stars, galaxies in zip(stars_list, galaxies_list):  #Aquí pongo en "in" el 
 
 wb.save(filename = ruta)
 
-
+"""
 
 

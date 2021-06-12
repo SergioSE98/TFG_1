@@ -299,7 +299,7 @@ df_galaxies_17 = vstack([df_galaxies_17_05, df_galaxies_17_098])
 
 df_galaxies_all = vstack([df_galaxies_0, df_galaxies_1, df_galaxies_2, df_galaxies_3, df_galaxies_4, df_galaxies_5, df_galaxies_6, df_galaxies_7, df_galaxies_8, df_galaxies_9, df_galaxies_10, df_galaxies_11, df_galaxies_12, df_galaxies_13, df_galaxies_14, df_galaxies_15, df_galaxies_16, df_galaxies_17])
 
-galaxies_list = np.array([len(df_galaxies_0), len(df_galaxies_1), len(df_galaxies_2), len(df_galaxies_3), len(df_galaxies_4), len(df_galaxies_5), len(df_galaxies_6), len(df_galaxies_7), len(df_galaxies_8), len(df_galaxies_9), len(df_galaxies_10), len(df_galaxies_11), len(df_galaxies_12), len(df_galaxies_13), len(df_galaxies_14),  len(df_galaxies_15), len(df_galaxies_16), len(df_galaxies_17)])
+galaxies_list = np.array([len(df_galaxies_0), len(df_galaxies_1), len(df_galaxies_2), len(df_galaxies_3), len(df_galaxies_4), len(df_galaxies_5), len(df_galaxies_6), len(df_galaxies_7), len(df_galaxies_8), len(df_galaxies_9), len(df_galaxies_10), len(df_galaxies_11), len(df_galaxies_12), len(df_galaxies_13), len(df_galaxies_14),  len(df_galaxies_15), len(df_galaxies_16), len(df_galaxies_17),])
 total_galaxies = len(df_galaxies_all)
 
 print(stars_list)
@@ -369,7 +369,6 @@ plt.figure()
 plt.plot(df["RA"], df["DEC"], ",", markersize = 1)
 plt.xlabel("RA")
 plt.ylabel("DEC")
-plt.invert_xaxis()
 plt.title("EROs distribution")
 plt.savefig("EROs_distribution_RA_DEC.png")
 
@@ -377,16 +376,15 @@ plt.savefig("EROs_distribution_RA_DEC.png")
 #Ploteo la distribución de galaxias y estrellas por separado
 
 plt.figure()
-plt.plot(df_galaxies_all["RA"], df_galaxies_all["DEC"], ",", markersize = 1, label = "EROs detected as galaxies", color = "grey", alpha =1)
-#plt.plot(df_stars_all["RA"], df_stars_all["DEC"], ",", markersize = 1, label = "EROs detected as stars", color = "red", alpha =1)
-plt.xlabel("RA [deg]")
-plt.ylabel("Dec [deg]")
-plt.title("EROs  distribution")
-plt.invert_xaxis()
+plt.plot(df_galaxies_all["RA"], df_galaxies_all["DEC"], ",", markersize = 1, label = "EROs galaxies", color = "tab:blue")
+#plt.plot(df_stars_all["RA"], df_stars_all["DEC"], "*", markersize = 1, label = "EROs stars", color = "darkorange")
+plt.xlabel("RA")
+plt.ylabel("DEC")
+plt.title("EROs galaxies/stars distribution")
 plt.legend()
 plt.savefig("EROs_galax_stars_distribution_RA_DEC.png")
 
-"""
+
 wb = Workbook()
 ruta = 'salida_EROS.xlsx'
 
@@ -410,7 +408,7 @@ for stars, galaxies, n_stars, n_galaxies in zip(stars_list, galaxies_list, N_sta
 
 wb.save(filename = ruta)
 
-"""
+
 
 
 

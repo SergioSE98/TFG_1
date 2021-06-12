@@ -10,3 +10,5 @@ Ejercicio 3: Cálculo de la profundidad de la imagen
 Ejercicio 4: Astrometría
 
 Ejercicio 5: Fotometría
+
+Carpeta SHARKS DR1 validation updated incluye las ultimas actualizaciones de los programas para validación de SHARKS DR1

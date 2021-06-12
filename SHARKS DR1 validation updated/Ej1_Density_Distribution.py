@@ -32,8 +32,9 @@ L = df["L"]
 B = df["B"]
 #Ploteo la distribución de densidad de las fuentes contenidas en el archivo fits (añado título y nombre a ejes)
 imagen1 = seaborn.jointplot(RA, DEC, kind="hex")
-imagen1.set_axis_labels(r'$\alpha_{J2000}$ (Right ascension) [$deg$]', '$\delta_{J2000}$ (Declination) [$deg$]', fontsize=11)
-imagen1.fig.axes[0].invert_xaxis()
+imagen1.fig.suptitle(r"Density distribution ($\alpha_{J2000}$, $\delta_{J2000}$) in spacial coordinates", fontsize=11)
+imagen1.set_axis_labels(r'$\alpha_{J2000}$ (Right ascension)', '$\delta_{J2000}$ (Declination)', fontsize=11)
+
 
 
 #Ahora uso astropy para convertir las unidades espaciales de los parámetros ploteados a coordenadas galácticas
@@ -48,8 +49,9 @@ imagen2.set_axis_labels('L (Right ascension)', 'B (Declination)', fontsize=11)
 """
 #Ploteo ahora la distribución en coordenadas galácticas (con su correspondiente título y nombre de ejes)
 imagen3 = seaborn.jointplot(L,B, kind="hex" )   #Vuelvo a plotear, ahora en uds galacticas
-imagen3.set_axis_labels('L (Longitude) [$deg$]', 'B (Latitude) [$deg$]', fontsize=11)
-imagen3.fig.axes[0].invert_xaxis()
+imagen3.fig.suptitle("Density distribution (L,B) in galactic coordinates", fontsize=11)
+imagen3.set_axis_labels('L (Right ascension)', 'B (Declination)', fontsize=11)
+
 
 #Guardo ahora las imagenes con las distintas representaciones del paralaje
 imagen1.savefig('ej1_sharks_sgpe_distribution_in_spacial_coords.png')  
