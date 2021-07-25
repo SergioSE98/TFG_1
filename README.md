@@ -8,4 +8,4 @@ ALL: Genera gráficas de todos los objetos.
 
 Sufijos detec_r: Genera gráficas de solo aquellos objetos con detección en r. De estos programas salen los colores (r-Ks). 
 
-
+makerelation: Programa para obtener variación con exptime (creado por Aurelio). 
